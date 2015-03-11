@@ -1,4 +1,4 @@
-CSCE315-Projec3
+CSCE315-Project3
 ===============
 
 PROJECT 3 - ARTIFICIAL INTELLIGENCE
