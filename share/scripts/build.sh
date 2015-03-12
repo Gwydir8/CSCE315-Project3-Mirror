@@ -40,9 +40,9 @@ fi
 
 cd "$RELEASE_BUILD_DIR";
 # generate release build make files
-cmake -DCMAKE_BUILD_TYPE=Release ..
+CC="$CC" CXX="$CXX" cmake -DCMAKE_BUILD_TYPE=Release ..
 # make on all cores
-CC="$CC" CXX="$CXX" make -j"$CORES"
+make -j"$CORES"
 echo "Release Build Done!"
 
 echo "Starting Debug Build..."
