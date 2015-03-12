@@ -26,6 +26,9 @@ set(LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib")
 # if we need to build documentation. useful for man pages
 set(SHARE_DIR "${CMAKE_CURRENT_SOURCE_DIR}share")
 
+# set cmake modules location
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_LIST_DIR}/share/cmake)
+
 # set library locations
 if(APPLE)
   # if run on OS X
