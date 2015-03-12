@@ -29,7 +29,7 @@ cmake ..
 - PROJECT_ROOT is where you cloned the repository.
 ```bash
 cd $PROJECT_ROOT;
-./share/build.sh
+./build.sh
 # release binary will be build/bin/gauss
 # debug binary will be debug/bin/gauss
 ```
