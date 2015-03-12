@@ -34,7 +34,7 @@ DEBUG_BUILD_DIR="debug"
 echo "Starting Release Build..."
 
 # create and switch to build dir
-if [ -d "$RELEASE_BUILD_DIR" ]; then
+if ![ -d "$RELEASE_BUILD_DIR" ]; then
 mkdir "$RELEASE_BUILD_DIR";
 fi
 
@@ -50,7 +50,7 @@ echo "Starting Debug Build..."
 # cd back to project root
 cd ..
 # create and switch to build dir
-if [ -d "$DEBUG_BUILD_DIR" ]; then
+if ![ -d "$DEBUG_BUILD_DIR" ]; then
 mkdir "$DEBUG_BUILD_DIR";
 fi
 cd "$DEBUG_BUILD_DIR";
