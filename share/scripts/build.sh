@@ -98,3 +98,4 @@ cd ..
 
 echo "Release Build PROJECT_ROOT/$RELEASE_BUILD_DIR/"
 echo "Debug Build PROJECT_ROOT/$DEBUG_BUILD_DIR/"
+exit 0
