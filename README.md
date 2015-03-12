@@ -3,8 +3,14 @@ CSCE315 Project 3 - Team 15
 
 ### Branches
 
-- master := latest *compiling* code
-- develop := latest code, compiling or not. Default branch.
+* Main Branches
+  - production := latest release
+  - master := latest *compiling* code
+  - develop := latest code, compiling or not. Default branch.
+
+* Other Branches
+  - feature/name := feature branch. note feature/ is a prefix. (e.g. feature/add-logging)
+    - merge this into develop
 
 ### Directories
 
