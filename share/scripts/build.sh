@@ -41,13 +41,13 @@ if [ ! -d "$RELEASE_BUILD_DIR" ]; then
     CC="$CC" CXX="$CXX" cmake -DCMAKE_BUILD_TYPE=Release ..
     # make on all cores
     make -j"$CORES"
-    echo "Release Build Done!"
 else
     echo "Running make clean in $RELEASE_BUILD_DIR"
     cd "$RELEASE_BUILD_DIR"
     make clean
     make -j"$CORES"
 fi
+    echo "Release Build Done!"
 
 echo "Starting Debug Build..."
 
