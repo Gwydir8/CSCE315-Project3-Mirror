@@ -9,7 +9,7 @@ cmake_minimum_required(VERSION 3.0.0)
 # and NDEBUG is set for release build
 if(${CMAKE_COMPILER_IS_GNUCXX})
   # gcc/g++ flags
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -Wextra -DNDEBUG")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ggdb -O0 -DDEBUG -Wall -Wextra")
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
