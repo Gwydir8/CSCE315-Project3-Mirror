@@ -1,6 +1,22 @@
 # Artificial Intelligence
 ## CSCE315 Project 3
 
+### Branches
+
+- master := latest *compiling* code
+- develop := latest code, compiling or not. Default branch.
+
+### Directories
+
+- src := source code for project
+- share := scripts, docs
+- include := library headers
+- lib := shared/static libraries
+- etc := configuration files
+- var := logs, caches, temporary files
+
+### Links
+
   - [Project 3 Spec](http://faculty.cse.tamu.edu/ritchey/courses/csce315/spring15/homework/project3.pdf)
   - [Gitter](https://gitter.im/Gwydir8/CSCE315-Project3-Mirror?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&content=body_link)
 
