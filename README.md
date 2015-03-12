@@ -40,6 +40,11 @@ cd $PROJECT_ROOT;
 # debug binary will be debug/bin/gauss
 ```
 
+### Help
+```
+man $PROJECT_ROOT/share/man/gauss.1
+```
+
 ### Team 15
 * Christopher Findeisen
   - cfindeisen7@email.tamu.edu
