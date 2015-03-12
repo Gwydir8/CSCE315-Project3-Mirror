@@ -18,6 +18,7 @@
   - vincentv18@email.tamu.edu
 
 ### Building
+#### Manual Build
 - note this builds the release build by default.
 - run `cmake -DCMAKE_BUILD_TYPE=Debug ..` in build to build debug build
 - run `cmake -DCMAKE_BUILD_TYPE=Release ..` in build to build release build explicitly
@@ -25,4 +26,12 @@
 mkdir build
 cd build
 cmake ..
+```
+#### Automated Build
+- PROJECT_ROOT is where you cloned the repository.
+```bash
+cd $PROJECT_ROOT;
+./share/build.sh
+# release binary will be build/bin/gauss
+# debug binary will be debug/bin/gauss
 ```
