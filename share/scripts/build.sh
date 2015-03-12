@@ -35,15 +35,19 @@ echo "Starting Release Build..."
 
 # create and switch to build dir
 if [ ! -d "$RELEASE_BUILD_DIR" ]; then
-mkdir "$RELEASE_BUILD_DIR";
+    mkdir "$RELEASE_BUILD_DIR";
+    cd "$RELEASE_BUILD_DIR";
+    # generate release build make files
+    CC="$CC" CXX="$CXX" cmake -DCMAKE_BUILD_TYPE=Release ..
+    # make on all cores
+    make -j"$CORES"
+    echo "Release Build Done!"
+else
+    echo "Running make clean in $RELEASE_BUILD_DIR"
+    cd "$RELEASE_BUILD_DIR"
+    make clean
+    make -j"$CORES"
 fi
-
-cd "$RELEASE_BUILD_DIR";
-# generate release build make files
-CC="$CC" CXX="$CXX" cmake -DCMAKE_BUILD_TYPE=Release ..
-# make on all cores
-make -j"$CORES"
-echo "Release Build Done!"
 
 echo "Starting Debug Build..."
 
@@ -51,14 +55,19 @@ echo "Starting Debug Build..."
 cd ..
 # create and switch to build dir
 if [ ! -d "$DEBUG_BUILD_DIR" ]; then
-mkdir "$DEBUG_BUILD_DIR";
+    mkdir "$DEBUG_BUILD_DIR";
+    cd "$DEBUG_BUILD_DIR";
+    # generate debug build make files
+    CC="$CC" CXX="$CXX" cmake -DCMAKE_BUILD_TYPE=Debug ..
+    # make on all cores
+    make -j"$CORES"
+else
+    echo "Running make clean in $DEBUG_BUILD_DIR"
+    cd "$RELEASE_BUILD_DIR"
+    make clean
+    make -j"$CORES"
 fi
-cd "$DEBUG_BUILD_DIR";
-# generate debug build make files
-CC="$CC" CXX="$CXX" cmake -DCMAKE_BUILD_TYPE=Debug ..
-# make on all cores
-make -j"$CORES"
-echo "Debug Build Done!"
+    echo "Debug Build Done!"
 
 # cd back to project root
 cd ..
