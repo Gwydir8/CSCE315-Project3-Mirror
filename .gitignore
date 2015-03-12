@@ -21,3 +21,4 @@
 *.app
 /build/
 /debug/
+/include/gflags-2.1.1/
