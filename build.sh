@@ -1,1 +1,1 @@
-share/build.sh
+share/scripts/build.sh
