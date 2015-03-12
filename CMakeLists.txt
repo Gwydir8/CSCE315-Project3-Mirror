@@ -26,8 +26,7 @@ set(LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib")
 # if we need to build documentation. useful for man pages
 set(SHARE_DIR "${CMAKE_CURRENT_SOURCE_DIR}share")
 
-# Make the scripts available in the 'cmake' directory available for the
-# 'include()' command, 'find_package()' command.
+# set cmake modules location
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_LIST_DIR}/share/cmake)
 
 # set library locations
