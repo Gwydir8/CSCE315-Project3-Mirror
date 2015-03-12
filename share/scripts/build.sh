@@ -41,13 +41,25 @@ if [ ! -d "$RELEASE_BUILD_DIR" ]; then
     CC="$CC" CXX="$CXX" cmake -DCMAKE_BUILD_TYPE=Release ..
     # make on all cores
     make -j"$CORES"
+    # get return code
+    RESULT=$?
+    if [ $RESULT -ne 0 ]; then
+        echo "Release Build Failed"
+        exit 1
+    fi
 else
     echo "Running make clean in $RELEASE_BUILD_DIR"
     cd "$RELEASE_BUILD_DIR"
     make clean
     make -j"$CORES"
+    # get return code
+    RESULT=$?
+    if [ $RESULT -ne 0 ]; then
+        echo "Release Build Failed"
+        exit 1
+    fi
 fi
-    echo "Release Build Done!"
+echo "Release Build Done!"
 
 echo "Starting Debug Build..."
 
@@ -61,13 +73,25 @@ if [ ! -d "$DEBUG_BUILD_DIR" ]; then
     CC="$CC" CXX="$CXX" cmake -DCMAKE_BUILD_TYPE=Debug ..
     # make on all cores
     make -j"$CORES"
+    # get return code
+    RESULT=$?
+    if [ $RESULT -ne 0 ]; then
+        echo "Debug Build Failed"
+        exit 1
+    fi
 else
     echo "Running make clean in $DEBUG_BUILD_DIR"
     cd "$RELEASE_BUILD_DIR"
     make clean
     make -j"$CORES"
+    # get return code
+    RESULT=$?
+    if [ $RESULT -ne 0 ]; then
+        echo "Debug Build Failed"
+        exit 1
+    fi
 fi
-    echo "Debug Build Done!"
+echo "Debug Build Done!"
 
 # cd back to project root
 cd ..
