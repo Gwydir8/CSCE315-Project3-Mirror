@@ -44,10 +44,15 @@ set(UNITTEST_BINARY "${PROJECT_NAME}-test")
 
 add_executable(${RELEASE_BINARY} ${MAIN_SRC} ${SRCS})
 
-#use C++14
-set_property(TARGET ${RELEASE_BINARY} PROPERTY CXX_STANDARD 14)
-#C++14 required
-#set_property(TARGET ${RELEASE_BINARY} PROPERTY CXX_STANDARD_REQUIRED ON)
+#use C++11
+set_property(TARGET ${RELEASE_BINARY} PROPERTY CXX_STANDARD 11)
+#C++11 required
+set_property(TARGET ${RELEASE_BINARY} PROPERTY CXX_STANDARD_REQUIRED ON)
+
+# #use C++14
+# set_property(TARGET ${RELEASE_BINARY} PROPERTY CXX_STANDARD 14)
+# #C++14 required
+# #set_property(TARGET ${RELEASE_BINARY} PROPERTY CXX_STANDARD_REQUIRED ON)
 
 # # link libraries
 # # if curses was found, link binary with boost, readline and curses

@@ -9,7 +9,7 @@ cmake_minimum_required(VERSION 3.0.0)
 # and NDEBUG is set for release build
 if(${CMAKE_COMPILER_IS_GNUCXX})
   # gcc/g++ flags
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -Wextra -DNDEBUG")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ggdb -O0 -DDEBUG -Wall -Wextra")
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
@@ -25,6 +25,9 @@ set(INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
 set(LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib")
 # if we need to build documentation. useful for man pages
 set(SHARE_DIR "${CMAKE_CURRENT_SOURCE_DIR}share")
+
+# set cmake modules location
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_LIST_DIR}/share/cmake)
 
 # set library locations
 if(APPLE)

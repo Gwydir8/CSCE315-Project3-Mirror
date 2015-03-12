@@ -1,0 +1,10 @@
+output-line-number   gate-type   input line number(s)
+
+example for XOR:
+1 NONE 1 (meaning output line 1 is the output of a wire [no gate] from input line 1)
+2 NONE 2
+3 NOT 1 (meaning output line 3 is the output of a NOT gate whose input is line 1)
+4 NOT 2
+5 AND 1 4
+6 AND 2 3
+7 OR 5 6
