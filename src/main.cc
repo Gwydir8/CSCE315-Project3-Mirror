@@ -21,7 +21,7 @@ static bool validate_algorithm(const char* flag_name, const std::string& algo) {
 DEFINE_string(algorithm, "genetic", "Choice of algorithm");
 DEFINE_bool(verbose, false, "Print verbose messages");
 
-static const bool algol_validated =
+static const bool algo_validated =
     gflags::RegisterFlagValidator(&FLAGS_algorithm, &validate_algorithm);
 
 int main(int argc, char* argv[]) {

@@ -1,5 +1,5 @@
 # Set Project_Name and Language
-project(gauss CXX)
+project(eugenics CXX)
 
 # version 3.0.0-rc5 is on compute.cse.tamu.edu
 cmake_minimum_required(VERSION 3.0.0)
