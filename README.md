@@ -4,7 +4,6 @@ CSCE315 Project 3 - Team 15
 ### Branches
 
 * Main Branches
-  - production := latest release
   - master := latest *compiling* code
   - develop := latest code, compiling or not. Default branch.
 
