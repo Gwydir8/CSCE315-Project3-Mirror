@@ -34,12 +34,16 @@ PROJECT_ROOT_DIR=`pwd`
 DL_DIR="/tmp/TEAM15_DL"
 
 GFLAGS_URL="https://github.com/schuhschuh/gflags/archive/v2.1.1.tar.gz"
-GFLAGS_TAR_FILENAME=`basename $GFLAGS_URL`
-GFLAGS_INSTALL_DIR="$PROJECT_ROOT_DIR/include/`basename $GFLAGS_URL .tar.gz`"
+if [ "$UNAME" = "Darwin" ]; then
+    GFLAGS_TAR_FILENAME="`basename $GFLAGS_URL`"
+else
+    GFLAGS_TAR_FILENAME="`basename $GFLAGS_URL .tar.gz`"
+fi
+GFLAGS_INSTALL_DIR="$PROJECT_ROOT_DIR/include/gflags-2.1.1"
 
 echo "Checking if you have gflags..."
 if [ -d "$GFLAGS_INSTALL_DIR" ]; then
-    echo "You have gflags. Checking symlinks..."
+    echo "You have gflags."
 else
     # if you don't have gflags
     echo "You don't have gflags"
@@ -64,10 +68,28 @@ else
         fi
     fi
 
+    cd $DL_DIR
     # extract zip
-    echo "Extracting in include..."
-    cd "$PROJECT_ROOT_DIR/include/"
-    tar -zxvf "$DL_DIR/`basename $GFLAGS_URL`" #>> "$LOGFILE" 2>&1
+    echo "Extracting in $DL_DIR..."
+    #cd "$PROJECT_ROOT_DIR/include/"
+    tar -zxvf "$DL_DIR/$GFLAGS_TAR_FILENAME" #>> "$LOGFILE" 2>&1
+
+    # build
+    echo "Building..."
+    #cd "$GFLAGS_INSTALL_DIR"
+    if [ ! -d "$DL_DIR/build" ]; then
+        mkdir build
+    fi
+    cd build
+    cmake -DBUILD_SHARED_LIBS=ON \
+          -DBUILD_STATIC_LIBS=ON \
+          -DCMAKE_INSTALL_PREFIX="$PROJECT_ROOT_DIR/local" ../gflags-2.1.1/.
+    make -j${CORES}
+    make install
+
+    # links cmake files into share/cmake
+    cd $PROJECT_ROOT_DIR
+    ln -s local/lib/cmake/gflags share/cmake/gflags
 
     echo "Done Installing gflags!"
 fi

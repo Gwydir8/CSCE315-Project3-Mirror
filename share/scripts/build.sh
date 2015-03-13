@@ -2,6 +2,12 @@
 # build project3. should be run in root of project.
 # USAGE: cd $PROJECT_ROOT; ./build.sh
 
+# if [ "$1" == "-v" ]; then
+# VERBOSE_MAKE=1
+# else
+# VERBOSE_MAKE=0
+# fi
+
 # get username
 USER=`whoami`
 # get os
@@ -22,11 +28,19 @@ if [ "$HOSTNAME" = "sun2.cs.tamu.edu" ]; then
 elif [ "$HOSTNAME" = "compute-linux1" ]; then
     # hell yeah
     CORES=32
-    CC=/usr/bin/gcc-4.7
-    CXX=/usr/bin/g++-4.7
+    # CC=/usr/bin/gcc-4.7
+    # CXX=/usr/bin/g++-4.7
 else
     CORES=4
 fi
+
+# set some directories and files
+PROJECT_ROOT_DIR=`pwd`
+
+# compile FLAGS
+LOCAL_LIBS=$PROJECT_ROOT_DIR/local/lib
+CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS}
+
 
 RELEASE_BUILD_DIR="build"
 DEBUG_BUILD_DIR="debug"
@@ -38,8 +52,9 @@ if [ ! -d "$RELEASE_BUILD_DIR" ]; then
     mkdir "$RELEASE_BUILD_DIR";
     cd "$RELEASE_BUILD_DIR";
     # generate release build make files
-    CC="$CC" CXX="$CXX" cmake -DCMAKE_BUILD_TYPE=Release ..
+    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -DCMAKE_BUILD_TYPE=Release ..
     # make on all cores
+    # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
     make -j"$CORES"
     # get return code
     RESULT=$?
@@ -51,6 +66,7 @@ else
     echo "Running make clean in $RELEASE_BUILD_DIR"
     cd "$RELEASE_BUILD_DIR"
     make clean
+    # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
     make -j"$CORES"
     # get return code
     RESULT=$?
@@ -70,8 +86,9 @@ if [ ! -d "$DEBUG_BUILD_DIR" ]; then
     mkdir "$DEBUG_BUILD_DIR";
     cd "$DEBUG_BUILD_DIR";
     # generate debug build make files
-    CC="$CC" CXX="$CXX" cmake -DCMAKE_BUILD_TYPE=Debug ..
+    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -DCMAKE_BUILD_TYPE=Debug ..
     # make on all cores
+    # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
     make -j"$CORES"
     # get return code
     RESULT=$?
@@ -83,6 +100,7 @@ else
     echo "Running make clean in $DEBUG_BUILD_DIR"
     cd "$RELEASE_BUILD_DIR"
     make clean
+    # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
     make -j"$CORES"
     # get return code
     RESULT=$?
