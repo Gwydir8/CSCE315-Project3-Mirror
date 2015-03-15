@@ -29,8 +29,8 @@ endif()
 ## set project locations
 # source directories
 set(SOURCE_DIR "${CMAKE_SOURCE_DIR}/src")
-set(EUGENICS_SRC_DIR "${CMAKE_SOURCE_DIR}/src/eugenics")
-set(LOOKINGGLASS_SRC_DIR "${CMAKE_SOURCE_DIR}/src/lookingglass")
+set(EUGENICS_SRC_DIR "${CMAKE_SOURCE_DIR}/eugenics")
+set(LOOKINGGLASS_SRC_DIR "${CMAKE_SOURCE_DIR}/lookingglass")
 # headers, libaries
 set(INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include")
 set(LIB_DIR "${CMAKE_SOURCE_DIR}/lib")
@@ -83,7 +83,11 @@ endif()
 
 ## subdirectories to build.
 ## First variable is location of files, second is where binary will be put
-add_subdirectory(${SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME})
+## Add subdirectories
+# Eugenics Engine
+add_subdirectory(${EUGENICS_SRC_DIR})
+# Looking Glass Client
+add_subdirectory(${LOOKINGGLASS_SRC_DIR})
 
 # may need to build our libraries
 #add_subdirectory(${LIB_DIR} ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/lib)

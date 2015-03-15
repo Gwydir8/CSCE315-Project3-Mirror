@@ -1,8 +1,8 @@
-set(PROGRAM_NAME "lookingglass")
+set(PROGRAM_NAME "eugenics")
 
 # file with main in it
 set(MAIN_SRC
-  main.cc)
+  src/main.cc)
 
 # rest of .cc's
 set(SRCS
