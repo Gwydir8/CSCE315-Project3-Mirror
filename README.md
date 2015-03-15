@@ -1,4 +1,4 @@
-# Artificial Intelligence
+# Eugenics
 CSCE315 Project 3 - Team 15
 
 ## Directories
