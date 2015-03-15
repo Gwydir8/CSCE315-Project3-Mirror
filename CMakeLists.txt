@@ -78,6 +78,6 @@ endif()
 
 # subdirectories to build.
 # First variable is location of files, second is where binary will be put
-add_subdirectory(${SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/bin)
+add_subdirectory(${SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/src/bin)
 # may need to build our libraries
 #add_subdirectory(${LIB_DIR} ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/lib)
