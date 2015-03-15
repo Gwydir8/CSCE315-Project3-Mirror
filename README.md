@@ -1,17 +1,7 @@
 # Artificial Intelligence
 CSCE315 Project 3 - Team 15
 
-### Branches
-
-* Main Branches
-  - master := latest *compiling* code
-  - develop := latest code, compiling or not. Default branch.
-
-* Other Branches
-  - feature/name := feature branch. note feature/ is a prefix. (e.g. feature/add-logging)
-    - merge this into develop
-
-### Directories
+## Directories
 
 - src := source code for project
 - share := scripts, docs
@@ -19,29 +9,44 @@ CSCE315 Project 3 - Team 15
 - lib := shared/static libraries
 - etc := configuration files
 - var := logs, caches, temporary files
+- local := external library install prefix
 
-### Building
-#### Manual Build
+## Branches
+
+* Main Branches
+  - master := latest *compiling* code
+  - develop := latest code, compiling or not. Default branch.
+
+* Other Branches
+- feature/name := feature branch, merged into develop. note feature/ is a prefix. (e.g. feature/add-logging)
+
+- experimental/<name> := a contributors experimental branch.
+
+## Building
+### Manual Build
 - note this builds the release build by default.
 - run `cmake -DCMAKE_BUILD_TYPE=Debug ..` in build to build debug build
 - run `cmake -DCMAKE_BUILD_TYPE=Release ..` in build to build release build explicitly
+
 ```bash
 mkdir build
 cd build
 cmake ..
 ```
-#### Automated Build
+
+### Automated Build
 - PROJECT_ROOT is where you cloned the repository.
 ```bash
 cd $PROJECT_ROOT;
 ./build.sh
-# release binary will be build/bin/gauss
-# debug binary will be debug/bin/gauss
+# release binary will be build/eugenics-system/{eugenics, lookingglass}
+# debug binary will be debug/eugenics-system/{eugenics, lookingglass}
 ```
 
-### Help
-```
-man $PROJECT_ROOT/share/man/gauss.1
+## Help
+```bash
+man $PROJECT_ROOT/share/man/eugenics.1
+man $PROJECT_ROOT/share/man/lookingglass.1
 ```
 
 ### Team 15
