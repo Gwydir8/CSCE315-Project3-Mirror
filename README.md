@@ -3,6 +3,10 @@ A system designed to generate a visualize a circuit generation algorithm.
 Consists of the engine server and visualization client.
 
 CSCE315 Project 3 - Team 15
+- Christopher Findeisen cfindeisen7@email.tamu.edu
+- Sam Gwydir gwydir8@gmail.com
+- Jerego Orlino jjo498@email.tamu.edu
+- Vincent Valenti vincentv18@email.tamu.edu
 
 ## Directories
 
@@ -77,21 +81,3 @@ cd $PROJECT_ROOT;
 man $PROJECT_ROOT/share/man/eugenics.1
 man $PROJECT_ROOT/share/man/lookingglass.1
 ```
-
-### Team 15
-* Christopher Findeisen
-  - cfindeisen7@email.tamu.edu
-
-* Sam Gwydir
-  - gwydir8@gmail.com
-
-* Jerego Orlino
-  - jjo498@email.tamu.edu
-
-* Vincent Valenti
-  - vincentv18@email.tamu.edu
-
-### Links
-
-  - [Project 3 Spec](http://faculty.cse.tamu.edu/ritchey/courses/csce315/spring15/homework/project3.pdf)
-  - [Gitter](https://gitter.im/Gwydir8/Eugenics?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
