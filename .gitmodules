@@ -1,0 +1,3 @@
+[submodule "share/doc/CSCE315-Project3.wiki"]
+	path = share/doc/CSCE315-Project3.wiki
+	url = git@github.tamu.edu:gwydir8/CSCE315-Project3.wiki.git
