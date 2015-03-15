@@ -18,16 +18,19 @@ CSCE315 Project 3 - Team 15
   - develop := latest code, compiling or not. Default branch.
 
 * Other Branches
-- feature/name := feature branch, merged into develop. note feature/ is a prefix. (e.g. feature/add-logging)
-
-- experimental/<name> := a contributors experimental branch.
+  - feature/name := feature branch, merged into develop. note feature/ is a prefix. (e.g. feature/add-logging)
+  - experimental/<name> := a contributors experimental branch.
 
 ## Building
 ### Dependencies
 - gflags 2.1.1
+- cmake
+- FLTK (not yet)
 
 #### Linux
-If building on linux,`share/scripts/install-gflags.sh` will install gflags into $PROJECT_ROOT/local.
+Use your package manager to install cmake.
+
+If building on Linux, `share/scripts/install-gflags.sh` will install gflags into `$PROJECT_ROOT/local`.
 
 ```bash
 cd $PROJECT_ROOT;
@@ -37,6 +40,7 @@ cd $PROJECT_ROOT;
 #### OS X
 If you have [homebrew](https://github.com/Homebrew/homebrew) installed:
 ```bash
+brew install cmake
 brew install https://raw.githubusercontent.com/Gwydir8/Eugenics/develop/share/scripts/gflags.rb
 ```
 
