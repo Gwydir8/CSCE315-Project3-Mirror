@@ -1,3 +1,4 @@
-[submodule "share/doc/CSCE315-Project3.wiki"]
+[submodule "share/doc/wiki"]
 	path = share/doc/wiki
 	url = git@github.tamu.edu:gwydir8/CSCE315-Project3.wiki.git
+	master = master
