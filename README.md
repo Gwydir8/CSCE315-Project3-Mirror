@@ -1,4 +1,7 @@
-# Eugenics
+# Eugenics-System
+A system designed to generate a visualize a circuit generation algorithm.
+Consists of the engine server and visualization client.
+
 CSCE315 Project 3 - Team 15
 
 ## Directories
