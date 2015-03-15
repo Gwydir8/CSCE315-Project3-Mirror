@@ -23,6 +23,28 @@ CSCE315 Project 3 - Team 15
 - experimental/<name> := a contributors experimental branch.
 
 ## Building
+### Dependencies
+- gflags 2.1.1
+
+#### Linux
+If building on linux,`share/scripts/install-gflags.sh` will install gflags into $PROJECT_ROOT/local.
+
+```bash
+cd $PROJECT_ROOT;
+./share/scripts/install-gflags.sh
+```
+
+#### OS X
+If you have [homebrew](https://github.com/Homebrew/homebrew) installed:
+```bash
+brew install https://raw.githubusercontent.com/Gwydir8/Eugenics/develop/share/scripts/gflags.rb
+```
+
+If you don't have [homebrew](https://github.com/Homebrew/homebrew) installed:
+```bash
+echo "Come back when you do!"
+```
+
 ### Manual Build
 - note this builds the release build by default.
 - run `cmake -DCMAKE_BUILD_TYPE=Debug ..` in build to build debug build
