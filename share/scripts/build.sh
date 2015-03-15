@@ -30,6 +30,11 @@ elif [ "$HOSTNAME" = "compute-linux1" ]; then
     CORES=32
     # CC=/usr/bin/gcc-4.7
     # CXX=/usr/bin/g++-4.7
+elif [ "$HOSTNAME" = "Tron" ]; then
+    CORES=4
+    CXX="/usr/local/opt/ccache/libexec/clang++-3.6 -stdlib=libc++"
+    CXXFLAGS="$CXXFLAGS -nostdinc++ -I/usr/local/opt/llvm36/lib/llvm-3.6/include/c++/v1"
+    LDFLAGS="$LDFLAGS -L/usr/local/opt/llvm36/lib/llvm-3.6/lib"
 else
     CORES=4
 fi
