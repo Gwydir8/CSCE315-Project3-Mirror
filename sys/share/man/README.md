@@ -1,0 +1,4 @@
+share/man
+===============
+
+man pages

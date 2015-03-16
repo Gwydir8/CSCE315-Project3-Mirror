@@ -5,21 +5,27 @@ Consists of the engine server and visualization client.
 [Christopher Findeisen](mailto:cfindeisen7@email.tamu.edu) & [Sam Gwydir](mailto:gwydir8@gmail.com) & [Jerego Orlino](mailto:jjo498@email.tamu.edu) & [Vincent Valenti](mailto:vincentv18@email.tamu.edu)
 
 ----------
-# Development Notes
+
 ## Directories
 
-- src := source code for project. this is the *need to know*
-- sys := environment and a lot of details regarding some of the frameworks and
-  configs that we're using. feel free to ask about it at any point for more
-  info. a more detailed README can be found here
+- src := source code for project
+- share := scripts, docs
+- include := library headers
+- lib := shared/static libraries
+- etc := configuration files
+- var := logs, caches, temporary files
+- local := external library install prefix
 
 ## Branches
 
-The most salient point of our branching structure is to stay on the 'develop'
-branch when working. This is the default, so unless there's a reason to, don't checkout a different branch.
-If you want more info, see [this article](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
+* Main Branches
+  - master := latest *compiling* code
+  - develop := latest code, compiling or not. Default branch.
 
-#Production Notes
+* Other Branches
+  - feature/name := feature branch, merged into develop. note feature/ is a prefix. (e.g. feature/add-logging)
+  - experimental/<name> := a contributors experimental branch.
+
 ## Building
 ### Dependencies
 - gflags 2.1.1
@@ -73,21 +79,3 @@ cd $PROJECT_ROOT;
 man $PROJECT_ROOT/share/man/eugenics.1
 man $PROJECT_ROOT/share/man/lookingglass.1
 ```
-
-### Team 15
-* Christopher Findeisen
-  - cfindeisen7@email.tamu.edu
-
-* Sam Gwydir
-  - gwydir8@gmail.com
-
-* Jerego Orlino
-  - jjo498@email.tamu.edu
-
-* Vincent Valenti
-  - vincentv18@email.tamu.edu
-
-### Links
-
-  - [Project 3 Spec](http://faculty.cse.tamu.edu/ritchey/courses/csce315/spring15/homework/project3.pdf)
-  - [Gitter](https://gitter.im/Gwydir8/CSCE315-Project3-Mirror?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&content=body_link)
