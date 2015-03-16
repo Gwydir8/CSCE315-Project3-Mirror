@@ -8,13 +8,10 @@ Consists of the engine server and visualization client.
 
 ## Directories
 
-- src := source code for project
-- share := scripts, docs
-- include := library headers
-- lib := shared/static libraries
-- etc := configuration files
-- var := logs, caches, temporary files
-- local := external library install prefix
+- eugenics := Eugenics Engine Server source code
+- lookingglass := LookingGlass Circuit Visualizer source code
+
+- eugenics-system := eugenics-system build files
 
 ## Branches
 
