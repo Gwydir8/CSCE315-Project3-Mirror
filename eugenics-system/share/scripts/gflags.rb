@@ -12,7 +12,7 @@ class Gflags < Formula
 
   def install
     mkdir "build" do
-      system "cmake", "..", *std_cmake_args
+      system "cmake", "..", "-DCMAKE_INSTALL_PREFIX='#{prefix}' -DCMAKE_BUILD_TYPE=None -Wno-dev -DBUILD_SHARED_LIBS=ON -DBUILD_STATIC_LIBS=ON "
       system "make", "install"
     end
   end

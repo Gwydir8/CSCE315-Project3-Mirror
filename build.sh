@@ -41,14 +41,15 @@ fi
 
 # set some directories and files
 PROJECT_ROOT_DIR=`pwd`
+PROJECT_SYSTEM_DIR=$PROJECT_ROOT_DIR/eugenics-system
 
 # compile FLAGS
 LOCAL_LIBS=$PROJECT_ROOT_DIR/local/lib
 CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS}
 
 
-RELEASE_BUILD_DIR="build"
-DEBUG_BUILD_DIR="debug"
+RELEASE_BUILD_DIR=$PROJECT_ROOT_DIR/build
+DEBUG_BUILD_DIR=$PROJECT_ROOT_DIR/debug
 
 echo "Starting Release Build..."
 
@@ -57,7 +58,7 @@ if [ ! -d "$RELEASE_BUILD_DIR" ]; then
     mkdir "$RELEASE_BUILD_DIR";
     cd "$RELEASE_BUILD_DIR";
     # generate release build make files
-    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -DCMAKE_BUILD_TYPE=Release ..
+    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -DCMAKE_BUILD_TYPE=Release ../eugenics-system
     # make on all cores
     # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
     make -j"$CORES"
@@ -91,7 +92,7 @@ if [ ! -d "$DEBUG_BUILD_DIR" ]; then
     mkdir "$DEBUG_BUILD_DIR";
     cd "$DEBUG_BUILD_DIR";
     # generate debug build make files
-    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -DCMAKE_BUILD_TYPE=Debug ..
+    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -DCMAKE_BUILD_TYPE=Debug ../eugenics-system
     # make on all cores
     # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
     make -j"$CORES"
