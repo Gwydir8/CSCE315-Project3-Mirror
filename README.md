@@ -6,6 +6,8 @@ Consists of the engine server and visualization client.
 
 ----------
 
+# Development Notes
+
 ## Directories
 
 - eugenics := Eugenics Engine Server source code
@@ -22,6 +24,8 @@ Consists of the engine server and visualization client.
 * Other Branches
   - feature/name := feature branch, merged into develop. note feature/ is a prefix. (e.g. feature/add-logging)
   - experimental/<name> := a contributors experimental branch.
+
+# Production Notes
 
 ## Building
 ### Dependencies
