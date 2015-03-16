@@ -1,10 +1,5 @@
 local
 ===============
 
-directory used to install external libraries.
-
-Whatever is put here will be ignored by git.
-
+directory used to install external libraries
 Nothing should be added here except by scripts.
-
-
