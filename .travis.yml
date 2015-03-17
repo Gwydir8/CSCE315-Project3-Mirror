@@ -4,7 +4,7 @@ compiler:
   - clang
 # Change this to your needs
 before_install:
-  sudo apt-get update -qq
-  sudo apt-get install -qq libgflags-dev
+  sudo apt-get update;
+  sudo apt-get install libgflags-dev
 #install:
 script: ./build.sh && ./build/release/eugenics/eugenics
