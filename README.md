@@ -5,7 +5,7 @@ Consists of the engine server and visualization client.
 [Christopher Findeisen](mailto:cfindeisen7@email.tamu.edu) & [Sam Gwydir](mailto:gwydir8@gmail.com) & [Jerego Orlino](mailto:jjo498@email.tamu.edu) & [Vincent Valenti](mailto:vincentv18@email.tamu.edu)
 
 ----------
-![Build Status](https://travis-ci.org/Gwydir8/Eugenics.svg?branch=develop)](https://travis-ci.org/Gwydir8/Eugenics)
+[![Build Status](https://travis-ci.org/Gwydir8/Eugenics.svg?branch=develop)](https://travis-ci.org/Gwydir8/Eugenics)
 
 # Development Notes
 
