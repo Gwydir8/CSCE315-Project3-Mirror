@@ -5,6 +5,7 @@ compiler:
 # Change this to your needs
 before_install:
   - sudo apt-get update
+  - sudo apt-get install build-essential
   - wget --quiet http://ftp.ussg.iu.edu/linux/ubuntu/pool/main/g/gflags/libgflags2_2.0-1.1ubuntu1_i386.deb
   - wget --quiet http://ftp.ussg.iu.edu/linux/ubuntu/pool/main/g/gflags/libgflags-dev_2.0-1.1ubuntu1_i386.deb
   - sudo dpkg -i libgflags2_2.0-1.1ubuntu1_i386.deb
