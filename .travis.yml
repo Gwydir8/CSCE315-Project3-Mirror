@@ -4,10 +4,10 @@ compiler:
   - clang
 # Change this to your needs
 before_install:
-  sudo apt-get update;
-  sudo echo "deb http://cz.archive.ubuntu.com/ubuntu trusty main" >
-  wget --quiet --output-document=- http://ftp.ussg.iu.edu/linux/ubuntu/pool/main/g/gflags/libgflags-dev_2.0-1.1ubuntu1_i386.deb | dpkg --install -
-
+  - sudo apt-get update
+  - wget --quiet http://ftp.ussg.iu.edu/linux/ubuntu/pool/main/g/gflags/libgflags-dev_2.0-1.1ubuntu1_i386.deb
+  - sudo dpkg -i libgflags-dev_2.0-1.1ubuntu1_i386.deb
 #  sudo apt-get install libgflags-dev
 #install:
-script: ./build.sh && ./build/release/eugenics/eugenics
+script:
+  - ./build.sh && ./build/release/eugenics/eugenics
