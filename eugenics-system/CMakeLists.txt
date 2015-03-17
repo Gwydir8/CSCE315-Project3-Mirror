@@ -1,8 +1,11 @@
 # Set Project_Name and Language
 project(eugenics-system CXX)
 
-# version 3.0.0-rc5 is on compute.cse.tamu.edu
-cmake_minimum_required(VERSION 3.0.0)
+# # version 3.0.0-rc5 is on compute.cse.tamu.edu
+# cmake_minimum_required(VERSION 3.0.0)
+
+# version 2.8.7 is on travis
+cmake_minimum_required(VERSION 2.8.7)
 
 ## set some compiler flags
 ## note DEBUG is set for debug build
