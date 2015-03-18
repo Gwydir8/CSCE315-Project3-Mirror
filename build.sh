@@ -32,8 +32,8 @@ elif [ "$HOSTNAME" = "compute-linux1" ]; then
     CXX=/usr/bin/g++-4.7
 elif [ "$HOSTNAME" = "Tron" ]; then
     CORES=4
-    CXX="/usr/local/opt/ccache/libexec/clang++-3.6 -stdlib=libc++"
-    CXXFLAGS="$CXXFLAGS -nostdinc++ -I/usr/local/opt/llvm36/lib/llvm-3.6/include/c++/v1"
+    CXX="/usr/local/opt/ccache/libexec/clang++-3.6 -std=gnu++11 -stdlib=libc++"
+    #CXXFLAGS="$CXXFLAGS -nostdinc++ -I/usr/local/opt/llvm36/lib/llvm-3.6/include/c++/v1"
     LDFLAGS="$LDFLAGS -L/usr/local/opt/llvm36/lib/llvm-3.6/lib"
 else
     CORES=4
@@ -44,7 +44,7 @@ PROJECT_ROOT_DIR=`pwd`
 PROJECT_SYSTEM_DIR=$PROJECT_ROOT_DIR/eugenics-system
 
 # compile FLAGS
-LOCAL_LIBS=$PROJECT_ROOT_DIR/local/lib
+LOCAL_LIBS=$PROJECT_SYSTEM_DIR/local/lib
 CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS}
 
 
@@ -58,7 +58,7 @@ if [ ! -d "$RELEASE_BUILD_DIR" ]; then
     mkdir "$RELEASE_BUILD_DIR";
     cd "$RELEASE_BUILD_DIR";
     # generate release build make files
-    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -DCMAKE_BUILD_TYPE=Release ../eugenics-system
+    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -DCMAKE_BUILD_TYPE=Release ../eugenics-system/.
     # make on all cores
     # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
     make -j"$CORES"
@@ -92,7 +92,7 @@ if [ ! -d "$DEBUG_BUILD_DIR" ]; then
     mkdir "$DEBUG_BUILD_DIR";
     cd "$DEBUG_BUILD_DIR";
     # generate debug build make files
-    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -DCMAKE_BUILD_TYPE=Debug ../eugenics-system
+    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -DCMAKE_BUILD_TYPE=Debug ../eugenics-system/.
     # make on all cores
     # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
     make -j"$CORES"
