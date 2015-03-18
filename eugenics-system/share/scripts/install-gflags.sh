@@ -30,7 +30,7 @@ fi
 
 # set some directories and files
 PROJECT_ROOT_DIR=`pwd`
-PROJECT_SYSTEM_DIR=$PROJECT_ROOT_DIR/eugenics-system
+PROJECT_SYSTEM_DIR=$PROJECT_ROOT_DIR
 
 # DL_DIR="/tmp/TEAM15_DL"
 
@@ -40,18 +40,30 @@ PROJECT_SYSTEM_DIR=$PROJECT_ROOT_DIR/eugenics-system
 # else
 #     GFLAGS_TAR_FILENAME="`basename $GFLAGS_URL .tar.gz`"
 # fi
-# GFLAGS_INSTALL_DIR="$PROJECT_ROOT_DIR/include/gflags-2.1.1"
+GFLAGS_INSTALL_DIR="$PROJECT_SYSTEM_DIR/include/gflags-2.1.1"
 
-echo "Pulling Gflags 2.1.1"
-cd $PROJECT_SYSTEM_DIR
-cd libraries
-cd gflags
-git submodule update --init
-cmake -DBUILD_SHARED_LIBS=ON \
-      -DBUILD_STATIC_LIBS=ON \
-      -DCMAKE_INSTALL_PREFIX="$PROJECT_SYSTEM_DIR/local" ../gflags-2.1.1/.
-make -j${CORES}
-make install
+echo "Checking if you have gflags..."
+if [ -d "$GFLAGS_INSTALL_DIR" ]; then
+    echo "You have gflags."
+else
+    # if you don't have gflags
+    echo "You don't have gflags"
+
+    echo "Pulling Gflags 2.1.1"
+    cd $PROJECT_SYSTEM_DIR
+    cd libraries
+    cd gflags
+    git submodule update --init
+    cmake -DBUILD_SHARED_LIBS=ON \
+          -DBUILD_STATIC_LIBS=ON \
+          -DCMAKE_INSTALL_PREFIX="$PROJECT_SYSTEM_DIR/local" ../gflags-2.1.1/.
+    make -j${CORES}
+    make install
+
+
+
+    echo "Done Installing gflags!"
+fi
 
 # echo "Checking if you have gflags..."
 # if [ -d "$GFLAGS_INSTALL_DIR" ]; then
