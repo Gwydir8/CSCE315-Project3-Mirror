@@ -63,6 +63,7 @@ else
     cd build
     cmake -DBUILD_SHARED_LIBS=ON \
           -DBUILD_STATIC_LIBS=ON \
+          -DCMAKE_BUILD_TYPE=None \
           -DCMAKE_INSTALL_PREFIX="$PROJECT_SYSTEM_DIR/local" ..
     make -j${CORES}
     make install
