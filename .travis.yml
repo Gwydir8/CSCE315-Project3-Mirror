@@ -1,5 +1,10 @@
 notifications:
-  irc: "irc.gitter.im#Gwydir8/Eugenics"
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/5bf3083a903021096f00
+      on_success: always  # options: [always|never|change] default: always
+      on_failure: always  # options: [always|never|change] default: always
+      on_start: false     # default: false
 language: cpp
 compiler:
   - gcc
