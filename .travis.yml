@@ -1,3 +1,5 @@
+notifications:
+  irc: "irc.gitter.im#Gwydir8/Eugenics"
 language: cpp
 compiler:
   - gcc
