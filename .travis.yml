@@ -18,4 +18,4 @@ install:
   - ./share/scripts/install-gflags.sh
   - cd ..
 script:
-  - ./build.sh && ./build/release/eugenics/eugenics
+  - rm -rf build debug; ./build.sh && ./build/release/eugenics/eugenics
