@@ -6,6 +6,7 @@ Consists of the engine server and visualization client.
 
 ----------
 [![Build Status](https://travis-ci.org/Gwydir8/Eugenics.svg?branch=develop)](https://travis-ci.org/Gwydir8/Eugenics)
+[![Coverage Status](https://coveralls.io/repos/Gwydir8/Eugenics/badge.svg)](https://coveralls.io/r/Gwydir8/Eugenics)
 
 # Development Notes
 
