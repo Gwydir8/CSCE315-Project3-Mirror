@@ -49,11 +49,12 @@ else
     # if you don't have gflags
     echo "You don't have gflags"
 
+    cd $PROJECT_SYSTEM_DIR/..
+    git submodule update --init
     echo "Pulling Gflags 2.1.1"
     cd $PROJECT_SYSTEM_DIR
     cd libraries
     cd gflags
-    git submodule update --init
     cmake -DBUILD_SHARED_LIBS=ON \
           -DBUILD_STATIC_LIBS=ON \
           -DCMAKE_INSTALL_PREFIX="$PROJECT_SYSTEM_DIR/local" ../gflags-2.1.1/.
