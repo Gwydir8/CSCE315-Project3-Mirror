@@ -32,9 +32,9 @@ elif [ "$HOSTNAME" = "compute-linux1" ]; then
     CXX=/usr/bin/g++-4.7
 elif [ "$HOSTNAME" = "Tron" ]; then
     CORES=4
-    CXX="/usr/local/opt/ccache/libexec/clang++-3.6 -std=gnu++11 -stdlib=libc++"
-    #CXXFLAGS="$CXXFLAGS -nostdinc++ -I/usr/local/opt/llvm36/lib/llvm-3.6/include/c++/v1"
-    LDFLAGS="$LDFLAGS -L/usr/local/opt/llvm36/lib/llvm-3.6/lib"
+    # CXX="/usr/local/opt/ccache/libexec/clang++-3.6 -std=gnu++11 -stdlib=libc++"
+    # #CXXFLAGS="$CXXFLAGS -nostdinc++ -I/usr/local/opt/llvm36/lib/llvm-3.6/include/c++/v1"
+    # LDFLAGS="$LDFLAGS -L/usr/local/opt/llvm36/lib/llvm-3.6/lib"
 else
     CORES=4
 fi

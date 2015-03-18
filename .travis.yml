@@ -12,6 +12,7 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y cmake
   - sudo apt-get install -y build-essential
+  - sudo pip install cpp-coveralls
   # - wget --quiet http://ftp.ussg.iu.edu/linux/ubuntu/pool/main/g/gflags/libgflags2_2.0-1.1ubuntu1_i386.deb
   # - wget --quiet http://ftp.ussg.iu.edu/linux/ubuntu/pool/main/g/gflags/libgflags-dev_2.0-1.1ubuntu1_i386.deb
   # - sudo dpkg -i libgflags2_2.0-1.1ubuntu1_i386.deb
@@ -23,4 +24,4 @@ install:
   - cd ..
 script:
   - rm -rf build debug
-  - ./build.sh && ./build/release/eugenics/eugenics
+  - ./build.sh && ./build/eugenics/eugenics
