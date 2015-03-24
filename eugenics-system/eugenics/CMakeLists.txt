@@ -5,8 +5,7 @@ set(MAIN_SRC
   src/main.cc)
 
 # rest of .cc's
-set(SRCS
-  )
+include(${CMAKE_CURRENT_SOURCE_DIR}/src/build_list.cmake)
 
 # if we use gtest unittesting
 #set(UNITTEST_SRCS
