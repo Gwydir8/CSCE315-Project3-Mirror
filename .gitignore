@@ -21,3 +21,6 @@
 *.app
 /build/
 /debug/
+/eugenics-system/include/gtest
+/eugenics-system/include/include
+build
