@@ -46,8 +46,14 @@ int Or_Gate::Or_Evaluate(int input_1, int input_2) {
 
 // Evaluation function for the Not_Gate
 int Not_Gate::Not_Evaluate(int input_1) {
-  if
-    input_1 ? return true : return false;
+  //if input_1 ? return true : return false;
+  if(input_1 == 0){
+	set_output(1);
+	return output;
+  } else if (input_2 == 1){
+	set_output(0);
+	return output;
+  }
+  
 }
 
-int main() {}
