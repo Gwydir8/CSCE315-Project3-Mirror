@@ -40,7 +40,7 @@ PROJECT_SYSTEM_DIR=$PROJECT_ROOT_DIR
 # else
 #     GTEST_TAR_FILENAME="`basename $GTEST_URL .tar.gz`"
 # fi
-GTEST_INSTALL_DIR="$PROJECT_SYSTEM_DIR/include/gtest-1.7.0"
+GTEST_INSTALL_DIR="$PROJECT_SYSTEM_DIR/eugenics-system/include/googletest"
 
 echo "Checking if you have gtest..."
 if [ -d "$GTEST_INSTALL_DIR" ]; then
@@ -49,12 +49,12 @@ else
     # if you don't have gtest
     echo "You don't have gtest"
 
-    cd $PROJECT_SYSTEM_DIR/..
-    git submodule update --init
+    cd $PROJECT_ROOT_DIR
     echo "Pulling Googletest 1.7.0"
+    git submodule update --init
     cd $PROJECT_SYSTEM_DIR
-    cd libraries
-    cd googletest
+    # cd libraries
+    # cd googletest
     # # build
     # echo "Building..."
     # if [ ! -d "build" ]; then
@@ -65,7 +65,9 @@ else
     # make -j${CORES}
     # make install
 
-
+    # set up symlink
+    cd $PROJECT_SYSTEM_DIR/eugenics-system/include
+    ln -s ../libraries/googletest/include .
 
     echo "Done Installing googletest!"
 fi

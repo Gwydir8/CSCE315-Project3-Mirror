@@ -80,7 +80,7 @@ else()
 endif()
 
 if (test)
-  add_subdirectory(${INCLUDE_DIR}/gtest)
+  add_subdirectory(${INCLUDE_DIR}/googletest)
   include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 endif()
 
@@ -88,7 +88,7 @@ endif()
 # if we use gtest
 # Unit testing with Google Test
 # to run tests use 'cmake -Dtest=ON'
-# option(test "Build ${PROJECT_NAME}'s tests" OFF)
+option(test "Build ${PROJECT_NAME}'s tests" OFF)
 
 ## subdirectories to build.
 ## First variable is location of files, second is where binary will be put

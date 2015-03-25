@@ -1,6 +1,7 @@
 //stub
 
-// #include "../include/gtest/include/gtest/gtest.h"
+//#include "../include/gtest/include/gtest/gtest.h"
+#include "../eugenics-system/include/googletest/gtest.h"
 
 // namespace {
 // // The fixture for testing class Project1. From google test primer.
