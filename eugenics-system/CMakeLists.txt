@@ -79,6 +79,12 @@ else()
   #set(Readline_ROOT_DIR ~/usr/)
 endif()
 
+if (test)
+  add_subdirectory(${INCLUDE_DIR}/gtest)
+  include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+endif()
+
+
 # if we use gtest
 # Unit testing with Google Test
 # to run tests use 'cmake -Dtest=ON'
