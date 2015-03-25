@@ -15,12 +15,12 @@ class Logic_Gates {
  public:
   // This first constructor used for the NOT Gate. Takes in one input to
   // evaluate.
-  Logic_Gates(const int& input_1) : input_1(input_1);
+  Logic_Gates(const int& input_1) : input_1(input_1) { };
 
   // This second constructor used for And and Or Gates. Takes in two inputs to
   // evaluate.
   Logic_Gates(const int& input_1, const int& input_2)
-      : input_1(input_1), input_2(input_2);
+      : input_1(input_1), input_2(input_2) { };
 
   // Simple Get and Set functions. Don't know if we really need it at the
   // moment.
