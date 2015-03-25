@@ -67,7 +67,7 @@ else
 
     # set up symlink
     cd $PROJECT_SYSTEM_DIR/eugenics-system/include
-    ln -s ../libraries/googletest/include .
+    ln -s ../libraries/googletest/include/gtest .
 
     echo "Done Installing googletest!"
 fi
