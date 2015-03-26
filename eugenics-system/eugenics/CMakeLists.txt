@@ -93,7 +93,7 @@ if (test)
   enable_testing()
 
   # Unit Tests
-	add_executable(${UNITTEST_BINARY} ${UNITTEST_SRCS})
+	add_executable(${UNITTEST_BINARY} ${UNITTEST_SRCS} ${SRCS})
 
   # Standard linking to gtest stuff.
   # also link boost

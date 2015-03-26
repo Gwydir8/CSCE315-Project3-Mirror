@@ -1,13 +1,34 @@
 #include "../../include/gtest/gtest.h"
+#include "logic_gates.h"
 
 namespace {
 // The fixture for testing class Project3. From google test primer.
-class GateTest : public ::testing::Test {
+class AndGateTest : public ::testing::Test {
+ protected:
+  virtual void SetUp() {
+  }
+
+};
+
+  // evaluate should have no arguments, and operate on the gate's input variables
+  TEST_F(AndGateTest, AndEvalTest) { EXPECT_EQ(0, And_Gate(0,0).And_Evaluate(0,0)); }
+
+class OrGateTest : public ::testing::Test {
  protected:
   virtual void SetUp() {
   }
 
   // create gates here
+  Or_Gate or;
+};
+
+class NotGateTest : public ::testing::Test {
+ protected:
+  virtual void SetUp() {
+  }
+
+  // create gates here
+  Not_Gate not;
 };
 
   // examples from my dbms
