@@ -89,22 +89,22 @@ endif()
 # endif()
 
 # # Unit Testing with gtest
-if (test)
-  enable_testing()
+# if (test)
+#   enable_testing()
 
-  # Unit Tests
-	add_executable(${UNITTEST_BINARY} ${UNITTEST_SRCS} ${SRCS})
+#   # Unit Tests
+# 	add_executable(${UNITTEST_BINARY} ${UNITTEST_SRCS})
 
-  # Standard linking to gtest stuff.
-  # also link boost
-	# target_link_libraries(${UNITTEST_BINARY} ${Boost_LIBRARIES} gtest gtest_main)
-	target_link_libraries(${UNITTEST_BINARY} gtest gtest_main)
+#   # Standard linking to gtest stuff.
+#   # also link boost
+# 	# target_link_libraries(${UNITTEST_BINARY} ${Boost_LIBRARIES} gtest gtest_main)
+# 	target_link_libraries(${UNITTEST_BINARY} gtest gtest_main)
 
-  # This is so you can do 'make test' to see all your tests run, instead of
-  # manually running the executable runUnitTests to see those specific tests.
-  add_test(NAME that-test-I-made COMMAND ${UNITTEST_BINARY})
+#   # This is so you can do 'make test' to see all your tests run, instead of
+#   # manually running the executable runUnitTests to see those specific tests.
+#   add_test(NAME that-test-I-made COMMAND ${UNITTEST_BINARY})
 
-  # You can also omit NAME and COMMAND. The second argument could be some other
-  # test executable.
-  add_test(that-other-test-I-made ${UNITTEST_BINARY})
-endif()
+#   # You can also omit NAME and COMMAND. The second argument could be some other
+#   # test executable.
+#   add_test(that-other-test-I-made ${UNITTEST_BINARY})
+# endif()

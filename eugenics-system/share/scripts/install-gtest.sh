@@ -40,7 +40,7 @@ PROJECT_SYSTEM_DIR=$PROJECT_ROOT_DIR
 # else
 #     GTEST_TAR_FILENAME="`basename $GTEST_URL .tar.gz`"
 # fi
-GTEST_INSTALL_DIR="$PROJECT_SYSTEM_DIR/eugenics-system/include/googletest"
+GTEST_INSTALL_DIR="$PROJECT_SYSTEM_DIR/eugenics-system/local/include/gtest"
 
 echo "Checking if you have gtest..."
 if [ -d "$GTEST_INSTALL_DIR" ]; then
@@ -52,22 +52,27 @@ else
     cd $PROJECT_ROOT_DIR
     echo "Pulling Googletest 1.7.0"
     git submodule update --init
-    cd $PROJECT_SYSTEM_DIR
-    # cd libraries
-    # cd googletest
-    # # build
-    # echo "Building..."
-    # if [ ! -d "build" ]; then
-    #     mkdir build
-    # fi
-    # cd build
-    # cmake -DCMAKE_INSTALL_PREFIX="$PROJECT_SYSTEM_DIR/local" ..
-    # make -j${CORES}
-    # make install
+    cd $PROJECT_SYSTEM_DIR/eugenics-system
+    cd libraries
+    cd googletest
+    # build
+    echo "Building..."
+    if [ ! -d "build" ]; then
+        mkdir build
+    fi
+    cd build
+    cmake ..
+    make -j${CORES}
+
+    cd $PROJECT_SYSTEM_DIR/eugenics-system/local/lib
+    ln -s $PROJECT_SYSTEM_DIR/eugenics-system/libraries/googletest/build/libgtest.a .
+    ln -s $PROJECT_SYSTEM_DIR/eugenics-system/libraries/googletest/build/libgtest_main.a .
 
     # set up symlink
     cd $PROJECT_SYSTEM_DIR/eugenics-system/include
     ln -s ../libraries/googletest/include/gtest .
+    cd $PROJECT_SYSTEM_DIR/eugenics-system/local/include
+    ln -s ../../libraries/googletest/include/gtest .
 
     echo "Done Installing googletest!"
 fi
