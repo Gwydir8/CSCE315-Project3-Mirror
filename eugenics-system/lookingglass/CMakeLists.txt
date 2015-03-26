@@ -9,8 +9,8 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/src/build_list.cmake)
 
 
 # if we use gtest unittesting
-#set(UNITTEST_SRCS
-#  test_main.cc)
+set(UNITTEST_SRCS
+ src/test_main.cc)
 
 # gflags
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
@@ -97,7 +97,8 @@ endif()
 
 #   # Standard linking to gtest stuff.
 #   # also link boost
-# 	target_link_libraries(${UNITTEST_BINARY} ${Boost_LIBRARIES} gtest gtest_main)
+# 	# target_link_libraries(${UNITTEST_BINARY} ${Boost_LIBRARIES} gtest gtest_main)
+# 	target_link_libraries(${UNITTEST_BINARY} gtest gtest_main)
 
 #   # This is so you can do 'make test' to see all your tests run, instead of
 #   # manually running the executable runUnitTests to see those specific tests.

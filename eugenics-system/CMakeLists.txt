@@ -79,10 +79,16 @@ else()
   #set(Readline_ROOT_DIR ~/usr/)
 endif()
 
+if (test)
+  add_subdirectory(libraries/googletest)
+  include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+endif()
+
+
 # if we use gtest
 # Unit testing with Google Test
 # to run tests use 'cmake -Dtest=ON'
-# option(test "Build ${PROJECT_NAME}'s tests" OFF)
+option(test "Build ${PROJECT_NAME}'s tests" OFF)
 
 ## subdirectories to build.
 ## First variable is location of files, second is where binary will be put

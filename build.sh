@@ -51,14 +51,24 @@ CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS}
 RELEASE_BUILD_DIR=$PROJECT_ROOT_DIR/build
 DEBUG_BUILD_DIR=$PROJECT_ROOT_DIR/debug
 
+echo "Updating Library Submodules..."
+git submodule update --init --recursive
+echo "Installing GoogleTest"
+./eugenics-system/share/scripts/install-gtest.sh
+echo "Installing GFlags"
+cd eugenics-system
+./share/scripts/install-gflags.sh
+cd ..
+
+
 echo "Starting Release Build..."
 
 # create and switch to build dir
-if [ ! -d "$RELEASE_BUILD_DIR" ]; then
+if [ ! -d "$RELEASE_BUILD_DIR/eugenics" ]; then
     mkdir "$RELEASE_BUILD_DIR";
     cd "$RELEASE_BUILD_DIR";
     # generate release build make files
-    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -DCMAKE_BUILD_TYPE=Release ../eugenics-system/.
+    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -Dtest=ON -DCMAKE_BUILD_TYPE=Release ../eugenics-system/.
     # make on all cores
     # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
     make -j"$CORES"
@@ -88,11 +98,11 @@ echo "Starting Debug Build..."
 # cd back to project root
 cd ..
 # create and switch to build dir
-if [ ! -d "$DEBUG_BUILD_DIR" ]; then
+if [ ! -d "$DEBUG_BUILD_DIR/eugenics" ]; then
     mkdir "$DEBUG_BUILD_DIR";
     cd "$DEBUG_BUILD_DIR";
     # generate debug build make files
-    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -DCMAKE_BUILD_TYPE=Debug ../eugenics-system/.
+    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -Dtest=ON -DCMAKE_BUILD_TYPE=Debug ../eugenics-system/.
     # make on all cores
     # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
     make -j"$CORES"
