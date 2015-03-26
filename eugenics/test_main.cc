@@ -1,6 +1,7 @@
 #include "../../include/gtest/gtest.h"
-#include "binary_gate.h"
+
 #include "unary_gate.h"
+#include "binary_gate.h"
 
 TEST(AND, And) {
   EXPECT_EQ(0, And(0, 0).evaluate());
