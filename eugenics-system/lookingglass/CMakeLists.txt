@@ -10,7 +10,7 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/src/build_list.cmake)
 
 # if we use gtest unittesting
 set(UNITTEST_SRCS
- test_main.cc)
+ src/test_main.cc)
 
 # gflags
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")

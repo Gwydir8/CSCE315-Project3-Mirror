@@ -80,7 +80,7 @@ else()
 endif()
 
 if (test)
-  # add_subdirectory(${INCLUDE_DIR}/gtest)
+  add_subdirectory(libraries/googletest)
   include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 endif()
 
