@@ -10,36 +10,32 @@ class BinaryGate {
   BinaryGate();
   BinaryGate(bool A, bool B) : A_(A), B_(B) {}
 
-  virtual ~BinaryGate();
+  // virtual ~BinaryGate();
 
   // evaluate gate
   virtual bool evaluate() = 0;
 };
 
-class And: public BinaryGate {
+class And : public BinaryGate {
  public:
   And();
-  And(bool A, bool B) : BinaryGate(A,B) {}
+  And(bool A, bool B) : BinaryGate(A, B) {}
 
-  virtual ~And();
+  // virtual ~And();
 
   // evaluate gate
-  bool evaluate() {
-    return A_ && B_;
-  }
+  bool evaluate() { return A_ && B_; }
 };
 
-class Or: public BinaryGate {
+class Or : public BinaryGate {
  public:
   Or();
-  Or(bool A, bool B) : BinaryGate(A,B) {}
+  Or(bool A, bool B) : BinaryGate(A, B) {}
 
-  virtual ~Or();
+  // virtual ~Or();
 
   // evaluate gate
-  bool evaluate() {
-    return A_ || B_;
-  }
+  bool evaluate() { return A_ || B_; }
 };
 
 #endif /* BINARY_GATE_H */
