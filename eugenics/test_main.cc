@@ -53,19 +53,41 @@ TEST_F(WireSetup, NOR) {
   EXPECT_EQ(0, Not(new Or(wire_1, wire_0)).evaluate());
 }
 
-TEST(Circuit, Simple) {
-    Circuit c({true, false});
-    std::vector<bool> expected_output{true, false};
-    EXPECT_EQ(expected_output, c.evaluate());
+TEST(Circuit, ReturnAddGate) {
 }
 
+TEST(Circuit, Simple) {
+    Circuit c(2, 2);
+    std::vector<bool> expected_output{true, false};
+    EXPECT_EQ(expected_output, c.evaluateInputSet({true, false}));
+}
+
+
 TEST(Circuit, LessSimple) {
-    Circuit c({true, false});
+    Circuit c(2, 2);
     c.addGate(AND, 1, 1);
     c.addGate(WIRE, 0);
-    std::vector<bool> expected_output{true, true};
-    EXPECT_EQ(expected_output, c.evaluate());
+    std::vector<bool> expected_output{false, true};
+    EXPECT_EQ(expected_output, c.evaluateInputSet({true, false}));
 }
+
+TEST(Circuit, XOR) {
+    Circuit c(2, 1);
+    c.addGate(WIRE, 0);
+    c.addGate(WIRE, 1);
+    c.addGate(NOT, 0);
+    c.addGate(NOT, 1);
+    c.addGate(AND, 0, 3);
+    c.addGate(AND, 1, 2);
+    c.addGate(OR, 4, 5);
+    std::vector<bool> expected_output{false};
+    /* EXPECT_EQ( ,  c.evaluateAllInputs()); */
+    EXPECT_EQ(expected_output, c.evaluateInputSet({false, false}));
+}
+
+/* class CircuitSetup : public testing::Test { */
+/*     Circuit c({true, false}); */
+/* }; */
 
 // TEST(SubCircuitTest, NOR) {
 //   std::vector<Gate*> gates;

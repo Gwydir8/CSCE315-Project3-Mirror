@@ -1,5 +1,6 @@
 #ifndef GATE_H
 #define GATE_H
+#include <iostream>
 
 class Gate {
  public:
@@ -41,6 +42,14 @@ class Wire : public Gate {
       }
       else {
           return input_1->evaluate();
+      }
+  }
+  void setInput(bool new_input){
+      if(input_1 == nullptr){
+          b = new_input;
+      }
+      else{
+          std::cerr << "Wire isn't an input wire\n";
       }
   }
 };
