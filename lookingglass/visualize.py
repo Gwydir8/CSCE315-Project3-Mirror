@@ -4,8 +4,7 @@
 # *@date     Wed 25 Mar 16:35:07 2015                       *
 # ***********************************************************
 import time
-import math
-
+import circuits as c
 from graphics import *
 steps = []
 
@@ -16,78 +15,80 @@ class Canvas:
     max_x = 1000
     max_y = 1000
     current_row = 1
+    current_column = 1
     def __init__(self):
         self.window = GraphWin('Current Logic Gate', self.max_x, self.max_y) # give title and dimensions
         print "Visualizing now..."
 
 
     def visualizeStep(self, step):
-        base_x = 0
+        print step
+        base_x = self.current_column * 100
         base_y = self.current_row * 50
+        self.setup_step(base_x, base_y)
+        #first draw line
+        # line =
+        shapes = []
         for token in step.split():
             token = unicode(token)
             if token.isnumeric():
-                base_x += 50
+                num = int(token)
+                if num < self.current_row:
+                    offset_x = -15
+                    shape = c.dot(base_x + offset_x, num * 50)
+                    line_in_gate = Line(Point(base_x + offset_x, base_y - 30), \
+                            Point(base_x + offset_x, num * 50) )
+
+                    line_in_gate.draw(self.window)
+                    base_x += 30
+                else:
+                    shape = None
+
             if token.isalpha():
-                base_x += 50
+                shape_base_x = base_x - 15
+                shape_base_y = base_y - 30
                 if token == "NOT":
-                    not_gate = Polygon([Point(base_x, base_y), \
-                               Point(base_x + 30, base_y), Point(base_x + 15, base_y + 30)])
-                    not_gate.draw(self.window)
+                    shape = c.not_gate(shape_base_x, shape_base_y)
+
                 elif token == "AND":
                     #for top of and_gate
-                    pts = [Point(base_x + 30, base_y), Point(base_x, base_y)]
-                    for i in xrange(30):
-                        if i <= 15:
-                            y = math.sqrt(1 - pow((30-i)/30.0, 2))
-                            pts.append(Point(base_x + i, base_y + y * 30))
-                        else:
-                            y = math.sqrt(1 - pow(i/30.0, 2))
-                            pts.append(Point(base_x + i, base_y + y * 30))
+                    shape = c.and_gate(shape_base_x, shape_base_y)
 
-                    and_gate = Polygon(pts)
-                    and_gate.draw(self.window)
                 elif token == "OR":
-                    pts = [Point(base_x, base_y)]
-                    #drawing base
-                    for i in xrange(31):
-                        if i <= 15:
-                            y = math.sqrt(1 - pow((30-i)/30.0, 2))
-                            pts.append(Point(base_x + i, base_y + y * 15 ))
-                        else:
-                            y = math.sqrt(1 - pow(i/30.0, 2))
-                            pts.append(Point(base_x + i, base_y + y * 15 ))
-                    #drawing top
-                    for i in reversed(xrange(30)):
-                        if i <= 15:
-                            y = math.sqrt(1 - pow((30-i)/30.0, 2))
-                            pts.append(Point(base_x + i, base_y + y * 30 ))
-                        else:
-                            y = math.sqrt(1 - pow(i/30.0, 2))
-                            pts.append(Point(base_x + i, base_y + y * 30 ))
-
-                    or_gate = Polygon(pts)
-                    or_gate.draw(self.window)
-
+                    shape = c.or_gate(shape_base_x, shape_base_y)
 
                 elif token == "NONE":
-                    pass
+                    shape = None
+
                 else:
                     #exit?
                     print "had some problem parsing output " + token
                     raise(AttributeError)
 
-        pt = Point(self.max_x - 50, base_y)
-        step_no = Text(pt, str(self.current_row))
-        step_no.setSize(14)
-        step_no.draw(self.window)
 
-        #go to next row
+            if shape is not None:
+                shapes.append(shape)
+
+
+        for shape in shapes:
+            shape.draw(self.window)
+
+        self.current_column += 1
         self.current_row += 1
 
     def waitForClick(self):
         self.window.getMouse() # Pause to view result
         self.window.close()
+
+    def setup_step(self, x, y):
+        #draws the horizontal line and numbers the step
+        pt = Point(self.max_x - 50, y)
+        step_no = Text(pt, str(self.current_row))
+        step_no.setSize(14)
+        step_no.draw(self.window)
+
+        step_line = Line(Point(x, y), Point(self.max_x - 75, y))
+        step_line.draw(self.window)
 
 
 def readInSteps(fname):
@@ -107,7 +108,6 @@ def main():
     for step in steps:
         canvas.visualizeStep(step)
     canvas.waitForClick()
-#wherever the output is.
 
 if __name__ == "__main__":
     # execute only if run as a script
