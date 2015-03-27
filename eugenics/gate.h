@@ -1,22 +1,67 @@
 #ifndef GATE_H
 #define GATE_H
 
-#include "inputnode.h"
-#include "outputnode.h"
-
 class Gate {
  public:
-  Gate() {}
-
-  // virtual ~Gate() = 0;
-
-  virtual bool evaluate() = 0;
-
-  OutputNode Q() { return Q_; }
+  Gate(Gate* A): input_1(A) {}
+  Gate(Gate* A, Gate* B): input_1(A), input_2(B) {}
+  Gate(bool B) : b(B){}
+  /* virtual bool evaluate() = 0; */
+  virtual bool evaluate(){return false;};
 
  protected:
-  // All gates have one output, Q
-  OutputNode Q_;
+  bool b;
+  Gate* input_1 = nullptr;
+  Gate* input_2;
+};
+
+class Not : public Gate {
+ protected:
+ public:
+  Not();
+  Not(Gate* A) : Gate(A) {}
+
+  bool evaluate() {
+    return !(input_1->evaluate());
+  }
+};
+
+class Wire : public Gate {
+ protected:
+  bool is_root;
+
+ public:
+  Wire();
+  Wire(bool B) : Gate(B){}
+  Wire(Gate* A) : Gate(A){}
+
+  bool evaluate() {
+      if(input_1 == nullptr){
+          return b;
+      }
+      else {
+          return input_1->evaluate();
+      }
+  }
+};
+
+class And : public Gate {
+    public:
+    And();
+    And(Gate* A, Gate* B) : Gate(A, B) {}
+    bool evaluate() {
+        return input_1->evaluate() && input_2->evaluate();
+    }
+};
+
+class Or : public Gate {
+    protected:
+    public:
+        Or();
+        Or(Gate* A, Gate* B) : Gate(A, B) {}
+        bool evaluate() {
+            return input_1->evaluate() || input_2->evaluate();
+        }
 };
 
 #endif /* GATE_H */
