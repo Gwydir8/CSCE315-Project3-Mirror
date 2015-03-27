@@ -96,7 +96,7 @@ option(test "Build ${PROJECT_NAME}'s tests" OFF)
 # Eugenics Engine
 add_subdirectory(${EUGENICS_SRC_DIR})
 # Looking Glass Client
-add_subdirectory(${LOOKINGGLASS_SRC_DIR})
+#add_subdirectory(${LOOKINGGLASS_SRC_DIR})
 
 # may need to build our libraries
 #add_subdirectory(${LIB_DIR} ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/lib)
