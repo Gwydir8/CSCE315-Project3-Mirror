@@ -1,8 +1,6 @@
 #ifndef IONODE_H
 #define IONODE_H
 
-class IONode;
-
 // An IONode is the wire connecting two gates, namely the "parent" and "child"
 // gate
 class IONode {
@@ -24,9 +22,11 @@ class IONode {
  private:
   // // pointer to parent gate
   // Gate parent_;
+  // OutputNode parent_;
 
   // // pointer to parent gate
   // Gate child_;
+  // InputNode child_;
 
   // value at the node, which is equivalent to the output of the gate before
   // this node.

@@ -5,8 +5,10 @@
 
 #include "gate.h"
 #include "inputnode.h"
+#include "inputnodeevaluator.h"
 
-// a UngaryGate has one input
+
+// a UnaryGate has one input
 class UnaryGate : public Gate {
  public:
   UnaryGate();

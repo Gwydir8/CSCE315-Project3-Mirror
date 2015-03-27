@@ -5,6 +5,7 @@
 
 #include "gate.h"
 #include "inputnode.h"
+#include "inputnodeevaluator.h"
 
 class BinaryGate : public Gate {
  public:

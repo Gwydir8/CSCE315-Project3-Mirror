@@ -1,6 +1,7 @@
 #ifndef GATE_H
 #define GATE_H
 
+#include "inputnode.h"
 #include "outputnode.h"
 
 class Gate {
