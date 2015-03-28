@@ -7,9 +7,9 @@ set(MAIN_SRC
 # rest of .cc's
 include(${CMAKE_CURRENT_SOURCE_DIR}/src/build_list.cmake)
 
-# if we use gtest unittesting
-set(UNITTEST_SRCS
- src/test_main.cc)
+# # if we use gtest unittesting
+# set(UNITTEST_SRCS
+#  src/test_main.cc)
 
 
 # # gflags
@@ -56,7 +56,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 #binary names
 set(RELEASE_BINARY "${PROGRAM_NAME}")
-set(UNITTEST_BINARY "${PROGRAM_NAME}-test")
+# set(UNITTEST_BINARY "${PROGRAM_NAME}-test")
 
 add_executable(${RELEASE_BINARY} ${MAIN_SRC} ${SRCS})
 
