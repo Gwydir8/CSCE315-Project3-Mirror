@@ -15,7 +15,8 @@
 /* DEFINE_bool(verbose, false, "Print verbose messages"); */
 
 /* // validates algorithm flags */
-/* static bool validate_algorithm(const char* flag_name, const std::string& algo) { */
+/* static bool validate_algorithm(const char* flag_name, const std::string&
+ * algo) { */
 /*   if ((algo == "genetic") || (algo == "traditional")) { */
 /*     return true; */
 /*   } else { */
@@ -34,7 +35,8 @@ int main(int argc, char* argv[]) {
   /* gflags::SetVersionString("0.0.1"); */
   /* // help string */
   /* std::string usagemsg = */
-  /*   std::string( "Usage:\n" ) + std::string(argv[0]) + " [OPTIONS] filename"; */
+  /*   std::string( "Usage:\n" ) + std::string(argv[0]) + " [OPTIONS] filename";
+   */
   /* gflags::SetUsageMessage(usagemsg); */
   /* // parse and validate flags */
   /* gflags::ParseCommandLineFlags(&argc, &argv, true); */

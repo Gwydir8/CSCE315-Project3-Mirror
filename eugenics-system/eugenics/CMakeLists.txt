@@ -12,16 +12,16 @@ set(UNITTEST_SRCS
  src/test_main.cc)
 
 
-# gflags
-if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-  find_package(gflags REQUIRED)
-  include_directories(${gflags_INCLUDE_DIR})
-else()
-  find_package(GFlags REQUIRED)
-  if(GFlags_FOUND)
-    include_directories(${GFlags_INCLUDE_DIRS})
-  endif()
-endif()
+# # gflags
+# if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+#   find_package(gflags REQUIRED)
+#   include_directories(${gflags_INCLUDE_DIR})
+# else()
+#   find_package(GFlags REQUIRED)
+#   if(GFlags_FOUND)
+#     include_directories(${GFlags_INCLUDE_DIRS})
+#   endif()
+# endif()
 
 #if we need boost, and what libraries
 #find_package(Boost 1.57.0 COMPONENTS filesystem system REQUIRED)
@@ -71,11 +71,11 @@ set_property(TARGET ${RELEASE_BINARY} PROPERTY CXX_STANDARD_REQUIRED ON)
 # #set_property(TARGET ${RELEASE_BINARY} PROPERTY CXX_STANDARD_REQUIRED ON)
 
 # link libraries
-if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-  target_link_libraries(${RELEASE_BINARY} ${gflags_LIBRARIES})
-else()
-  target_link_libraries(${RELEASE_BINARY} ${GFlags_LIBS})
-endif()
+# if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+#   target_link_libraries(${RELEASE_BINARY} ${gflags_LIBRARIES})
+# else()
+#   target_link_libraries(${RELEASE_BINARY} ${GFlags_LIBS})
+# endif()
 
 # # if curses was found, link binary with boost, readline and curses
 # if(CURSES_FOUND)
