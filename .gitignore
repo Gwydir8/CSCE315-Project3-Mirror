@@ -19,6 +19,9 @@
 *.exe
 *.out
 *.app
+
+#Compiled Python
+*.pyc
 /build/
 /debug/
 /eugenics-system/include/gtest
@@ -26,4 +29,3 @@
 build
 /eugenics-system/libraries/gflags_build/
 /eugenics-system/libraries/gtest_build/
-/eugenics-system/share/scripts/gflags211.rb
