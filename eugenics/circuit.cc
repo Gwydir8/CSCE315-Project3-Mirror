@@ -72,7 +72,7 @@ vector<bool> Circuit::evaluateInputSet(vector<bool> input_set) {
     std::string errmsg = "Circuit::evaluateInputSet: output[" +
                          std::to_string(i) + "] = " + std::to_string(output) +
                          ".";
-    errlog(errmsg, true);
+    errlog(errmsg);
 
     result.insert(result.begin(), output);
   }

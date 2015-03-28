@@ -30,7 +30,7 @@ class Not : public Gate {
     std::string errmsg = "Not::evaluate: !" +
                          std::to_string(input_1->evaluate()) + " = " +
                          std::to_string(q) + ".";
-    errlog(errmsg, true);
+    errlog(errmsg);
     return q;
   }
 };
@@ -69,7 +69,7 @@ class And : public Gate {
     std::string errmsg =
         "And::evaluate: " + std::to_string(input_1->evaluate()) + " && " +
         std::to_string(input_2->evaluate()) + " = " + std::to_string(q);
-    errlog(errmsg, true);
+    errlog(errmsg);
     return q;
   }
 };
@@ -84,7 +84,7 @@ class Or : public Gate {
     std::string errmsg =
         "Or::evaluate: " + std::to_string(input_1->evaluate()) + " || " +
         std::to_string(input_2->evaluate()) + " = " + std::to_string(q);
-    errlog(errmsg, true);
+    errlog(errmsg);
     return q;
   }
 };
