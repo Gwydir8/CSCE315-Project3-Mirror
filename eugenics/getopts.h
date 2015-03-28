@@ -57,5 +57,4 @@ Algol_t getOpts(int argc, char** argv) {
   }
 }
 
-
 #endif /* GETOPTS_H */
