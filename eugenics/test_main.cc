@@ -79,15 +79,6 @@ class XORTest : public testing::Test {
  protected:
   virtual void SetUp() {
     c = new Circuit(2, 1);
-    // EXPECT_EQ(3, c->addGate(WIRE, 0));
-    // EXPECT_EQ(4, c->addGate(WIRE, 1));
-    // EXPECT_EQ(5, c->addGate(NOT, 0));
-    // EXPECT_EQ(6, c->addGate(NOT, 1));
-    // EXPECT_EQ(7, c->addGate(AND, 0, 3));
-    // EXPECT_EQ(8, c->addGate(AND, 1, 2));
-    // EXPECT_EQ(9, c->addGate(OR, 4, 5));
-    // c->addGate(WIRE, 0);
-    // c->addGate(WIRE, 1);
     c->addGate(NOT, 0);
     c->addGate(NOT, 1);
     c->addGate(AND, 0, 3);
@@ -118,35 +109,75 @@ TEST_F(XORTest, XOR3) {
   EXPECT_EQ(expected_output1, c->evaluateInputSet({true, false}));
 }
 
-// TEST_F(XORTest, XOR) {
-//   // Circuit c(2, 1);
-//   EXPECT_EQ(3, c.addGate(WIRE, 0));
-//   EXPECT_EQ(4, c.addGate(WIRE, 1));
-//   EXPECT_EQ(5, c.addGate(NOT, 0));
-//   EXPECT_EQ(6, c.addGate(NOT, 1));
-//   EXPECT_EQ(7, c.addGate(AND, 0, 3));
-//   EXPECT_EQ(8, c.addGate(AND, 1, 2));
-//   EXPECT_EQ(9, c.addGate(OR, 4, 5));
-//   std::vector<bool> expected_output{false};
-//   /* EXPECT_EQ( ,  c.evaluateAllInputs()); */
-//   EXPECT_EQ(expected_output, c.evaluateInputSet({false, false}));
-//   std::vector<bool> expected_output2{true};
-//   EXPECT_EQ(expected_output, c.evaluateInputSet({true, true}));
-//   EXPECT_EQ(expected_output2, c.evaluateInputSet({false, true}));
-//   EXPECT_EQ(expected_output2, c.evaluateInputSet({true, false}));
-// }
+
+/* TEST_F(FullAdderTest, FA_matrix_size) { EXPECT_EQ(matrix[0].size(), c->evaluateAllInputs()[0].size()); } */
+
+class FullAdderTest : public testing::Test {
+ protected:
+  virtual void SetUp() {
+    c = new Circuit(3, 2);
+    //this is mapped to this picture:
+    //http://www.gamezero.com/team-0/articles/math_magic/micro/fulladder.gif
+    //3 NOTS in picture
+     c->addGate(NOT, 0);//first
+     c->addGate(NOT, 1);//second
+     c->addGate(NOT, 2);//third
+
+    //first triple AND gate
+     c->addGate(AND, 4, 2);
+     c->addGate(AND, 6, 3);
+
+    //second triple AND GATE
+     c->addGate(AND, 0, 4);
+     c->addGate(AND, 8, 3);
+
+    //third triple AND GATE
+     c->addGate(AND, 3, 1);
+     c->addGate(AND, 10, 5);
+
+    //fourth triple AND GATE
+     c->addGate(AND, 0, 1);
+     c->addGate(AND, 12, 2);
+
+    //SuperOR AKA quadruple OR gate
+     c->addGate(OR, 7, 9);
+     c->addGate(OR, 11, 13);
+     c->addGate(OR, 14, 15);
+
+    //first double AND gate
+     c->addGate(AND, 0, 2);
+    //second double AND gate
+     c->addGate(AND, 0, 1);
+    //third double AND gate
+     c->addGate(AND, 1, 2);
+    //triple OR gate
+     c->addGate(OR, 17, 18);
+     c->addGate(OR, 20, 19);
+
+     c->addGate(WIRE, 16);
+    matrix = {
+        {false, false},
+        {false, true},
+        {false, true},
+        {true, false},
+        {false, true},
+        {true, false},
+        {true, false},
+        {true, true}
+    };
+  }
+  virtual void TearDown() { delete c; }
+  Circuit* c;
+  std::vector<std::vector<bool> >matrix;
+  Circuit cempty = Circuit(2, 1);
+};
+
+TEST_F(FullAdderTest, FAMatrixSize) { EXPECT_EQ(matrix.size(), c->evaluateAllInputs().size()); }
+TEST_F(FullAdderTest, FAEvalTotal) { EXPECT_EQ(matrix, c->evaluateAllInputs()); }
 
 /* class CircuitSetup : public testing::Test { */
 /*     Circuit c({true, false}); */
 /* }; */
-
-// TEST(SubCircuitTest, NOR) {
-//   std::vector<Gate*> gates;
-//   gates.push_back(new Not(0));
-//   gates.push_back(new Or(0,1));
-//   SubCircuit subcircuit(gates);
-//   EXPECT_EQ(0, subcircuit.evaluate());
-// }
 
 // int main(int argc, char **argv) {
 //   testing::InitGoogleTest(&argc, argv);

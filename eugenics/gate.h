@@ -9,12 +9,12 @@ class Gate {
  public:
   Gate(Gate* A) : input_1(A) {}
   Gate(Gate* A, Gate* B) : input_1(A), input_2(B) {}
-  Gate(bool B) : b(B) {}
+  Gate(bool B) : val(B) {}
   /* virtual bool evaluate() = 0; */
   virtual bool evaluate() { return false; };
 
  protected:
-  bool b;
+  bool val;
   Gate* input_1 = nullptr;
   Gate* input_2;
 };
@@ -36,9 +36,6 @@ class Not : public Gate {
 };
 
 class Wire : public Gate {
- protected:
-  bool is_root;
-
  public:
   Wire();
   Wire(bool B) : Gate(B) {}
@@ -46,9 +43,9 @@ class Wire : public Gate {
 
   bool evaluate() {
     if (input_1 == nullptr) {
-      std::string errmsg = "Wire::evaluate:(bool) " + std::to_string(b);
+      std::string errmsg = "Wire::evaluate:(bool) " + std::to_string(val);
       errlog(errmsg);
-      return b;
+      return val;
     } else {
       bool a = input_1->evaluate();
       std::string errmsg = "Wire::evaluate:(Gate*) " + std::to_string(a);
@@ -58,8 +55,8 @@ class Wire : public Gate {
   }
   void setInput(bool new_input) {
     if (input_1 == nullptr) {
-      b = new_input;
-      std::string errmsg = "Wire::setInput: " + std::to_string(b);
+      val = new_input;
+      std::string errmsg = "Wire::setInput: " + std::to_string(val);
       errlog(errmsg);
     } else {
       std::cerr << "Wire isn't an input wire\n";
