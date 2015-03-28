@@ -8,7 +8,7 @@ before_install:
   - git clean -fdx
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo add-apt-repository --yes ppa:kalakris/cmake
-  # - sudo apt-get update
+  - sudo apt-get update -qq
   - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-4.8; fi
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
   - sudo apt-get install -y cmake
@@ -22,7 +22,8 @@ before_install:
 script:
   - rm -rf build debug
   - ./build.sh
-  - ./build/eugenics/eugenics-test
+  - ./build/eugenics/test-circuit
+  - ./build/eugenics/test-getopts
 notifications:
   webhooks:
     urls: https://webhooks.gitter.im/e/9706bbd6480b87449c86
