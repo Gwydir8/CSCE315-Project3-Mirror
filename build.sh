@@ -51,7 +51,7 @@ CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS}
 RELEASE_BUILD_DIR=$PROJECT_ROOT_DIR/build
 DEBUG_BUILD_DIR=$PROJECT_ROOT_DIR/debug
 
-if [ ! -d "$PROJECT_SYSTEM_DIR/libraries/gtest"]; then
+if [ ! -d "$PROJECT_SYSTEM_DIR/libraries/googletest"]; then
 echo "Updating Library Submodules..."
 git submodule update --init --recursive
 echo "Installing GoogleTest"
