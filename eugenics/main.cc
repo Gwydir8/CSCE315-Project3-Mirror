@@ -5,8 +5,21 @@
 #include <iostream>
 #include <string>
 
-int main(int argc, char* argv[]) {
-  std::cout << "Group 15: CSCE315-503 Project 3" << std::endl;
+#include <cstdlib>   //exit
+#include <unistd.h>  // getopt
 
-  return 0;
+#include "utility.h"
+
+#include "getopts.h"
+
+int main(int argc, char* argv[]) {
+  // get algorithm from CLI
+  Algol_t algol = getOpts(argc, argv);
+  if (algol == GENETIC) {
+    std::cout << "Running Genetic Algorithm" << std::endl;
+  } else if (algol == TRADITIONAL) {
+    std::cout << "Running Traditional Algorithm" << std::endl;
+  }
+
+  std::exit(EXIT_SUCCESS);
 }

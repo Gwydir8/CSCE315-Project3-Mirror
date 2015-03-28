@@ -7,9 +7,9 @@ set(MAIN_SRC
 # rest of .cc's
 include(${CMAKE_CURRENT_SOURCE_DIR}/src/build_list.cmake)
 
-# if we use gtest unittesting
-set(UNITTEST_SRCS
- src/test_main.cc)
+# # if we use gtest unittesting
+# set(UNITTEST_SRCS
+#  src/test_main.cc)
 
 
 # # gflags
@@ -56,7 +56,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 #binary names
 set(RELEASE_BINARY "${PROGRAM_NAME}")
-set(UNITTEST_BINARY "${PROGRAM_NAME}-test")
+# set(UNITTEST_BINARY "${PROGRAM_NAME}-test")
 
 add_executable(${RELEASE_BINARY} ${MAIN_SRC} ${SRCS})
 
@@ -92,19 +92,14 @@ set_property(TARGET ${RELEASE_BINARY} PROPERTY CXX_STANDARD_REQUIRED ON)
 if (test)
   enable_testing()
 
-  # Unit Tests
-	add_executable(${UNITTEST_BINARY} ${UNITTEST_SRCS} ${SRCS})
+  # test lists
+  include(${CMAKE_CURRENT_SOURCE_DIR}/src/test_list.cmake)
 
-  # Standard linking to gtest stuff.
-  # also link boost
-	# target_link_libraries(${UNITTEST_BINARY} ${Boost_LIBRARIES} gtest gtest_main)
-	target_link_libraries(${UNITTEST_BINARY} gtest gtest_main)
+  # # This is so you can do 'make test' to see all your tests run, instead of
+  # # manually running the executable runUnitTests to see those specific tests.
+  # add_test(NAME that-test-I-made COMMAND ${UNITTEST_BINARY})
 
-  # This is so you can do 'make test' to see all your tests run, instead of
-  # manually running the executable runUnitTests to see those specific tests.
-  add_test(NAME that-test-I-made COMMAND ${UNITTEST_BINARY})
-
-  # You can also omit NAME and COMMAND. The second argument could be some other
-  # test executable.
-  add_test(that-other-test-I-made ${UNITTEST_BINARY})
+  # # You can also omit NAME and COMMAND. The second argument could be some other
+  # # test executable.
+  # add_test(that-other-test-I-made ${UNITTEST_BINARY})
 endif()
