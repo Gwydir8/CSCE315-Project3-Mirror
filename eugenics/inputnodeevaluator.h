@@ -13,5 +13,4 @@ class InputNodeEvaluator : public boost::static_visitor<bool> {
   bool operator()(bool const& value) const { return value; }
 };
 
-
 #endif /* INPUTNODEEVALUATOR_H */
