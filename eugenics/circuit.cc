@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cstddef>
 #include <iterator>
+#include <string>
 
 #include "utility.h"
 
@@ -28,8 +29,14 @@ int Circuit::addGate(GateType gate_type, int index_1) {
   Gate* input_1 = gates[index_1];
   if (gate_type == NOT) {
     built_gate = new Not(input_1);
+    std::string errmsg = "Circuit::addGate: " + std::to_string(gates.size()) + " NOT " +
+                         std::to_string(index_1);
+    errlog(errmsg);
   } else if (gate_type == WIRE) {
     built_gate = new Wire(input_1);
+    std::string errmsg = "Circuit::addGate: " + std::to_string(gates.size()) + " WIRE " +
+                         std::to_string(index_1);
+    errlog(errmsg);
   }
   assert(built_gate != nullptr);
   gates.push_back(built_gate);
@@ -42,8 +49,14 @@ int Circuit::addGate(GateType gate_type, int index_1, int index_2) {
   Gate* input_2 = gates[index_2];
   if (gate_type == AND) {
     built_gate = new And(input_1, input_2);
+    std::string errmsg = "Circuit::addGate: " + std::to_string(gates.size()) + " AND " +
+                         std::to_string(index_1) + " " + std::to_string(index_2);
+    errlog(errmsg);
   } else if (gate_type == OR) {
     built_gate = new Or(input_1, input_2);
+    std::string errmsg = "Circuit::addGate: " + std::to_string(gates.size()) + " OR " +
+                         std::to_string(index_1) + " " + std::to_string(index_2);
+    errlog(errmsg);
   }
   assert(built_gate != nullptr);
   gates.push_back(built_gate);
@@ -63,16 +76,18 @@ vector<vector<bool>> Circuit::evaluateAllInputs() {
 vector<bool> Circuit::evaluateInputSet(vector<bool> input_set) {
   vector<bool> result;
   for (int i = 0; i < input_no; ++i) {
-    ((Wire*)(gates[i]))->setInput(input_set[i]);
+    (dynamic_cast<Wire*>(gates[i]))->setInput(input_set[i]);
+    std::string errmsg = "Circuit::evaluateInputSet: input_set[" +
+                         std::to_string(i) + "] = " + std::to_string(input_set[i]);
+    errlog(errmsg);
   }
   reverse_iterator<vector<Gate*>::iterator> r = gates.rbegin();
   for (int i = 0; i < output_no; ++i) {
     bool output = r[i]->evaluate();
 
     std::string errmsg = "Circuit::evaluateInputSet: output[" +
-                         std::to_string(i) + "] = " + std::to_string(output) +
-                         ".";
-    errlog(errmsg, true);
+                         std::to_string(i) + "] = " + std::to_string(output);
+    errlog(errmsg);
 
     result.insert(result.begin(), output);
   }
@@ -88,7 +103,7 @@ vector<vector<bool>> Circuit::getPossibleInputs() {
       int current_bit = (i >> j) & 1;
       row.push_back(current_bit);
     }
-    assert(row.size() == input_no);
+    assert(row.size() == (unsigned int)input_no);
     possibilities.push_back(row);
   }
   return possibilities;
