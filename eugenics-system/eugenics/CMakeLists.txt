@@ -92,14 +92,23 @@ set_property(TARGET ${RELEASE_BINARY} PROPERTY CXX_STANDARD_REQUIRED ON)
 if (test)
   enable_testing()
 
-  # test lists
-  include(${CMAKE_CURRENT_SOURCE_DIR}/src/test_list.cmake)
+  # Unit Tests
+	add_executable("test-circuit" src/test_circuit.cc ${SRCS})
+    add_executable("test-algorithm" src/test_algorithm.cc ${SRCS})
+#	add_executable(${UNITTEST_BINARY} test_blahhh.cc ${SRCS})
 
-  # # This is so you can do 'make test' to see all your tests run, instead of
-  # # manually running the executable runUnitTests to see those specific tests.
+
+  # Standard linking to gtest stuff.
+  # also link boost
+	# target_link_libraries(${UNITTEST_BINARY} ${Boost_LIBRARIES} gtest gtest_main)
+	target_link_libraries("test-circuit" gtest gtest_main)
+	target_link_libraries("test-algorithm" gtest gtest_main)
+
+  # This is so you can do 'make test' to see all your tests run, instead of
+  # manually running the executable runUnitTests to see those specific tests.
   # add_test(NAME that-test-I-made COMMAND ${UNITTEST_BINARY})
 
-  # # You can also omit NAME and COMMAND. The second argument could be some other
-  # # test executable.
+  # You can also omit NAME and COMMAND. The second argument could be some other
+  # test executable.
   # add_test(that-other-test-I-made ${UNITTEST_BINARY})
 endif()
