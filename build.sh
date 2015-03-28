@@ -57,10 +57,6 @@ git submodule update --init --recursive
 echo "Installing GoogleTest"
 ./eugenics-system/share/scripts/install-gtest.sh
 fi
-# echo "Installing GFlags"
-# cd eugenics-system
-# ./share/scripts/install-gflags.sh
-# cd ..
 
 
 echo "Starting Release Build..."

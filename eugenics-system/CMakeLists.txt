@@ -50,7 +50,8 @@ set(CMAKE_PREFIX_PATH
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
   set(CMAKE_MODULE_PATH
     ${CMAKE_MODULE_PATH}
-    "${CMAKE_CURRENT_LIST_DIR}/local/lib/cmake/gflags")
+    "${CMAKE_CURRENT_LIST_DIR}/local/lib/cmake/gflags"
+    )
 else()
   set(CMAKE_MODULE_PATH
     ${CMAKE_MODULE_PATH}
