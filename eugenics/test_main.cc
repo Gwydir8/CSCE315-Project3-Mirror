@@ -96,25 +96,29 @@ class XORTest : public testing::Test {
   }
   virtual void TearDown() { delete c; }
   Circuit* c;
-  Circuit cempty = Circuit(2, 1);
   std::vector<bool> expected_output0{false};
   std::vector<bool> expected_output1{true};
 };
 
-TEST_F(XORTest, XOR_wiretest) { EXPECT_EQ(2, cempty.numGates()); }
+TEST(EmptyCircuit, wiretest) {
+  Circuit cempty = Circuit(2, 1);
+  EXPECT_EQ(2, cempty.numGates());
+}
 
 TEST_F(XORTest, XOR0) {
-  // Circuit c(2, 1);
-  /* EXPECT_EQ( ,  c.evaluateAllInputs()); */
+  EXPECT_EQ(7, c->numGates());
   EXPECT_EQ(expected_output0, c->evaluateInputSet({false, false}));
 }
 TEST_F(XORTest, XOR1) {
+  EXPECT_EQ(7, c->numGates());
   EXPECT_EQ(expected_output0, c->evaluateInputSet({true, true}));
 }
 TEST_F(XORTest, XOR2) {
+  EXPECT_EQ(7, c->numGates());
   EXPECT_EQ(expected_output1, c->evaluateInputSet({false, true}));
 }
 TEST_F(XORTest, XOR3) {
+  EXPECT_EQ(7, c->numGates());
   EXPECT_EQ(expected_output1, c->evaluateInputSet({true, false}));
 }
 
