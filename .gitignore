@@ -29,3 +29,4 @@
 build
 /eugenics-system/libraries/gflags_build/
 /eugenics-system/libraries/gtest_build/
+/debuglog.log
