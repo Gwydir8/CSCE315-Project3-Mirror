@@ -1,6 +1,3 @@
-[submodule "eugenics-system/libraries/boost"]
-	path = eugenics-system/libraries/boost
-	url = git://github.com/boostorg/boost.git
 [submodule "eugenics-system/libraries/gflags"]
 	path = eugenics-system/libraries/gflags
 	url = git://github.com/schuhschuh/gflags.git
