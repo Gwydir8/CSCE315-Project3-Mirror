@@ -70,7 +70,7 @@ TEST_F(CircuitTest, Simple) {
 TEST_F(CircuitTest, LessSimple) {
   // Circuit c(2, 2);
   EXPECT_EQ(2, c.addGate(2, AND, 1, 1));
-  EXPECT_EQ(3, c.addGate(3, WIRE, 0));
+  EXPECT_EQ(3, c.addGate(WIRE, 0));
   std::vector<bool> expected_output{false, true};
   EXPECT_EQ(expected_output, c.evaluateInputSet({true, false}));
 }
@@ -79,37 +79,33 @@ class XORTest : public testing::Test {
  protected:
   virtual void SetUp() {
     c = new Circuit(2, 1);
-    c->addGate(2, NOT, 0);
-    c->addGate(3, NOT, 1);
-    c->addGate(4, AND, 0, 3);
-    c->addGate(5, AND, 1, 2);
-    c->addGate(6, OR, 4, 5);
+    c->addGate(NOT, 0);
+    c->addGate(NOT, 1);
+    c->addGate(AND, 0, 3);
+    c->addGate(AND, 1, 2);
+    c->addGate(OR, 4, 5);
   }
   virtual void TearDown() { delete c; }
   Circuit* c;
+  Circuit cempty = Circuit(2, 1);
   std::vector<bool> expected_output0{false};
   std::vector<bool> expected_output1{true};
 };
 
-TEST(EmptyCircuit, wiretest) {
-  Circuit cempty = Circuit(2, 1);
-  EXPECT_EQ(2, cempty.numGates());
-}
+TEST_F(XORTest, XOR_wiretest) { EXPECT_EQ(2, cempty.numGates()); }
 
 TEST_F(XORTest, XOR0) {
-  EXPECT_EQ(7, c->numGates());
+  // Circuit c(2, 1);
+  /* EXPECT_EQ( ,  c.evaluateAllInputs()); */
   EXPECT_EQ(expected_output0, c->evaluateInputSet({false, false}));
 }
 TEST_F(XORTest, XOR1) {
-  EXPECT_EQ(7, c->numGates());
   EXPECT_EQ(expected_output0, c->evaluateInputSet({true, true}));
 }
 TEST_F(XORTest, XOR2) {
-  EXPECT_EQ(7, c->numGates());
   EXPECT_EQ(expected_output1, c->evaluateInputSet({false, true}));
 }
 TEST_F(XORTest, XOR3) {
-  EXPECT_EQ(7, c->numGates());
   EXPECT_EQ(expected_output1, c->evaluateInputSet({true, false}));
 }
 
@@ -133,7 +129,7 @@ class FullAdderTest : public testing::Test {
 
     //second triple AND GATE
      c->addGate(AND, 0, 4);
-     c->addGate(AND, 8, 3);
+     c->addGate(AND, 8, 5);
 
     //third triple AND GATE
      c->addGate(AND, 3, 1);
@@ -173,7 +169,6 @@ class FullAdderTest : public testing::Test {
   virtual void TearDown() { delete c; }
   Circuit* c;
   std::vector<std::vector<bool> >matrix;
-  Circuit cempty = Circuit(2, 1);
 };
 
 TEST_F(FullAdderTest, FAMatrixSize) { EXPECT_EQ(matrix.size(), c->evaluateAllInputs().size()); }
