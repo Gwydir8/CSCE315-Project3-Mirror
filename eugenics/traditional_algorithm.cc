@@ -16,7 +16,6 @@ Circuit TraditionalAlgorithm::search() {
     }
   }
 }
-}
 
 vector<Circuit> TraditionalAlgorithm::allPossibleCircuits(Circuit c) {
   vector<Circuit> all_possibilities;
