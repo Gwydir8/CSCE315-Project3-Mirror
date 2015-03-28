@@ -92,7 +92,7 @@ class Wire : public Gate {
 class And : public Gate {
  public:
   // invalid constructor
-  And(): Gate() {}
+  And() : Gate() {}
   // and constructor
   And(Gate* A, Gate* B) : Gate(A, B) {}
 
@@ -111,7 +111,7 @@ class And : public Gate {
 class Or : public Gate {
  public:
   // invalid constructor
-  Or(): Gate() {}
+  Or() : Gate() {}
   // or constructor
   Or(Gate* A, Gate* B) : Gate(A, B) {}
 

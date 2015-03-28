@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 
-#include <cstdlib>   //exit
+#include <cstdlib>  //exit
 
 #include "getopts.h"
 #include "utility.h"
