@@ -22,7 +22,8 @@ before_install:
 script:
   - rm -rf build debug
   - ./build.sh
-  - ./build/eugenics/eugenics-test
+  - ./build/eugenics/test-circuit
+  - ./build/eugenics/test-getopts
 notifications:
   webhooks:
     urls: https://webhooks.gitter.im/e/9706bbd6480b87449c86
