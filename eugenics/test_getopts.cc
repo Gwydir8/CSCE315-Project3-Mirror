@@ -1,7 +1,5 @@
 #include "../../local/include/gtest/gtest.h"
-// #include "circuit.h"
-// #include "gate.h"
-// #include <vector>
+
 #include "getopts.h"
 
 // TEST(TEST_GROUP_NAME, TEST_NAME) {
