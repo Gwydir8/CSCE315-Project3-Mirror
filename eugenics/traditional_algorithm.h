@@ -21,6 +21,8 @@ class TraditionalAlgorithm {
   TraditionalAlgorithm(Circuit c, std::vector<std::vector<bool>> output_set)
       : root(c), expected_output(output_set){};
 
+  bool isCorrectCircuit(Circuit c);
+  Circuit search();
   Circuit getRootCircuit() const { return root; }
   std::vector<std::vector<bool>> getOuputSet() const { return expected_output; }
   // stubs for test function
