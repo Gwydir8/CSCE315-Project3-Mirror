@@ -1,7 +1,7 @@
 language: cpp
 compiler:
   - gcc
-  - clang
+  #- clang
 # Change this to your needs
 before_install:
   - git reset --hard HEAD
