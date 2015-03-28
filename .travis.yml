@@ -4,8 +4,8 @@ compiler:
   #- clang
 # Change this to your needs
 before_install:
-  - git reset --hard HEAD
-  - git clean -fdx
+  # - git reset --hard HEAD
+  # - git clean -fdx
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo add-apt-repository --yes ppa:kalakris/cmake
   - sudo apt-get update -qq
@@ -13,17 +13,18 @@ before_install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
   - sudo apt-get install -y cmake
   - sudo apt-get install -y build-essential
-  - sudo pip install cpp-coveralls
+  # - sudo pip install cpp-coveralls
 # install:
   # - ./eugenics-system/share/scripts/install-gtest.sh
   # - cd eugenics-system
   # - ./share/scripts/install-gflags.sh
   # - cd ..
 script:
-  - rm -rf build debug
+  # - rm -rf build debug
   - ./build.sh
   - ./build/eugenics/test-circuit
   - ./build/eugenics/test-getopts
+  - ./build/eugenics/test-algorithm
 notifications:
   webhooks:
     urls: https://webhooks.gitter.im/e/9706bbd6480b87449c86
