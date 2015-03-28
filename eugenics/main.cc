@@ -5,7 +5,16 @@
 #include <iostream>
 #include <string>
 
+#include <unistd.h>
+
+#include <cstdio>
+#include <cstring>
 #include <cstdlib>   //exit
+
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+
 
 #include "getopts.h"
 #include "utility.h"
