@@ -24,10 +24,16 @@ class Circuit {
 
   // add a unary gate which takes the gate/wire at gates[index_1] as input
   int addGate(GateType gate_type, int index_1);
+  // same as above, but with same syntax as text file representation
+  // NOTE: output_index is checked if it is correct, not set to output_index
+  int addGate(int output_index, GateType gate_type, int index_1);
 
   // add a binary gate which takes the gate/wire at gates[index_1]  and
   // gates[index_2] as input
   int addGate(GateType gate_type, int index_1, int index_2);
+  // same as above, but with same syntax as text file representation
+  // NOTE: output_index is checked if it is correct, not set to output_index
+  int addGate(int output_index, GateType gate_type, int index_1, int index_2);
 
   // evaluate a circuit for all sets of inputs
   // e.g. the entire set of inputs for an XOR gate

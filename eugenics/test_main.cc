@@ -69,8 +69,8 @@ TEST_F(CircuitTest, Simple) {
 
 TEST_F(CircuitTest, LessSimple) {
   // Circuit c(2, 2);
-  EXPECT_EQ(3, c.addGate(AND, 1, 1));
-  EXPECT_EQ(4, c.addGate(WIRE, 0));
+  EXPECT_EQ(2, c.addGate(2, AND, 1, 1));
+  EXPECT_EQ(3, c.addGate(3, WIRE, 0));
   std::vector<bool> expected_output{false, true};
   EXPECT_EQ(expected_output, c.evaluateInputSet({true, false}));
 }
@@ -88,11 +88,11 @@ class XORTest : public testing::Test {
     // EXPECT_EQ(9, c->addGate(OR, 4, 5));
     // c->addGate(WIRE, 0);
     // c->addGate(WIRE, 1);
-    c->addGate(NOT, 0);
-    c->addGate(NOT, 1);
-    c->addGate(AND, 0, 3);
-    c->addGate(AND, 1, 2);
-    c->addGate(OR, 4, 5);
+    c->addGate(2, NOT, 0);
+    c->addGate(3, NOT, 1);
+    c->addGate(4, AND, 0, 3);
+    c->addGate(5, AND, 1, 2);
+    c->addGate(6, OR, 4, 5);
   }
   virtual void TearDown() { delete c; }
   Circuit* c;

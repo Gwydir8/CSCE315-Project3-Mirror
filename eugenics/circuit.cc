@@ -60,7 +60,14 @@ int Circuit::addGate(GateType gate_type, int index_1) {
   }
   assert(built_gate != nullptr);
   gates.push_back(built_gate);
-  return gates.size();
+  // gates is zero indexed
+  return (gates.size() - 1);
+}
+
+int Circuit::addGate(int output_index, GateType gate_type, int index_1) {
+  int actual_output_index = addGate(gate_type, index_1);
+  assert(output_index == actual_output_index);
+  return actual_output_index;
 }
 
 int Circuit::addGate(GateType gate_type, int index_1, int index_2) {
@@ -86,8 +93,16 @@ int Circuit::addGate(GateType gate_type, int index_1, int index_2) {
   }
   assert(built_gate != nullptr);
   gates.push_back(built_gate);
-  return gates.size();
+  // gates is zero indexed
+  return (gates.size() - 1);
 }
+
+int Circuit::addGate(int output_index, GateType gate_type, int index_1, int index_2) {
+  int actual_output_index = addGate(gate_type, index_1, index_2);
+  assert(output_index == actual_output_index);
+  return actual_output_index;
+}
+
 
 vector<vector<bool>> Circuit::evaluateAllInputs() {
   printStatistics();
