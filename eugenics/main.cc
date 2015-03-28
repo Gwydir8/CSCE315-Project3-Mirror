@@ -6,19 +6,17 @@
 #include <string>
 
 #include <cstdlib>   //exit
-#include <unistd.h>  // getopt
-
-#include "utility.h"
 
 #include "getopts.h"
+#include "utility.h"
 
 int main(int argc, char* argv[]) {
   // get algorithm from CLI
   Algol_t algol = getOpts(argc, argv);
   if (algol == GENETIC) {
-    std::cout << "Running Genetic Algorithm" << std::endl;
+    errlog("Running Genetic Algorithm");
   } else if (algol == TRADITIONAL) {
-    std::cout << "Running Traditional Algorithm" << std::endl;
+    errlog("Running Traditional Algorithm");
   }
 
   std::exit(EXIT_SUCCESS);
