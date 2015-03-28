@@ -46,14 +46,21 @@ class Wire : public Gate {
 
   bool evaluate() {
     if (input_1 == nullptr) {
+      std::string errmsg = "Wire::evaluate:(bool) " + std::to_string(b);
+      errlog(errmsg);
       return b;
     } else {
-      return input_1->evaluate();
+      bool a = input_1->evaluate();
+      std::string errmsg = "Wire::evaluate:(Gate*) " + std::to_string(a);
+      errlog(errmsg);
+      return a;
     }
   }
   void setInput(bool new_input) {
     if (input_1 == nullptr) {
       b = new_input;
+      std::string errmsg = "Wire::setInput: " + std::to_string(b);
+      errlog(errmsg);
     } else {
       std::cerr << "Wire isn't an input wire\n";
     }
@@ -65,10 +72,11 @@ class And : public Gate {
   And();
   And(Gate* A, Gate* B) : Gate(A, B) {}
   bool evaluate() {
-    bool q = input_1->evaluate() && input_2->evaluate();
-    std::string errmsg =
-        "And::evaluate: " + std::to_string(input_1->evaluate()) + " && " +
-        std::to_string(input_2->evaluate()) + " = " + std::to_string(q);
+    bool a = input_1->evaluate();
+    bool b = input_2->evaluate();
+    bool q = a && b;
+    std::string errmsg = "And::evaluate: " + std::to_string(a) + " && " +
+                         std::to_string(b) + " = " + std::to_string(q);
     errlog(errmsg);
     return q;
   }
@@ -80,10 +88,11 @@ class Or : public Gate {
   Or();
   Or(Gate* A, Gate* B) : Gate(A, B) {}
   bool evaluate() {
-    bool q = input_1->evaluate() || input_2->evaluate();
-    std::string errmsg =
-        "Or::evaluate: " + std::to_string(input_1->evaluate()) + " || " +
-        std::to_string(input_2->evaluate()) + " = " + std::to_string(q);
+    bool a = input_1->evaluate();
+    bool b = input_2->evaluate();
+    bool q = a || b;
+    std::string errmsg = "Or::evaluate: " + std::to_string(a) + " || " +
+                         std::to_string(b) + " = " + std::to_string(q);
     errlog(errmsg);
     return q;
   }

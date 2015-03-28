@@ -86,8 +86,8 @@ class XORTest : public testing::Test {
     // EXPECT_EQ(7, c->addGate(AND, 0, 3));
     // EXPECT_EQ(8, c->addGate(AND, 1, 2));
     // EXPECT_EQ(9, c->addGate(OR, 4, 5));
-    c->addGate(WIRE, 0);
-    c->addGate(WIRE, 1);
+    // c->addGate(WIRE, 0);
+    // c->addGate(WIRE, 1);
     c->addGate(NOT, 0);
     c->addGate(NOT, 1);
     c->addGate(AND, 0, 3);
