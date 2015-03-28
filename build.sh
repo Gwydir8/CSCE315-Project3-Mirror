@@ -51,14 +51,16 @@ CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS}
 RELEASE_BUILD_DIR=$PROJECT_ROOT_DIR/build
 DEBUG_BUILD_DIR=$PROJECT_ROOT_DIR/debug
 
+if [ ! -d "$PROJECT_SYSTEM_DIR/libraries/gtest"]; then
 echo "Updating Library Submodules..."
 git submodule update --init --recursive
 echo "Installing GoogleTest"
 ./eugenics-system/share/scripts/install-gtest.sh
-echo "Installing GFlags"
-cd eugenics-system
-./share/scripts/install-gflags.sh
-cd ..
+fi
+# echo "Installing GFlags"
+# cd eugenics-system
+# ./share/scripts/install-gflags.sh
+# cd ..
 
 
 echo "Starting Release Build..."
