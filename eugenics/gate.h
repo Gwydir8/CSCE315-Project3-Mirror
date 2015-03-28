@@ -5,13 +5,16 @@
 
 #include "utility.h"
 
+// A Gate is the fundamental circuit component type
+// It can be an And, Or, Not or Wire
 class Gate {
  public:
   Gate(Gate* A) : input_1(A) {}
   Gate(Gate* A, Gate* B) : input_1(A), input_2(B) {}
   Gate(bool B) : val(B) {}
-  /* virtual bool evaluate() = 0; */
-  virtual bool evaluate() { return false; };
+
+  // evaluate returns the output of a gate
+  virtual bool evaluate() =0;
 
  protected:
   bool val;
