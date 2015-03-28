@@ -5,7 +5,6 @@
 enum GateType { NOT, WIRE, OR, AND };
 class Circuit {
  public:
-
   // Constructor
   // input_no is used to compute the input half of the truth table
   // e.g. input_no = 2 becomes:
@@ -19,13 +18,11 @@ class Circuit {
   // number of gates
   int numGates() { return gates.size(); }
 
-
-  //Valid Gate types with 1 input { NOT, WIRE}
+  // Valid Gate types with 1 input { NOT, WIRE}
   // add a unary gate which takes the gate/wire at gates[index_1] as input
   int addGate(GateType gate_type, int index_1);
 
-
-  //Valid Gate types with 2 input { OR, AND}
+  // Valid Gate types with 2 input { OR, AND}
   // add a binary gate which takes the gate/wire at gates[index_1]  and
   // gates[index_2] as input
   int addGate(GateType gate_type, int index_1, int index_2);
@@ -42,15 +39,11 @@ class Circuit {
   // e.g. if input_no is 3, returns 2^3 sets of input_no wide inputs
   std::vector<std::vector<bool>> generateInputSet();
 
-
-
-
   /*---end of usefulness for algorithm folks----*/
   // DEPRECATED Constructor
   // inputs is a a row of the inputs portion of a truth table
   // output_no is the number of outputs desired
   Circuit(std::vector<bool> inputs, int output_no);
-
 
   // same as above, but with same syntax as text file representation
   // NOTE: output_index is checked if it is correct, not set to output_index

@@ -97,12 +97,12 @@ int Circuit::addGate(GateType gate_type, int index_1, int index_2) {
   return (gates.size() - 1);
 }
 
-int Circuit::addGate(int output_index, GateType gate_type, int index_1, int index_2) {
+int Circuit::addGate(int output_index, GateType gate_type, int index_1,
+                     int index_2) {
   int actual_output_index = addGate(gate_type, index_1, index_2);
   assert(output_index == actual_output_index);
   return actual_output_index;
 }
-
 
 vector<vector<bool>> Circuit::evaluateAllInputs() {
   printStatistics();
@@ -167,7 +167,8 @@ vector<vector<bool>> Circuit::generateInputSet() {
 
 void Circuit::printStatistics() {
   std::string errmsg =
-      "Circuit::printStatistics: WIREs = " + std::to_string(wire_no) + " ANDs = " +
-    std::to_string(and_no) + " ORs = " + std::to_string(or_no) + " NOTs = " + std::to_string(not_no);
+      "Circuit::printStatistics: WIREs = " + std::to_string(wire_no) +
+      " ANDs = " + std::to_string(and_no) + " ORs = " + std::to_string(or_no) +
+      " NOTs = " + std::to_string(not_no);
   errlog(errmsg);
 }

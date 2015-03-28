@@ -177,4 +177,3 @@ TEST_F(FullAdderTest, FAMatrixSize) {
 TEST_F(FullAdderTest, FAEvalTotal) {
   EXPECT_EQ(matrix, c->evaluateAllInputs());
 }
-
