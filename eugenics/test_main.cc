@@ -1,4 +1,4 @@
-#include "../../include/gtest/gtest.h"
+#include "../../local/include/gtest/gtest.h"
 #include "circuit.h"
 #include <vector>
 #include "gate.h"

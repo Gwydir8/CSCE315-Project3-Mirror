@@ -1,6 +1,7 @@
 //stub
 
-// #include "../include/gtest/include/gtest/gtest.h"
+//#include "../../local/include/gtest/gtest.h"
+
 
 // namespace {
 // // The fixture for testing class Project1. From google test primer.
