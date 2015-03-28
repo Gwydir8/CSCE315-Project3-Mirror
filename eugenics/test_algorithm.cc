@@ -16,6 +16,6 @@ TEST(AlgorithmTest, SimpleSearchTest) {
       {true, false}, {true, true}, {false, false}, {false, true}};
   Circuit basic = Circuit(2, 2);
   TraditionalAlgorithm alg = TraditionalAlgorithm(basic, expected_output);
-  Circuit result = alg.findMatchingCircuit();
+  Circuit result = alg.search();
   EXPECT_EQ(expected_output, result.evaluateAllInputs());
 }

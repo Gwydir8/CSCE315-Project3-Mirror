@@ -18,7 +18,7 @@ Circuit::Circuit(vector<bool> inputs, int o)
   // create initial input wires
   for (bool input : inputs) {
     wire_no++;
-    std::string errmsg = "Circuit::Circuit: " + std::to_string(numGates()) +
+    std::string errmsg = "Circuit::Circuit: " + std::to_string(getGateCount()) +
                          " WIRE " + std::to_string(input);
     errlog(errmsg);
 
@@ -33,7 +33,7 @@ Circuit::Circuit(int inputs, int o) : output_no(o), input_no(inputs){
   // create initial input wires
   for (int i = 0; i < input_no; ++i) {
     wire_no++;
-    std::string errmsg = "Circuit::Circuit: " + std::to_string(numGates()) +
+    std::string errmsg = "Circuit::Circuit: " + std::to_string(getGateCount()) +
                          " WIRE " + std::to_string(false);
     errlog(errmsg);
 

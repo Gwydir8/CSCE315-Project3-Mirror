@@ -72,7 +72,7 @@ class XORTest : public testing::Test {
   std::vector<bool> expected_output1{true};
 };
 
-TEST_F(XORTest, XOR_wiretest) { EXPECT_EQ(2, cempty.numGates()); }
+TEST_F(XORTest, XOR_wiretest) { EXPECT_EQ(2, cempty.getGateCount()); }
 
 TEST_F(XORTest, XOR0) {
   // Circuit c(2, 1);

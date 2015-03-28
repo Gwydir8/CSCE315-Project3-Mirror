@@ -1,66 +1,57 @@
 #include "traditional_algorithm.h"
 using namespace std;
-Circuit Circuit::search() {
+Circuit TraditionalAlgorithm::search() {
   queue<Circuit> Q;
   // remove "first" element
-  q.push(root);
+  Q.push(root);
   while(Q.empty() == false) {
-    Circuit current = Q.pop();
-    for(Circuit circuit_to_check : allPossibleCircuits(v)){
-      if(true) { //if v is "undiscovered"
-        Q.push(circuit_to_check);
-      }
-      if (isCorrectCircuit(current)){
-        return Circuit;
-      }
+    Circuit current = Q.front();
+    Q.pop();
+    //checks single correct output
+    if (isCorrectCircuit(current)){
+      return current;
+    }
+    for(Circuit circuit_to_check : allPossibleCircuits(current)){
+      Q.push(circuit_to_check);
     }
   }
-  bool Circuit::isCorrectCircuit(Circuit c){
-    if(evaluateAllInputs() == expected_output)
-      return true;
-    else
-      return false;
-  }
-
-
-  vector<bool> init = {0, 0, 0};
-
-  int level = 1;
-  /* ex_list.push(base); */
-  // keeps track of # of combinations
-  ++level;
-  int combo_counter;
-  for(int i = 1; i <= level; ++i) {
-    other_counter += i;
-  }
-
-  // adds NOT gate
-  for(int i = 0; i < not_counter; ++i) {
-    Circuit next = ex_list.front();
-    next.addGate(NOT, i);
-    ex_list.push(next);
-  }
-  ++not_counter;
-
-  // adds AND/OR gate
-  for(int i = 0; i < combo_counter; ++i) {
-    Circuit next = ex_list.front();
-    next.addGate(AND, i);
-    ex_list.push(next);
-  }
-  for(int i = 0; i < combo_counter; ++i) {
-    Circuit next = ex_list.front();
-    next.addGate(OR, i);
-    ex_list.push(next);
-  }
-
-
-  search();
 }
-bool checkPermutation(){ //check if one of the outputs matches one of the expected...
-  return true;
 }
-bool keepPermutation(){
 
-  return true;
+vector<Circuit> TraditionalAlgorithm::allPossibleCircuits(Circuit c){
+  vector<Circuit> all_possibilities;
+  int output_gate_offset = getGateCount() - getOutputCount();
+  for(int i = 0; i < c.getOutputCount(); ++i){
+    //try a NOT
+    Circuit added_not = c;
+    added_not.addGate(NOT, output_gate_offset + i);//needs to add to the end...
+    all_possibilities.push_back(added_not);
+    //on odd nums, use binary gates, always can try a unary
+    if(i % 2 == 1){
+      //try AND
+      Circuit added_and = c;
+      added_and.addGate(AND, output_gate_offset + i-1, output_gate_offset + i);//needs to add to the end...
+      all_possibilities.push_back(added_and);
+      //try OR
+      Circuit added_or = c;
+      added_or.addGate(OR, output_gate_offset + i-1, output_gate_offset + i);//needs to add to the end...
+      all_possibilities.push_back(added_or);
+    }
+  }
+  return all_possibilities;
 }
+
+bool TraditionalAlgorithm::isCorrectCircuit(Circuit c){
+  if(c.evaluateAllInputs() == expected_output)
+    return true;
+  else
+    return false;
+}
+
+/* bool checkPermutation(){ //check if one of the outputs matches one of the expected... */
+/*   return true; */
+/* } */
+/* bool keepPermutation(){ */
+
+/*   return true; */
+/* } */

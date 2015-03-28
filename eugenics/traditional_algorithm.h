@@ -10,6 +10,7 @@
 #include "circuit.h"
 #include <vector>
 #include <queue>
+#include <queue>
 
 class TraditionalAlgorithm {
  private:
@@ -21,10 +22,11 @@ class TraditionalAlgorithm {
   TraditionalAlgorithm(Circuit c, std::vector<std::vector<bool>> output_set)
       : root(c), expected_output(output_set){};
 
+  std::vector<Circuit> allPossibleCircuits(Circuit c);
   bool isCorrectCircuit(Circuit c);
   Circuit search();
   Circuit getRootCircuit() const { return root; }
-  std::vector<std::vector<bool>> getOuputSet() const { return expected_output; }
+  std::vector<std::vector<bool> > getOuputSet() const { return expected_output; }
   // stubs for test function
   Circuit findMatchingCircuit() { return root; }
 };

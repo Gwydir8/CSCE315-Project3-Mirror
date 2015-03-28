@@ -2,4 +2,5 @@
 set(SRCS
     src/circuit.cc
     src/utility.cc
+    src/traditional_algorithm.cc
 )
