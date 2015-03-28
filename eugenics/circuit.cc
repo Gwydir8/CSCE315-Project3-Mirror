@@ -81,7 +81,7 @@ vector<vector<bool> > Circuit::getPossibleInputs(){
             int current_bit = (i >> j) & 1;
             row.push_back(current_bit);
         }
-        assert(row == input_no);
+        assert(row.size() == input_no);
         possibilities.push_back(row);
     }
     return possibilities;
