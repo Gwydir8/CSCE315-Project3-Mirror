@@ -54,17 +54,16 @@ else
     echo "Pulling Gflags 2.1.1"
     cd $PROJECT_SYSTEM_DIR
     cd libraries
-    cd gflags
     # build
     echo "Building..."
-    if [ ! -d "build" ]; then
-        mkdir build
+    if [ ! -d "gflags_build" ]; then
+        mkdir gflags_build
     fi
-    cd build
+    cd gflags_build
     cmake -DBUILD_SHARED_LIBS=ON \
           -DBUILD_STATIC_LIBS=ON \
           -DCMAKE_BUILD_TYPE=None \
-          -DCMAKE_INSTALL_PREFIX="$PROJECT_SYSTEM_DIR/local" ..
+          -DCMAKE_INSTALL_PREFIX="$PROJECT_SYSTEM_DIR/local" ../gflags/.
     make -j${CORES}
     make install
 

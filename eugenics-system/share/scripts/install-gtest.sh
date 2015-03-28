@@ -54,19 +54,18 @@ else
     git submodule update --init
     cd $PROJECT_SYSTEM_DIR/eugenics-system
     cd libraries
-    cd googletest
     # build
     echo "Building..."
-    if [ ! -d "build" ]; then
-        mkdir build
+    if [ ! -d "gtest_build" ]; then
+        mkdir gtest_build
     fi
-    cd build
-    cmake ..
+    cd gtest_build
+    cmake ../googletest/.
     make -j${CORES}
 
     cd $PROJECT_SYSTEM_DIR/eugenics-system/local/lib
-    ln -s $PROJECT_SYSTEM_DIR/eugenics-system/libraries/googletest/build/libgtest.a .
-    ln -s $PROJECT_SYSTEM_DIR/eugenics-system/libraries/googletest/build/libgtest_main.a .
+    ln -s $PROJECT_SYSTEM_DIR/eugenics-system/libraries/gtest_build/libgtest.a .
+    ln -s $PROJECT_SYSTEM_DIR/eugenics-system/libraries/gtest_build/libgtest_main.a .
 
     # set up symlink
     cd $PROJECT_SYSTEM_DIR/eugenics-system/include
