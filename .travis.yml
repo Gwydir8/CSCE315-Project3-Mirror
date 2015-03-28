@@ -3,7 +3,7 @@ compiler:
   - gcc
   #- clang
 # Change this to your needs
-before_install:
+install:
   # - git reset --hard HEAD
   # - git clean -fdx
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
