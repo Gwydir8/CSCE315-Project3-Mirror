@@ -40,15 +40,10 @@ int main(int argc, char *argv[]) {
 
   char buffer[256];
 
-  if (argc < 3) {
-    fprintf(stderr, "usage %s hostname port\n", argv[0]);
-    std::exit(EXIT_SUCCESS);
-  }
-
   portno = atoi(argv[2]);
   sockfd = socket(AF_INET, SOCK_STREAM, 0);
   if (sockfd < 0) error("ERROR opening socket");
-  server = gethostbyname(argv[1]);
+  server = gethostbyname(config.hostname);
   if (server == NULL) {
     fprintf(stderr, "ERROR, no such host\n");
     std::exit(EXIT_SUCCESS);

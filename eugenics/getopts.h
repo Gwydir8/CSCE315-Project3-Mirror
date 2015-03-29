@@ -13,9 +13,9 @@
 enum Algol_t { GENETIC, TRADITIONAL };
 
 struct EugenicsConfig {
-  Algol_t algol;
-  std::string hostname;
-  int port;
+  Algol_t algol = GENETIC;
+  char * hostname = "localhost";
+  int port = 20000;
 };
 
 // print usage information
@@ -39,27 +39,24 @@ void usage() {
             << "if both -g and -t are specified, -g is used." << std::endl;
 }
 
-EugenicsConfig getOpts(int argc, char** argv) {
+EugenicsConfig getOpts(int argc, char* argv[]) {
   // create config
   EugenicsConfig config;
 
-  bool host_flag = false;  // got host arg
-  bool port_flag = false;  // got port arg
   bool gen_flag = false;   // Use genetic algorithm
   bool trad_flag = false;  // Use traditional algorithm
+
+  char * host = "localhost";
+  int port = 20000;
 
   int arg;  // argument given
   while ((arg = getopt(argc, argv, "h:p:gt")) != -1) {
     switch (arg) {
       case 'h':  // hostname
-        host_flag = true;
-        // errlog("got hostname");
-        config.hostname = std::string(optarg);
+        host = optarg;
         break;
       case 'p':  // port number
-        port_flag = true;
-        // errlog("got port");
-        config.port = std::atoi(optarg);
+        port = std::atoi(optarg);
         break;
       case 'g':  // genetic algorithm
         // errlog("got genetic");
@@ -84,14 +81,9 @@ EugenicsConfig getOpts(int argc, char** argv) {
     config.algol = GENETIC;
   }
 
-  if (!host_flag) {
-    // set default if -h is not used
-    config.hostname = "localhost";
-  }
-  if (!port_flag) {
-    // set default if -p is not used
-    config.port = 20000;
-  }
+  config.hostname = host;
+  config.port = port;
+
 
   return config;
 }

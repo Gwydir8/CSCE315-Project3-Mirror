@@ -19,7 +19,7 @@ TEST(GetOpts, default) {
   EugenicsConfig outputconf = getOpts(1, args);
 
   EXPECT_EQ(config.algol, outputconf.algol);
-  EXPECT_EQ(config.hostname, outputconf.hostname);
+  ASSERT_STREQ(config.hostname, outputconf.hostname);
   EXPECT_EQ(config.port, outputconf.port);
 }
 
@@ -36,7 +36,7 @@ TEST(GetOpts, traditional) {
   EugenicsConfig outputconf = getOpts(2, args);
 
   EXPECT_EQ(config.algol, outputconf.algol);
-  EXPECT_EQ(config.hostname, outputconf.hostname);
+  ASSERT_STREQ(config.hostname, outputconf.hostname);
   EXPECT_EQ(config.port, outputconf.port);
 }
 
@@ -53,7 +53,7 @@ TEST(GetOpts, genetic) {
   EugenicsConfig outputconf = getOpts(2, args);
 
   EXPECT_EQ(config.algol, outputconf.algol);
-  EXPECT_EQ(config.hostname, outputconf.hostname);
+  ASSERT_STREQ(config.hostname, outputconf.hostname);
   EXPECT_EQ(config.port, outputconf.port);
 }
 
@@ -70,7 +70,7 @@ TEST(GetOpts, both) {
   EugenicsConfig outputconf = getOpts(2, args);
 
   EXPECT_EQ(config.algol, outputconf.algol);
-  EXPECT_EQ(config.hostname, outputconf.hostname);
+  ASSERT_STREQ(config.hostname, outputconf.hostname);
   EXPECT_EQ(config.port, outputconf.port);
 }
 
@@ -88,7 +88,7 @@ TEST(GetOpts, hostname) {
   EugenicsConfig outputconf = getOpts(3, args);
 
   EXPECT_EQ(config.algol, outputconf.algol);
-  EXPECT_EQ(config.hostname, outputconf.hostname);
+  ASSERT_STREQ(config.hostname, outputconf.hostname);
   EXPECT_EQ(config.port, outputconf.port);
 }
 
@@ -106,6 +106,27 @@ TEST(GetOpts, port) {
   EugenicsConfig outputconf = getOpts(3, args);
 
   EXPECT_EQ(config.algol, outputconf.algol);
-  EXPECT_EQ(config.hostname, outputconf.hostname);
+  ASSERT_STREQ(config.hostname, outputconf.hostname);
+  EXPECT_EQ(config.port, outputconf.port);
+}
+
+TEST(GetOpts, all) {
+  // create config
+  EugenicsConfig config;
+  config.algol = TRADITIONAL;
+  config.hostname = "compute";
+  config.port = 30000;
+
+  char bin[] = "eugenics";
+  char arg1[] = "-h";
+  char arg2[] = "compute";
+  char arg3[] = "-p";
+  char arg4[] = "30000";
+  char arg5[] = "-t";
+  char* args[] = {bin, arg1, arg2, arg3, arg4, arg5};
+  EugenicsConfig outputconf = getOpts(7, args);
+
+  EXPECT_EQ(config.algol, outputconf.algol);
+  ASSERT_STREQ(config.hostname, outputconf.hostname);
   EXPECT_EQ(config.port, outputconf.port);
 }
