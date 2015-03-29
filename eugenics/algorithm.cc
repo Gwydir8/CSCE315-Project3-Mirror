@@ -1,13 +1,20 @@
 #include <vector>
 #include <queue>
+
 #include "algorithm.h"
 #include "utility.h"
+
 using namespace std;
 
-Algo::Algo() {
+Algo::Algo() : circ_output(), level(1), not_counter(3) {
   // initalize base circuit into exhaustive list
   Circuit base(3, 2);
   ex_list.push(base);
+}
+
+Algo::Algo(Circuit circuit, int lev, int ncount)
+    : circ_output(), level(lev), not_counter(ncount) {
+  ex_list.push(circuit);
 }
 
 int Algo::check_output(Circuit x, vector<vector<bool>> desired) {
