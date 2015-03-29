@@ -1,18 +1,17 @@
 #include <vector>
 #include <queue>
-#include "circuit.h"
+#include "algorithm.h"
 using namespace std;
 
-// initalize base circuit into exhaustive list
-queue<Circuit> ex_list;
-vector<bool> init = {0, 0, 0};
-Circuit base(init, 0);
 
-int y=0;
-int level = 1;
-int not_counter = 3;
+Algo::Algo() {
+  // initalize base circuit into exhaustive list
+  vector<bool> init = {0, 0, 0};
+  Circuit base(init, 0);
+  ex_list.push(base);
+}
 
-int check_output(Circuit x, vector<bool> sum, vector<bool> c_out) {
+int Algo::check_output(Circuit x, vector<bool> sum, vector<bool> c_out) {
   // assuming that sum and c_out are the same length
   int size = sum.size();
 
@@ -29,7 +28,7 @@ int check_output(Circuit x, vector<bool> sum, vector<bool> c_out) {
   return 1;
 }
 
-void add_not(int counter) {
+void Algo::add_not(int counter) {
   for (int i = 0; i < counter; ++i) {
     Circuit next = ex_list.front();
     next.addGate(NOT, i);
@@ -37,7 +36,7 @@ void add_not(int counter) {
   }
 }
 
-void add_and(int counter) {
+void Algo::add_and(int counter) {
   for (int i = 0; i < counter; ++i) {
     Circuit next = ex_list.front();
     next.addGate(AND, i);
@@ -45,7 +44,7 @@ void add_and(int counter) {
   }
 }
 
-void add_or(int counter) {
+void Algo::add_or(int counter) {
   for (int i = 0; i < counter; ++i) {
     Circuit next = ex_list.front();
     next.addGate(OR, i);
@@ -53,12 +52,8 @@ void add_or(int counter) {
   }
 }
 
-Circuit search(vector<bool> sum, vector<bool> c_out) {
+Circuit Algo::search(vector<bool> sum, vector<bool> c_out) {
 
-  if (y==0){
-	ex_list.push(base);
-	++y;
-  }
   // keeps track of # of combinations
   ++level;
   int combo_counter;
