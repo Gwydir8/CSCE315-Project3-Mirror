@@ -32,6 +32,7 @@ Circuit::Circuit(vector<bool> inputs, int o)
     writeGateToFile(*wire, getGateCount() - 1, " NONE ", input);
   }
 }
+
 Circuit::Circuit(int inputs, int o) : output_no(o), input_no(inputs) {
   // initialize statistics to 0
   and_no = or_no = not_no = wire_no = 0;
@@ -40,14 +41,14 @@ Circuit::Circuit(int inputs, int o) : output_no(o), input_no(inputs) {
   for (int i = 0; i < input_no; ++i) {
     wire_no++;
     std::string errmsg = "Circuit::Circuit: " + std::to_string(getGateCount()) +
-                         " WIRE " + std::to_string(false);
+                         " WIRE " + std::to_string(i);
     errlog(errmsg);
 
     Gate* wire = new Wire(false);
     gates.push_back(wire);
 
-    // // write wire to file
-    // writeGateToFile(*wire, getGateCount() - 1, " WIRE ", 0);
+    // write wire to file
+    writeGateToFile(*wire, getGateCount() - 1, " NONE ", i);
   }
 }
 
@@ -222,6 +223,10 @@ void Circuit::writeGateToFile(const Gate& gate, int output_index,
   // Open filepath
   std::ofstream circuitfile(filepath, std::ios::app);
 
+  // increment indexes
+  output_index++;
+  input_index++;
+
   // Write circuit to circuitfile
   circuitfile << output_index << " ";
   circuitfile << type;
@@ -245,6 +250,11 @@ void Circuit::writeGateToFile(const Gate& gate, int output_index,
 
   // Open filepath
   std::ofstream circuitfile(filepath, std::ios::app);
+
+  // increment indexes
+  output_index++;
+  input_index1++;
+  input_index2++;
 
   // Write circuit to circuitfile
   circuitfile << output_index << " ";
