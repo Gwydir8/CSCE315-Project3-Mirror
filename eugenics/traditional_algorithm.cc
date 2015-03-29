@@ -19,7 +19,7 @@ Circuit TraditionalAlgorithm::search() {
 
 vector<Circuit> TraditionalAlgorithm::allPossibleCircuits(Circuit c) {
   vector<Circuit> all_possibilities;
-  int output_gate_offset = getGateCount() - getOutputCount();
+  int output_gate_offset = c.getGateCount() - c.getOutputCount();
   for (int i = 0; i < c.getOutputCount(); ++i) {
     // try a NOT
     Circuit added_not = c;
