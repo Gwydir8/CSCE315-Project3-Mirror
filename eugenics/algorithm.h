@@ -20,7 +20,7 @@ class Algo {
     void add_or(int counter);
     Circuit search(std::vector<bool> sum, std::vector<bool> c_out);
 
-}
+};
 
 
 
