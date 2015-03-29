@@ -54,7 +54,6 @@ TEST_F(WireSetup, NOR) {
   EXPECT_EQ(0, Not(new Or(wire_1, wire_0)).evaluate());
 }
 
-
 class XORTest : public testing::Test {
  protected:
   virtual void SetUp() {
@@ -72,7 +71,7 @@ class XORTest : public testing::Test {
   std::vector<bool> expected_output1{true};
 };
 
-TEST_F(XORTest, XOR_wiretest) { EXPECT_EQ(2, cempty.numGates()); }
+TEST_F(XORTest, XOR_wiretest) { EXPECT_EQ(2, cempty.getGateCount()); }
 
 TEST_F(XORTest, XOR0) {
   // Circuit c(2, 1);
@@ -157,14 +156,13 @@ TEST_F(FullAdderTest, FAEvalTotal) {
   EXPECT_EQ(matrix, c->evaluateAllInputs());
 }
 
-
 class CircuitTest : public testing::Test {
  protected:
   Circuit c = Circuit(2, 2);
 };
 
 TEST_F(CircuitTest, MappingOutput) {
-  c.mapGateToOutput(0, 1); //maps input 1 to output 2
+  c.mapGateToOutput(0, 1);  // maps input 1 to output 2
   std::vector<bool> expected_output{true, true};
   EXPECT_EQ(expected_output, c.evaluateInputSet({true, false}));
 }
