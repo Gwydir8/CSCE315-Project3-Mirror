@@ -11,7 +11,7 @@ TEST(AlgorithmTest, SimpleSearchTest) {
       {true, false}, {true, true}, {false, false}, {false, true}};
   Circuit basic = Circuit(3, 2);
   Algo algorithm_test = Algo();
-  //Circuit result = alg.findMatchingCircuit();
+  // Circuit result = alg.findMatchingCircuit();
   vector<vector<bool>> result = algorithm_test.search(expected_output);
   EXPECT_EQ(expected_output, result);
 }
