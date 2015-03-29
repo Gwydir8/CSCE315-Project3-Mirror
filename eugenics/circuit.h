@@ -60,9 +60,26 @@ class Circuit {
   int getNotCount() const { return not_no; }
   int getWireCount() const { return wire_no; }
 
-  //gate indexes which gate we want to always have as ouput
-  //desired_output indexes which output to map it to
+  // gate indexes which gate we want to always have as ouput
+  // desired_output indexes which output to map it to
   void mapGateToOutput(int gate_index, int desired_output_index);
+
+  // stdout printer
+  // friend std::ostream& operator<<(std::ostream& os, const Circuit& circuit);
+
+  // file read
+  // friend std::ifstream& operator>>(std::ifstream& is, Circuit& circuit);
+
+  // file print
+  // friend std::ofstream &operator<<(std::ofstream &os, const Circuit
+  // &circuit);
+
+  // this is the function that should be used to print gates
+  void writeGateToFile(const Gate& gate, int output_index, std::string type,
+                       int input_index);
+
+  void writeGateToFile(const Gate& gate, int output_index, std::string type,
+                       int input_index1, int input_index2);
 
  private:
   // gates and wires storage
@@ -84,8 +101,5 @@ class Circuit {
   // number of Wires
   int wire_no;
 };
-
-std::ostream& operator<<(std::ostream& os, const Relation& relation);
-std::ifstream& operator>>(std::ifstream& is, Relation& relation);
 
 #endif
