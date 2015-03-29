@@ -21,10 +21,10 @@ class Circuit {
   int getOrCount() const { return or_no; }
   int getNotCount() const { return not_no; }
   int getWireCount() const { return wire_no; }
-  int getGateCount()const { return gates.size(); }
+  int getGateCount() const { return gates.size(); }
 
-  //gate indexes which gate we want to always have as ouput
-  //desired_output indexes which output to map it to
+  // gate indexes which gate we want to always have as ouput
+  // desired_output indexes which output to map it to
   void mapGateToOutput(int gate_index, int desired_output_index);
 
   // Valid Gate types with 1 input { NOT, WIRE}
