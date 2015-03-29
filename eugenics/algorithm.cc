@@ -4,10 +4,9 @@
 using namespace std;
 
 // initalize base circuit into exhaustive list
-std::queue<Circuit> ex_list;
-std::vector<bool> init = {0, 0, 0};
+queue<Circuit> ex_list;
+vector<bool> init = {0, 0, 0};
 Circuit base(init, 0);
-//ex_list.push(base);
 
 int y=0;
 int level = 1;
