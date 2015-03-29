@@ -26,10 +26,10 @@ void error(const char *msg) {
 
 int main(int argc, char *argv[]) {
   // get algorithm from CLI
-  Algol_t algol = getOpts(argc, argv);
-  if (algol == GENETIC) {
+  EugenicsConfig config = getOpts(argc, argv);
+  if (config.algol == GENETIC) {
     errlog("Running Genetic Algorithm");
-  } else if (algol == TRADITIONAL) {
+  } else if (config.algol == TRADITIONAL) {
     errlog("Running Traditional Algorithm");
   }
 
