@@ -29,7 +29,7 @@ Circuit::Circuit(vector<bool> inputs, int o)
     gates.push_back(wire);
 
     // write wire to file
-    writeGateToFile(*wire, numGates() - 1, " WIRE ", input);
+    writeGateToFile(*wire, getGateCount() - 1, " NONE ", input);
   }
 }
 Circuit::Circuit(int inputs, int o) : output_no(o), input_no(inputs) {
@@ -46,8 +46,8 @@ Circuit::Circuit(int inputs, int o) : output_no(o), input_no(inputs) {
     Gate* wire = new Wire(false);
     gates.push_back(wire);
 
-    // write wire to file
-    writeGateToFile(*wire, numGates() - 1, " WIRE ", 0);
+    // // write wire to file
+    // writeGateToFile(*wire, getGateCount() - 1, " WIRE ", 0);
   }
 }
 
@@ -63,7 +63,7 @@ int Circuit::addGate(GateType gate_type, int index_1) {
     errlog(errmsg);
 
     // write wire to file
-    writeGateToFile(*built_gate, numGates(), " NOT  ", index_1);
+    writeGateToFile(*built_gate, getGateCount(), " NOT  ", index_1);
   } else if (gate_type == WIRE) {
     built_gate = new Wire(input_1);
     // increment number of wires
@@ -73,7 +73,7 @@ int Circuit::addGate(GateType gate_type, int index_1) {
     errlog(errmsg);
 
     // write wire to file
-    writeGateToFile(*built_gate, numGates(), " WIRE ", index_1);
+    writeGateToFile(*built_gate, getGateCount(), " NONE ", index_1);
   }
   assert(built_gate != nullptr);
   gates.push_back(built_gate);
@@ -101,7 +101,7 @@ int Circuit::addGate(GateType gate_type, int index_1, int index_2) {
     errlog(errmsg);
 
     // write wire to file
-    writeGateToFile(*built_gate, numGates(), " AND  ", index_1, index_2);
+    writeGateToFile(*built_gate, getGateCount(), " AND  ", index_1, index_2);
   } else if (gate_type == OR) {
     built_gate = new Or(input_1, input_2);
     // increment number of or
@@ -112,7 +112,7 @@ int Circuit::addGate(GateType gate_type, int index_1, int index_2) {
     errlog(errmsg);
 
     // write wire to file
-    writeGateToFile(*built_gate, numGates(), " OR   ", index_1, index_2);
+    writeGateToFile(*built_gate, getGateCount(), " OR   ", index_1, index_2);
   }
   assert(built_gate != nullptr);
   gates.push_back(built_gate);
