@@ -1,7 +1,7 @@
 #include "../../local/include/gtest/gtest.h"
 #include "circuit.h"
 #include "gate.h"
-#include "traditional_algorithm.h"
+#include "algorithm.h"
 #include <vector>
 
 using namespace std;

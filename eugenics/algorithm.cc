@@ -1,6 +1,7 @@
 #include <vector>
 #include <queue>
 #include "algorithm.h"
+#include "utility.h"
 using namespace std;
 
 
@@ -72,10 +73,10 @@ vector<vector<bool>> Algo::search(vector<vector<bool>> desired) {
   // compares circuits wires to desired outputs
   if (check_output(ex_list.front(), desired) == 0) {
     // adds NOT gate
-	if(not_counter < 2){
-		add_not(not_counter);
-		++not_counter;
-	}
+
+	add_not(not_counter);
+	++not_counter;
+
     // adds AND/OR gate
     add_and(combo_counter);
     add_or(combo_counter);
