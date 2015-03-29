@@ -85,4 +85,7 @@ class Circuit {
   int wire_no;
 };
 
+std::ostream& operator<<(std::ostream& os, const Relation& relation);
+std::ifstream& operator>>(std::ifstream& is, Relation& relation);
+
 #endif
