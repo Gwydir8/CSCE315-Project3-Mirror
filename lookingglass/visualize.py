@@ -94,12 +94,11 @@ class Canvas:
     def __del__(self):
         self.window.close()
 
-
 def readInSteps(fname):
     try:
         f = open(fname, 'r')
     except IOError:
-        pass
+        print 'cannot open', fname
     else:
         global steps 
         steps = []
