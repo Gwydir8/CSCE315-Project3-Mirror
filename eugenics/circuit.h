@@ -62,17 +62,6 @@ class Circuit {
   // NOTE: output_index is checked if it is correct, not set to output_index
   int addGate(int output_index, GateType gate_type, int index_1);
 
-  int getOutputCount() const { return output_no; }
-  int getInputCount() const { return input_no; }
-  int getAndCount() const { return and_no; }
-  int getOrCount() const { return or_no; }
-  int getNotCount() const { return not_no; }
-  int getWireCount() const { return wire_no; }
-
-  // gate indexes which gate we want to always have as ouput
-  // desired_output indexes which output to map it to
-  void mapGateToOutput(int gate_index, int desired_output_index);
-
   // stdout printer
   // friend std::ostream& operator<<(std::ostream& os, const Circuit& circuit);
 
