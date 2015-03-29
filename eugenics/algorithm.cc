@@ -7,8 +7,9 @@ using namespace std;
 std::queue<Circuit> ex_list;
 std::vector<bool> init = {0, 0, 0};
 Circuit base(init, 0);
-ex_list.push(base);
+//ex_list.push(base);
 
+int y=0;
 int level = 1;
 int not_counter = 3;
 
@@ -54,6 +55,11 @@ void add_or(int counter) {
 }
 
 Circuit search(vector<bool> sum, vector<bool> c_out) {
+
+  if (y==0){
+	ex_list.push(base);
+	++y;
+  }
   // keeps track of # of combinations
   ++level;
   int combo_counter;
