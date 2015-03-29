@@ -60,8 +60,8 @@ class Circuit {
   int getNotCount() const { return not_no; }
   int getWireCount() const { return wire_no; }
 
-  //gate indexes which gate we want to always have as ouput
-  //desired_output indexes which output to map it to
+  // gate indexes which gate we want to always have as ouput
+  // desired_output indexes which output to map it to
   void mapGateToOutput(int gate_index, int desired_output_index);
 
  private:

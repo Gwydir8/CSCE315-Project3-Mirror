@@ -9,7 +9,8 @@ TEST(TraditionalAlgorithmTest, ConstructorTest) {
   Circuit basic = Circuit(3, 2);
   TraditionalAlgorithm alg = TraditionalAlgorithm(basic, expected_output);
   EXPECT_EQ(expected_output, alg.getOuputSet());
-  EXPECT_EQ(basic.evaluateAllInputs(), alg.getRootCircuit().evaluateAllInputs());
+  EXPECT_EQ(basic.evaluateAllInputs(),
+            alg.getRootCircuit().evaluateAllInputs());
 }
 TEST(AlgorithmTest, SimpleSearchTest) {
   vector<vector<bool>> expected_output = {

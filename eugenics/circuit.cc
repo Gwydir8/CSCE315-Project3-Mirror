@@ -26,7 +26,7 @@ Circuit::Circuit(vector<bool> inputs, int o)
     gates.push_back(wire);
   }
 }
-Circuit::Circuit(int inputs, int o) : output_no(o), input_no(inputs){
+Circuit::Circuit(int inputs, int o) : output_no(o), input_no(inputs) {
   // initialize statistics to 0
   and_no = or_no = not_no = wire_no = 0;
   mapped_outputs = vector<int>(output_no, -1);
@@ -132,18 +132,19 @@ vector<bool> Circuit::evaluateInputSet(vector<bool> input_set) {
   vector<bool> result;
   // evaluate gates in reverse order, i.e. from input to output
   reverse_iterator<vector<Gate*>::iterator> r = gates.rbegin();
-  for (int i = output_no-1; i >= 0; --i) {
-    Gate* output_gate = ((mapped_outputs[i] != -1) ? gates[mapped_outputs[i]] : r[i]);
+  for (int i = output_no - 1; i >= 0; --i) {
+    Gate* output_gate =
+        ((mapped_outputs[i] != -1) ? gates[mapped_outputs[i]] : r[i]);
     bool output = output_gate->evaluate();
-    //gates_reversed = {2, 1, 0}
-    //i = {2,1,0}
-    //result  = { 0, 1, 2}
+    // gates_reversed = {2, 1, 0}
+    // i = {2,1,0}
+    // result  = { 0, 1, 2}
     result.push_back(output);
 
     std::string errmsg = "Circuit::evaluateInputSet: output[" +
                          std::to_string(i) + "] = " + std::to_string(output) +
-                         "Current Mapped Output = [" + std::to_string(mapped_outputs[i]) + "]"
-                         ;
+                         "Current Mapped Output = [" +
+                         std::to_string(mapped_outputs[i]) + "]";
     errlog(errmsg);
   }
 
@@ -174,10 +175,10 @@ vector<vector<bool>> Circuit::generateInputSet() {
 }
 
 void Circuit::mapGateToOutput(int gate_index, int desired_output_index) {
-    std::string errmsg = "Called with: [" + std::to_string(gate_index) + "] ";
-    errlog(errmsg);
-    int actual_output_index = output_no - 1 - desired_output_index;
-    mapped_outputs[actual_output_index] = gate_index;
+  std::string errmsg = "Called with: [" + std::to_string(gate_index) + "] ";
+  errlog(errmsg);
+  int actual_output_index = output_no - 1 - desired_output_index;
+  mapped_outputs[actual_output_index] = gate_index;
 }
 
 void Circuit::printStatistics() {
