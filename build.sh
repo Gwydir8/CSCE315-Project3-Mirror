@@ -71,10 +71,11 @@ if [ ! -d "$RELEASE_BUILD_DIR/eugenics" ]; then
     mkdir "$RELEASE_BUILD_DIR";
     cd "$RELEASE_BUILD_DIR";
     # generate release build make files
-    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -Dtest=ON -DCMAKE_BUILD_TYPE=Release ../eugenics-system/.
+    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -GNinja -Dtest=ON -DCMAKE_BUILD_TYPE=Release ../eugenics-system/.
     # make on all cores
     # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
-    make -j"$CORES"
+    # make -j"$CORES"
+    ninja
     # get return code
     RESULT=$?
     if [ $RESULT -ne 0 ]; then
@@ -84,9 +85,10 @@ if [ ! -d "$RELEASE_BUILD_DIR/eugenics" ]; then
 else
     echo "Running make clean in $RELEASE_BUILD_DIR"
     cd "$RELEASE_BUILD_DIR"
-    make clean
+    # make clean
     # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
-    make -j"$CORES"
+    # make -j"$CORES"
+    ninja
     # get return code
     RESULT=$?
     if [ $RESULT -ne 0 ]; then
@@ -105,10 +107,11 @@ if [ ! -d "$DEBUG_BUILD_DIR/eugenics" ]; then
     mkdir "$DEBUG_BUILD_DIR";
     cd "$DEBUG_BUILD_DIR";
     # generate debug build make files
-    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -Dtest=ON -DCMAKE_BUILD_TYPE=Debug ../eugenics-system/.
+    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -GNinja -Dtest=ON -DCMAKE_BUILD_TYPE=Debug ../eugenics-system/.
     # make on all cores
     # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
-    make -j"$CORES"
+    # make -j"$CORES"
+    ninja
     # get return code
     RESULT=$?
     if [ $RESULT -ne 0 ]; then
@@ -118,9 +121,10 @@ if [ ! -d "$DEBUG_BUILD_DIR/eugenics" ]; then
 else
     echo "Running make clean in $DEBUG_BUILD_DIR"
     cd "$RELEASE_BUILD_DIR"
-    make clean
+    # make clean
     # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
-    make -j"$CORES"
+    # make -j"$CORES"
+    ninja
     # get return code
     RESULT=$?
     if [ $RESULT -ne 0 ]; then
