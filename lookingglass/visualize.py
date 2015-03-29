@@ -6,6 +6,7 @@
 import time
 import circuits as c
 from graphics import *
+prev_steps = []
 steps = []
 
 class Canvas:
@@ -14,8 +15,8 @@ class Canvas:
     #track the current state of drawing
     max_x = 1000
     max_y = 1000
-    current_row = 1
-    current_column = 1
+    current_row = 0
+    current_column = 0
     def __init__(self):
         self.window = GraphWin('Current Logic Gate', self.max_x, self.max_y) # give title and dimensions
         print "Visualizing now..."
@@ -90,25 +91,35 @@ class Canvas:
         step_line = Line(Point(x, y), Point(self.max_x - 75, y))
         step_line.draw(self.window)
 
+    def __del__(self):
+        self.window.close()
+
 
 def readInSteps(fname):
     try:
         f = open(fname, 'r')
     except IOError:
-        print 'cannot open', fname
+        pass
     else:
-        global steps
+        global steps 
+        steps = []
         for line in f:
             steps.append(line)
         f.close()
 
 def main():
-    readInSteps(sys.argv[1])
-    canvas = Canvas()
-    for step in steps:
-        canvas.visualizeStep(step)
+    global prev_steps
+    while True:
+        readInSteps(sys.argv[1])
+        if steps != prev_steps :
+            canvas = Canvas()
+            for step in steps:
+                canvas.visualizeStep(step)
+            prev_steps = steps
+        time.sleep(5)
+
     canvas.waitForClick()
 
+# execute only if run as a script
 if __name__ == "__main__":
-    # execute only if run as a script
     main()
