@@ -54,27 +54,6 @@ TEST_F(WireSetup, NOR) {
   EXPECT_EQ(0, Not(new Or(wire_1, wire_0)).evaluate());
 }
 
-class CircuitTest : public testing::Test {
- protected:
-  Circuit c = Circuit(2, 2);
-};
-
-// TEST(CircuitTest, ReturnAddGate) {
-// }
-
-TEST_F(CircuitTest, Simple) {
-  // Circuit c(2, 2);
-  std::vector<bool> expected_output{true, false};
-  EXPECT_EQ(expected_output, c.evaluateInputSet({true, false}));
-}
-
-TEST_F(CircuitTest, LessSimple) {
-  // Circuit c(2, 2);
-  EXPECT_EQ(2, c.addGate(2, AND, 1, 1));
-  EXPECT_EQ(3, c.addGate(WIRE, 0));
-  std::vector<bool> expected_output{false, true};
-  EXPECT_EQ(expected_output, c.evaluateInputSet({true, false}));
-}
 
 class XORTest : public testing::Test {
  protected:
@@ -176,4 +155,30 @@ TEST_F(FullAdderTest, FAMatrixSize) {
 }
 TEST_F(FullAdderTest, FAEvalTotal) {
   EXPECT_EQ(matrix, c->evaluateAllInputs());
+}
+
+
+class CircuitTest : public testing::Test {
+ protected:
+  Circuit c = Circuit(2, 2);
+};
+
+TEST_F(CircuitTest, MappingOutput) {
+  c.mapGateToOutput(0, 1); //maps input 1 to output 2
+  std::vector<bool> expected_output{true, true};
+  EXPECT_EQ(expected_output, c.evaluateInputSet({true, false}));
+}
+
+TEST_F(CircuitTest, Simple) {
+  // Circuit c(2, 2);
+  std::vector<bool> expected_output{true, false};
+  EXPECT_EQ(expected_output, c.evaluateInputSet({true, false}));
+}
+
+TEST_F(CircuitTest, LessSimple) {
+  // Circuit c(2, 2);
+  EXPECT_EQ(2, c.addGate(2, AND, 1, 1));
+  EXPECT_EQ(3, c.addGate(WIRE, 0));
+  std::vector<bool> expected_output{false, true};
+  EXPECT_EQ(expected_output, c.evaluateInputSet({true, false}));
 }
