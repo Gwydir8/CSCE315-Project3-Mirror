@@ -10,7 +10,7 @@ class Algo {
     std::queue<Circuit> ex_list;
 	std::vector<std::vector<bool>> circ_output;
     int level = 1;
-    int not_counter = 0;
+    int not_counter = 3;
     
   public:
     Algo();

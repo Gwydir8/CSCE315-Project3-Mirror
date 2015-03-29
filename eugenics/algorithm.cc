@@ -64,7 +64,7 @@ vector<vector<bool>> Algo::search(vector<vector<bool>> desired) {
 
   // keeps track of # of combinations
   ++level;
-  int combo_counter;
+  int combo_counter=0;
   for (int i = 1; i <= level; ++i) {
     combo_counter += i;
   }
