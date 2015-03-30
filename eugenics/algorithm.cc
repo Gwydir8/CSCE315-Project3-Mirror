@@ -44,6 +44,8 @@ int Algo::check_output(Circuit x, vector<vector<bool>> desired) {
 }
 
 void Algo::add_not(int counter) {
+  // generates different circuits based on the different
+  // combinations of gates to wires, then pushes to queue
   for (int i = 0; i < counter; ++i) {
     Circuit next = ex_list.front();
     next.addGate(NOT, i);
@@ -52,43 +54,44 @@ void Algo::add_not(int counter) {
 }
 
 void Algo::add_and(int counter) {
-  for (int i = 0; i < counter; ++i) {
-    Circuit next = ex_list.front();
-    next.addGate(AND, i);
-    ex_list.push(next);
+  // generates different circuits based on the different
+  // combinations of gates to wires, then pushes to queue
+  for (int i = 0; i < counter - 1; ++i) {
+	for (int j = i + 1; j < counter; ++j) {
+		Circuit next = ex_list.front();
+		next.addGate(AND, i, j);
+		ex_list.push(next);
+	}
   }
+  
 }
 
 void Algo::add_or(int counter) {
-  for (int i = 0; i < counter; ++i) {
-    Circuit next = ex_list.front();
-    next.addGate(OR, i);
-    ex_list.push(next);
+  // generates different circuits based on the different
+  // combinations of gates to wires, then pushes to queue
+  for (int i = 0; i < counter - 1; ++i) {
+	for (int j = i + 1; j < counter; ++j) {
+		Circuit next = ex_list.front();
+		next.addGate(OR, i, j);
+		ex_list.push(next);
+	}
   }
 }
 
 vector<vector<bool>> Algo::search(vector<vector<bool>> desired) {
-  // keeps track of # of combinations
-  ++level;
-  int combo_counter = 0;
-  for (int i = 1; i <= level; ++i) {
-    combo_counter += i;
-  }
 
   // compares circuits wires to desired outputs
   if (check_output(ex_list.front(), desired) == 0) {
-    // adds NOT gate
-
-    add_not(not_counter);
-    ++not_counter;
-
-    // adds AND/OR gate
-    add_and(combo_counter);
-    add_or(combo_counter);
+  
+    // adds NOT/AND/OR gate
+    add_not(ex_list.front().getWireCount());
+    add_and(ex_list.front().getWireCount());
+    add_or(ex_list.front().getWireCount());
 
     // remove "first" element
     ex_list.pop();
 
+	// search the next circuit
     search(desired);
   } else {
     return circ_output;

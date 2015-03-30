@@ -22,8 +22,7 @@ class Algo {
  private:
   std::queue<Circuit> ex_list;
   std::vector<std::vector<bool>> circ_output;
-  int level;
-  int not_counter;
+
 };
 
 #endif
