@@ -50,7 +50,8 @@ set(CMAKE_PREFIX_PATH
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
   set(CMAKE_MODULE_PATH
     ${CMAKE_MODULE_PATH}
-    "${CMAKE_CURRENT_LIST_DIR}/local/lib/cmake/gflags")
+    "${CMAKE_CURRENT_LIST_DIR}/local/lib/cmake/gflags"
+    )
 else()
   set(CMAKE_MODULE_PATH
     ${CMAKE_MODULE_PATH}
@@ -96,7 +97,7 @@ option(test "Build ${PROJECT_NAME}'s tests" OFF)
 # Eugenics Engine
 add_subdirectory(${EUGENICS_SRC_DIR})
 # Looking Glass Client
-add_subdirectory(${LOOKINGGLASS_SRC_DIR})
+#add_subdirectory(${LOOKINGGLASS_SRC_DIR})
 
 # may need to build our libraries
 #add_subdirectory(${LIB_DIR} ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/lib)
