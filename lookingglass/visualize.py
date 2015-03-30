@@ -13,19 +13,21 @@ class Canvas:
     #graphics.py window to bind to
     window = None
     #track the current state of drawing
-    max_x = 1000
     max_y = 1000
-    current_row = 0
-    current_column = 0
+    max_x = 1000
+    current_row = 1
+    current_column = 0.0
     def __init__(self):
+        global steps
+        self.max_y = 45 * len(steps)
         self.window = GraphWin('Current Logic Gate', self.max_x, self.max_y) # give title and dimensions
         print "Visualizing now..."
 
 
     def visualizeStep(self, step):
         print step
-        base_x = self.current_column * 100
-        base_y = self.current_row * 50
+        base_x = (self.current_column * 100) % (self.max_x - 50)
+        base_y = self.current_row * 40
         self.setup_step(base_x, base_y)
         #first draw line
         # line =
@@ -36,9 +38,14 @@ class Canvas:
                 num = int(token)
                 if num < self.current_row:
                     offset_x = -15
-                    shape = c.dot(base_x + offset_x, num * 50)
+                    shape = c.dot(base_x + offset_x, num * 40)
                     line_in_gate = Line(Point(base_x + offset_x, base_y - 30), \
-                            Point(base_x + offset_x, num * 50) )
+                            Point(base_x + offset_x, num * 40) )
+                    r = (20 * self.current_column) % 255
+                    g = (15 * self.current_row) % 255
+                    b = (140 + 10 * self.current_column) % 255
+                    color = color_rgb(r, g, b)
+                    line_in_gate.setFill(color)
 
                     line_in_gate.draw(self.window)
                     base_x += 30
@@ -88,7 +95,8 @@ class Canvas:
         step_no.setSize(14)
         step_no.draw(self.window)
 
-        step_line = Line(Point(x, y), Point(self.max_x - 75, y))
+        step_line = Line(Point(0, y), Point(self.max_x - 75, y))
+        step_line.setWidth(2)
         step_line.draw(self.window)
 
     def __del__(self):
