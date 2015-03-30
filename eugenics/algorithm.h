@@ -11,7 +11,7 @@ class Algo {
   Algo();
 
   // circuit constructor
-  Algo(Circuit circuit, int lev, int ncount);
+  Algo(Circuit circuit);
 
   int check_output(Circuit x, std::vector<std::vector<bool>> desired);
   void add_not(int counter);
@@ -22,7 +22,6 @@ class Algo {
  private:
   std::queue<Circuit> ex_list;
   std::vector<std::vector<bool>> circ_output;
-
 };
 
 #endif

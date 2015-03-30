@@ -6,16 +6,13 @@
 
 using namespace std;
 
-Algo::Algo() : circ_output(), level(1), not_counter(3) {
+Algo::Algo() : circ_output() {
   // initalize base circuit into exhaustive list
   Circuit base(3, 2);
   ex_list.push(base);
 }
 
-Algo::Algo(Circuit circuit, int lev, int ncount)
-    : circ_output(), level(lev), not_counter(ncount) {
-  ex_list.push(circuit);
-}
+Algo::Algo(Circuit circuit) : circ_output() { ex_list.push(circuit); }
 
 int Algo::check_output(Circuit x, vector<vector<bool>> desired) {
   // generates an output set based on the circuit
@@ -57,32 +54,29 @@ void Algo::add_and(int counter) {
   // generates different circuits based on the different
   // combinations of gates to wires, then pushes to queue
   for (int i = 0; i < counter - 1; ++i) {
-	for (int j = i + 1; j < counter; ++j) {
-		Circuit next = ex_list.front();
-		next.addGate(AND, i, j);
-		ex_list.push(next);
-	}
+    for (int j = i + 1; j < counter; ++j) {
+      Circuit next = ex_list.front();
+      next.addGate(AND, i, j);
+      ex_list.push(next);
+    }
   }
-  
 }
 
 void Algo::add_or(int counter) {
   // generates different circuits based on the different
   // combinations of gates to wires, then pushes to queue
   for (int i = 0; i < counter - 1; ++i) {
-	for (int j = i + 1; j < counter; ++j) {
-		Circuit next = ex_list.front();
-		next.addGate(OR, i, j);
-		ex_list.push(next);
-	}
+    for (int j = i + 1; j < counter; ++j) {
+      Circuit next = ex_list.front();
+      next.addGate(OR, i, j);
+      ex_list.push(next);
+    }
   }
 }
 
 vector<vector<bool>> Algo::search(vector<vector<bool>> desired) {
-
   // compares circuits wires to desired outputs
   if (check_output(ex_list.front(), desired) == 0) {
-  
     // adds NOT/AND/OR gate
     add_not(ex_list.front().getWireCount());
     add_and(ex_list.front().getWireCount());
@@ -91,7 +85,7 @@ vector<vector<bool>> Algo::search(vector<vector<bool>> desired) {
     // remove "first" element
     ex_list.pop();
 
-	// search the next circuit
+    // search the next circuit
     search(desired);
   } else {
     return circ_output;
