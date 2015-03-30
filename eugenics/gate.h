@@ -21,17 +21,8 @@ class Gate {
   // wire input value
   Gate(bool B) : input_1(nullptr), input_2(nullptr), val(B) {}
 
-  // deep copy constructor
-  Gate(Gate& gate)
-      : input_1(gate.input_1),
-        input_2(gate.input_2),
-        val(gate.val),
-        type(gate.type) {}
-
   // evaluate returns the output of a gate
   virtual bool evaluate() = 0;
-
-  std::string get_type() { return type; }
 
   // // print gate to ofstream
   // friend std::ofstream& operator<<(std::ofstream& os, const Gate& gate) {
@@ -40,6 +31,7 @@ class Gate {
   //   os << gate.type;
   //   return os;
   // }
+
 
  protected:
   // first input (also only input for Not gates and Wires)
@@ -59,10 +51,7 @@ class Not : public Gate {
   // invalid constructor
   Not() : Gate() {}
   // not constructor
-  Not(Gate* A) : Gate(A) { type = "NOT"; }
-
-  // deep copy constructor
-  Not(Gate& not_) : Gate(not_) { type = "NOT"; }
+  Not(Gate* A) : Gate(A) {}
 
   bool evaluate() {
     bool q = !(input_1->evaluate());
@@ -80,13 +69,9 @@ class Wire : public Gate {
   // invalid wire
   Wire() : Gate() {}
   // input node
-  Wire(bool B) : Gate(B) { type = "WIRE"; }
-
+  Wire(bool B) : Gate(B) {}
   // gate connector
-  Wire(Gate* A) : Gate(A) { type = "WIRE"; }
-
-  // deep copy constructor
-  Wire(Gate& wire_) : Gate(wire_) { type = "WIRE"; }
+  Wire(Gate* A) : Gate(A) {}
 
   bool evaluate() {
     if (input_1 == nullptr) {
@@ -122,10 +107,7 @@ class And : public Gate {
   // invalid constructor
   And() : Gate() {}
   // and constructor
-  And(Gate* A, Gate* B) : Gate(A, B) { type = "AND"; }
-
-  // deep copy constructor
-  And(Gate& and_) : Gate(and_) { type = "AND"; }
+  And(Gate* A, Gate* B) : Gate(A, B) {}
 
   bool evaluate() {
     bool a = input_1->evaluate();
@@ -144,10 +126,7 @@ class Or : public Gate {
   // invalid constructor
   Or() : Gate() {}
   // or constructor
-  Or(Gate* A, Gate* B) : Gate(A, B) { type = "OR"; }
-
-  // deep copy constructor
-  Or(Gate& or_) : Gate(or_) { type = "OR"; }
+  Or(Gate* A, Gate* B) : Gate(A, B) {}
 
   bool evaluate() {
     bool a = input_1->evaluate();

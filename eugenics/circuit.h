@@ -15,9 +15,6 @@ class Circuit {
   // output_no is the number of outputs desired
   Circuit(int input_no, int output_no);
 
-  // Deep Copy Constructor
-  Circuit(const Circuit &original);
-
   int getOutputCount() const { return output_no; }
   int getInputCount() const { return input_no; }
   int getAndCount() const { return and_no; }
