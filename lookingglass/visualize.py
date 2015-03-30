@@ -120,8 +120,11 @@ def main():
         readInSteps(sys.argv[1])
         if steps != prev_steps :
             canvas = Canvas()
-            for step in steps:
-                canvas.visualizeStep(step)
+            for i in range(len(steps)):
+                if len(prev_steps) > i:
+                    pass
+                else:
+                    canvas.visualizeStep(steps[i])
             prev_steps = steps
         time.sleep(5)
 
