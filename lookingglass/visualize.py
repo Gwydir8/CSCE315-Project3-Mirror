@@ -4,9 +4,10 @@
 # *@date     Wed 25 Mar 16:35:07 2015                       *
 # ***********************************************************
 import time
+import string
 import circuits as c
 from graphics import *
-prev_steps = []
+prev_steps = -1
 steps = []
 
 class Canvas:
@@ -118,15 +119,21 @@ def main():
     global prev_steps
     while True:
         readInSteps(sys.argv[1])
-        if steps != prev_steps :
+        if len(steps) != prev_steps :
             canvas = Canvas()
             for i in range(len(steps)):
-                if len(prev_steps) > i:
+                if prev_steps > i:
                     pass
+                elif (str(steps[i].replace(' ', '').strip()) == '1NONE1' and (i - prev_steps) >= 2):
+                    prev_steps = i
+                    break
                 else:
+                    print str(steps[i].replace(' ', '')) == str('1NONE1')
                     canvas.visualizeStep(steps[i])
-            prev_steps = steps
-        time.sleep(5)
+            else:
+                print "Done reading?"
+                prev_steps = len(steps)
+        time.sleep(2)
 
     canvas.waitForClick()
 
