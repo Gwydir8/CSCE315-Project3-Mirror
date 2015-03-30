@@ -24,7 +24,8 @@ script:
   - ./build.sh
   - ./build/eugenics/test-circuit
   - ./build/eugenics/test-getopts
-  - ./build/eugenics/test-algorithm
+  # - ./build/eugenics/test-algorithm
+  - ./build/eugenics/test-jv_algorithm
 notifications:
   webhooks:
     urls: https://webhooks.gitter.im/e/9706bbd6480b87449c86
