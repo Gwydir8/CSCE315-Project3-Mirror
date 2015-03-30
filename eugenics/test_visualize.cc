@@ -11,11 +11,11 @@ class XORTest : public testing::Test {
  protected:
   virtual void SetUp() {
     c = new Circuit(2, 1);
-    c->addGate(NOT, 0);
-    c->addGate(NOT, 1);
-    c->addGate(AND, 0, 3);
-    c->addGate(AND, 1, 2);
-    c->addGate(OR, 4, 5);
+    c->addGate(2, NOT, 0);
+    c->addGate(3, NOT, 1);
+    c->addGate(4, AND, 0, 3);
+    c->addGate(5, AND, 1, 2);
+    c->addGate(6, OR, 4, 5);
   }
   virtual void TearDown() { delete c; }
   Circuit* c;

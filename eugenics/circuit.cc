@@ -73,8 +73,8 @@ int Circuit::addGate(GateType gate_type, int index_1) {
                          " WIRE " + std::to_string(index_1);
     errlog(errmsg);
 
-    // write wire to file
-    writeGateToFile(*built_gate, getGateCount(), " NONE ", index_1);
+    // // write wire to file
+    // writeGateToFile(*built_gate, getGateCount(), " NONE ", index_1);
   }
   assert(built_gate != nullptr);
   gates.push_back(built_gate);
