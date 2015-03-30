@@ -78,9 +78,9 @@ vector<vector<bool>> Algo::search(vector<vector<bool>> desired) {
   // compares circuits wires to desired outputs
   if (check_output(ex_list.front(), desired) == 0) {
     // adds NOT/AND/OR gate
-    add_not(ex_list.front().getWireCount());
-    add_and(ex_list.front().getWireCount());
-    add_or(ex_list.front().getWireCount());
+    add_not(ex_list.front().getGateCount());
+    add_and(ex_list.front().getGateCount());
+    add_or(ex_list.front().getGateCount());
 
     // remove "first" element
     ex_list.pop();

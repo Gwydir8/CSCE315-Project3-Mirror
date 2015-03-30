@@ -8,7 +8,7 @@ using namespace std;
 
 TEST(AlgorithmTest, SimpleSearchTest) {
   vector<vector<bool>> expected_output = {
-      {true, false}, {true, true}, {false, false}, {false, true}};
+      {false, false}};
   Circuit basic = Circuit(3, 2);
   Algo algorithm_test = Algo();
   // Circuit result = alg.findMatchingCircuit();
