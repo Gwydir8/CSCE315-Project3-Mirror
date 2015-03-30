@@ -15,8 +15,17 @@ class Circuit {
   // output_no is the number of outputs desired
   Circuit(int input_no, int output_no);
 
-  // number of gates
-  int numGates() { return gates.size(); }
+  int getOutputCount() const { return output_no; }
+  int getInputCount() const { return input_no; }
+  int getAndCount() const { return and_no; }
+  int getOrCount() const { return or_no; }
+  int getNotCount() const { return not_no; }
+  int getWireCount() const { return wire_no; }
+  int getGateCount() const { return gates.size(); }
+
+  // gate indexes which gate we want to always have as ouput
+  // desired_output indexes which output to map it to
+  void mapGateToOutput(int gate_index, int desired_output_index);
 
   // Valid Gate types with 1 input { NOT, WIRE}
   // add a unary gate which takes the gate/wire at gates[index_1] as input
@@ -53,16 +62,22 @@ class Circuit {
   // NOTE: output_index is checked if it is correct, not set to output_index
   int addGate(int output_index, GateType gate_type, int index_1);
 
-  int getOutputCount() const { return output_no; }
-  int getInputCount() const { return input_no; }
-  int getAndCount() const { return and_no; }
-  int getOrCount() const { return or_no; }
-  int getNotCount() const { return not_no; }
-  int getWireCount() const { return wire_no; }
+  // stdout printer
+  // friend std::ostream& operator<<(std::ostream& os, const Circuit& circuit);
 
-  // gate indexes which gate we want to always have as ouput
-  // desired_output indexes which output to map it to
-  void mapGateToOutput(int gate_index, int desired_output_index);
+  // file read
+  // friend std::ifstream& operator>>(std::ifstream& is, Circuit& circuit);
+
+  // file print
+  // friend std::ofstream &operator<<(std::ofstream &os, const Circuit
+  // &circuit);
+
+  // this is the function that should be used to print gates
+  void writeGateToFile(const Gate& gate, int output_index, std::string type,
+                       int input_index);
+
+  void writeGateToFile(const Gate& gate, int output_index, std::string type,
+                       int input_index1, int input_index2);
 
  private:
   // gates and wires storage

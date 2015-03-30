@@ -2,6 +2,7 @@
 #define GATE_H
 
 #include <iostream>
+#include <fstream>
 
 #include "utility.h"
 
@@ -11,7 +12,7 @@
 class Gate {
  public:
   // invalid default constructor
-  Gate() : input_1(nullptr), input_2(nullptr), val(false) {}
+  Gate() : input_1(nullptr), input_2(nullptr), val(false), type("INVALID") {}
 
   // unary gate or wire
   Gate(Gate* A) : input_1(A), input_2(nullptr), val(false) {}
@@ -23,6 +24,15 @@ class Gate {
   // evaluate returns the output of a gate
   virtual bool evaluate() = 0;
 
+  // // print gate to ofstream
+  // friend std::ofstream& operator<<(std::ofstream& os, const Gate& gate) {
+  //   // right now this only prints the type, but it can and should be extended
+  //   // later
+  //   os << gate.type;
+  //   return os;
+  // }
+
+
  protected:
   // first input (also only input for Not gates and Wires)
   Gate* input_1;
@@ -31,6 +41,9 @@ class Gate {
 
   // truth value
   bool val;
+
+  // type can be and, or, not or wire
+  std::string type;
 };
 
 class Not : public Gate {

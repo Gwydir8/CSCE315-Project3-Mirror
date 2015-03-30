@@ -4,6 +4,9 @@
 #include <iostream>
 #include <cstddef>
 #include <iterator>
+#include <iomanip>
+#include <fstream>
+#include <sstream>
 #include <string>
 
 #include "utility.h"
@@ -18,14 +21,18 @@ Circuit::Circuit(vector<bool> inputs, int o)
   // create initial input wires
   for (bool input : inputs) {
     wire_no++;
-    std::string errmsg = "Circuit::Circuit: " + std::to_string(numGates()) +
+    std::string errmsg = "Circuit::Circuit: " + std::to_string(getGateCount()) +
                          " WIRE " + std::to_string(input);
     errlog(errmsg);
 
     Gate* wire = new Wire(input);
     gates.push_back(wire);
+
+    // write wire to file
+    writeGateToFile(*wire, getGateCount() - 1, " NONE ", input);
   }
 }
+
 Circuit::Circuit(int inputs, int o) : output_no(o), input_no(inputs) {
   // initialize statistics to 0
   and_no = or_no = not_no = wire_no = 0;
@@ -33,12 +40,15 @@ Circuit::Circuit(int inputs, int o) : output_no(o), input_no(inputs) {
   // create initial input wires
   for (int i = 0; i < input_no; ++i) {
     wire_no++;
-    std::string errmsg = "Circuit::Circuit: " + std::to_string(numGates()) +
-                         " WIRE " + std::to_string(false);
+    std::string errmsg = "Circuit::Circuit: " + std::to_string(getGateCount()) +
+                         " WIRE " + std::to_string(i);
     errlog(errmsg);
 
     Gate* wire = new Wire(false);
     gates.push_back(wire);
+
+    // write wire to file
+    writeGateToFile(*wire, getGateCount() - 1, " NONE ", i);
   }
 }
 
@@ -52,6 +62,9 @@ int Circuit::addGate(GateType gate_type, int index_1) {
     std::string errmsg = "Circuit::addGate: " + std::to_string(gates.size()) +
                          " NOT  " + std::to_string(index_1);
     errlog(errmsg);
+
+    // write wire to file
+    writeGateToFile(*built_gate, getGateCount(), " NOT  ", index_1);
   } else if (gate_type == WIRE) {
     built_gate = new Wire(input_1);
     // increment number of wires
@@ -59,6 +72,9 @@ int Circuit::addGate(GateType gate_type, int index_1) {
     std::string errmsg = "Circuit::addGate: " + std::to_string(gates.size()) +
                          " WIRE " + std::to_string(index_1);
     errlog(errmsg);
+
+    // write wire to file
+    writeGateToFile(*built_gate, getGateCount(), " NONE ", index_1);
   }
   assert(built_gate != nullptr);
   gates.push_back(built_gate);
@@ -84,6 +100,9 @@ int Circuit::addGate(GateType gate_type, int index_1, int index_2) {
                          " AND  " + std::to_string(index_1) + " " +
                          std::to_string(index_2);
     errlog(errmsg);
+
+    // write wire to file
+    writeGateToFile(*built_gate, getGateCount(), " AND  ", index_1, index_2);
   } else if (gate_type == OR) {
     built_gate = new Or(input_1, input_2);
     // increment number of or
@@ -92,6 +111,9 @@ int Circuit::addGate(GateType gate_type, int index_1, int index_2) {
                          " OR   " + std::to_string(index_1) + " " +
                          std::to_string(index_2);
     errlog(errmsg);
+
+    // write wire to file
+    writeGateToFile(*built_gate, getGateCount(), " OR   ", index_1, index_2);
   }
   assert(built_gate != nullptr);
   gates.push_back(built_gate);
@@ -188,3 +210,77 @@ void Circuit::printStatistics() {
       " NOTs = " + std::to_string(not_no);
   errlog(errmsg);
 }
+
+// this is the function that should be used to print gates
+void Circuit::writeGateToFile(const Gate& gate, int output_index,
+                              std::string type, int input_index) {
+  // Create filepath
+  std::string directory = "";
+  std::string filename = "eugenics.circuit";
+  // std::string filepath = directory + filename;
+  std::string filepath = filename;
+
+  // Open filepath
+  std::ofstream circuitfile(filepath, std::ios::app);
+
+  // increment indexes
+  output_index++;
+  input_index++;
+
+  // Write circuit to circuitfile
+  circuitfile << output_index << " ";
+  circuitfile << type;
+  circuitfile << " " << input_index;
+  circuitfile << std::endl;
+
+    std::string errmsg = "Circuit::writeGateToFile: " + std::to_string(output_index) +
+      type + std::to_string(input_index);
+    errlog(errmsg);
+
+  circuitfile.close();
+}
+
+void Circuit::writeGateToFile(const Gate& gate, int output_index,
+                              std::string type, int input_index1, int input_index2) {
+  // Create filepath
+  std::string directory = "";
+  std::string filename = "eugenics.circuit";
+  // std::string filepath = directory + filename;
+  std::string filepath = filename;
+
+  // Open filepath
+  std::ofstream circuitfile(filepath, std::ios::app);
+
+  // increment indexes
+  output_index++;
+  input_index1++;
+  input_index2++;
+
+  // Write circuit to circuitfile
+  circuitfile << output_index << " ";
+  circuitfile << type;
+  circuitfile << " " << input_index1;
+  circuitfile << " " << input_index2;
+  circuitfile << std::endl;
+
+    std::string errmsg = "Circuit::writeGateToFile: " + std::to_string(output_index) +
+      type + std::to_string(input_index1) + " " + std::to_string(input_index2);
+    errlog(errmsg);
+
+  circuitfile.close();
+}
+
+// std::ostream& operator<<(std::ostream& os, const Circuit& circuit) {
+//
+// }
+
+// std::ifstream& operator>>(std::ifstream& is, Circuit& circuit) {
+
+// }
+
+// std::ofstream &operator<<(std::ofstream &os, const Circuit &circuit) {
+//   for (Gate* gate : circuit.gates) {
+//     gate->
+//   }
+
+// }
