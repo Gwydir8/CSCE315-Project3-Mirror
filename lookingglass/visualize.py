@@ -17,7 +17,7 @@ class Canvas:
     max_y = 1000
     max_x = 1000
     current_row = 1
-    current_column = 0.0
+    current_column = -2.0
     def __init__(self):
         global steps
         self.max_y = 45 * len(steps)
@@ -27,7 +27,7 @@ class Canvas:
 
     def visualizeStep(self, step):
         print step
-        base_x = (self.current_column * 100) % (self.max_x - 50)
+        base_x = (self.current_column * 80) % (self.max_x - 100) + 25
         base_y = self.current_row * 40
         self.setup_step(base_x, base_y)
         #first draw line
@@ -128,10 +128,8 @@ def main():
                     prev_steps = i
                     break
                 else:
-                    print str(steps[i].replace(' ', '')) == str('1NONE1')
                     canvas.visualizeStep(steps[i])
             else:
-                print "Done reading?"
                 prev_steps = len(steps)
         time.sleep(2)
 
