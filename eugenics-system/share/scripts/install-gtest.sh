@@ -49,28 +49,27 @@ else
     # if you don't have gtest
     echo "You don't have gtest"
 
-    cd $PROJECT_ROOT_DIR
-    echo "Pulling Googletest 1.7.0"
-    git submodule update --init
-    cd $PROJECT_SYSTEM_DIR/eugenics-system
-    cd libraries
-    cd googletest
-    # build
-    echo "Building..."
-    if [ ! -d "build" ]; then
-        mkdir build
-    fi
-    cd build
-    cmake ..
-    make -j${CORES}
+    # cd $PROJECT_ROOT_DIR
+    # echo "Pulling Googletest 1.7.0"
+    # git submodule update --init
+    # cd $PROJECT_SYSTEM_DIR/eugenics-system
+    # cd libraries
+    # # build
+    # echo "Building..."
+    # if [ ! -d "gtest_build" ]; then
+    #     mkdir gtest_build
+    # fi
+    # cd gtest_build
+    # cmake ../googletest/.
+    # make -j${CORES}
 
-    cd $PROJECT_SYSTEM_DIR/eugenics-system/local/lib
-    ln -s $PROJECT_SYSTEM_DIR/eugenics-system/libraries/googletest/build/libgtest.a .
-    ln -s $PROJECT_SYSTEM_DIR/eugenics-system/libraries/googletest/build/libgtest_main.a .
+    # cd $PROJECT_SYSTEM_DIR/eugenics-system/local/lib
+    # ln -s ../../libraries/eugenics-system/libraries/gtest_build/libgtest.a .
+    # ln -s ../../libraries/eugenics-system/libraries/gtest_build/libgtest_main.a .
 
     # set up symlink
-    cd $PROJECT_SYSTEM_DIR/eugenics-system/include
-    ln -s ../libraries/googletest/include/gtest .
+    # cd $PROJECT_SYSTEM_DIR/eugenics-system/local/include
+    # ln -s ../../libraries/googletest/include/gtest .
     cd $PROJECT_SYSTEM_DIR/eugenics-system/local/include
     ln -s ../../libraries/googletest/include/gtest .
 

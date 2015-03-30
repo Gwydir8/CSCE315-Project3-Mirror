@@ -28,3 +28,7 @@
 /eugenics-system/include/gtest
 /eugenics-system/include/include
 build
+/eugenics-system/libraries/gflags_build/
+/eugenics-system/libraries/gtest_build/
+/debuglog.log
+/eugenics.circuit
