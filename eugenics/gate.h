@@ -32,7 +32,6 @@ class Gate {
   //   return os;
   // }
 
-
  protected:
   // first input (also only input for Not gates and Wires)
   Gate* input_1;
