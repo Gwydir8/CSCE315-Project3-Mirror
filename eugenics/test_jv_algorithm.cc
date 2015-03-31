@@ -8,7 +8,7 @@ using namespace std;
 
 TEST(JVAlgorithmTest, EmptyTest) {
   vector<vector<bool>> expected_output = {{false}, {true}};
-  EXPECT_EQ(expected_output, Algo(Circuit(1,1)).search(expected_output));
+  EXPECT_EQ(expected_output, Algo(Circuit(1, 1)).search(expected_output));
 }
 
 // TEST(JVAlgorithmTest, SimpleSearchTest) {

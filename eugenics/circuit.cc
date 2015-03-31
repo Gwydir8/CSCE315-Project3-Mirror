@@ -233,15 +233,17 @@ void Circuit::writeGateToFile(const Gate& gate, int output_index,
   circuitfile << " " << input_index;
   circuitfile << std::endl;
 
-    std::string errmsg = "Circuit::writeGateToFile: " + std::to_string(output_index) +
-      type + std::to_string(input_index);
-    errlog(errmsg);
+  std::string errmsg = "Circuit::writeGateToFile: " +
+                       std::to_string(output_index) + type +
+                       std::to_string(input_index);
+  errlog(errmsg);
 
   circuitfile.close();
 }
 
 void Circuit::writeGateToFile(const Gate& gate, int output_index,
-                              std::string type, int input_index1, int input_index2) {
+                              std::string type, int input_index1,
+                              int input_index2) {
   // Create filepath
   std::string directory = "";
   std::string filename = "eugenics.circuit";
@@ -263,9 +265,10 @@ void Circuit::writeGateToFile(const Gate& gate, int output_index,
   circuitfile << " " << input_index2;
   circuitfile << std::endl;
 
-    std::string errmsg = "Circuit::writeGateToFile: " + std::to_string(output_index) +
-      type + std::to_string(input_index1) + " " + std::to_string(input_index2);
-    errlog(errmsg);
+  std::string errmsg =
+      "Circuit::writeGateToFile: " + std::to_string(output_index) + type +
+      std::to_string(input_index1) + " " + std::to_string(input_index2);
+  errlog(errmsg);
 
   circuitfile.close();
 }
