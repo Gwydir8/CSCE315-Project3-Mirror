@@ -1,7 +1,32 @@
+#ifndef JVALGORITHM_H
+#define JVALGORITHM_H
+
 #include <vector>
-#include <queue>
+#include "circuit.h"
 
-#include "algorithm.h"
-#include "utility.h"
+class Ckt_Algo {
+	private:
+		// exhaustive list, a vector of search-generated circuits
+		std::vector<Circuit> ex_list;
 
-using namespace std;
+		// ex_list.front()'s output
+		std::vector<std::vector<bool>> circ_output;
+
+		// returns true if circuit.evaluateAllInputs() matches desired
+		bool circuit_matches_desired(Circuit circuit,
+										std::vector<std::vector<bool>> desired);
+		void add_not(int counter);
+  		void add_and(int counter);
+  		void add_or(int counter);
+	public:
+
+		//Circuit Constructor
+		Ckt_Algo(Circuit circuit);
+
+		// searches for circuit that matches desired output
+		// if found, search is complete
+		std::vector<std::vector<bool>> search(std::vector<std::vector<bool>> desired);
+
+};
+
+#endif

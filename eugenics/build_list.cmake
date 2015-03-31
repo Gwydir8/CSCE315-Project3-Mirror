@@ -2,6 +2,5 @@
 set(SRCS
     src/circuit.cc
     src/utility.cc
-    src/algorithm.cc
-    src/traditional_algorithm.cc
+    src/jvalgorithm.cc
 )
