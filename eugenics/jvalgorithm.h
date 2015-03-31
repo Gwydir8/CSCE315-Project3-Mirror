@@ -10,7 +10,6 @@ class Ckt_Algo {
   std::vector<Circuit> ex_list;
 
   // ex_list.front()'s output
-  
 
   void add_not(int counter);
   void add_and(int counter);
