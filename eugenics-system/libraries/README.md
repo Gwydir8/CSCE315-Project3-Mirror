@@ -1,0 +1,4 @@
+libraries
+===============
+
+Library git submodules

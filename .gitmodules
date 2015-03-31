@@ -1,0 +1,3 @@
+[submodule "eugenics-system/libraries/googletest"]
+	path = eugenics-system/libraries/googletest
+	url = git://github.com/Gwydir8/googletest.git

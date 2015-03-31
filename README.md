@@ -2,24 +2,32 @@
 A system designed to generate a visualize a circuit generation algorithm.
 Consists of the engine server and visualization client.
 
-[Christopher Findeisen](mailto:cfindeisen7@email.tamu.edu) & [Sam Gwydir](mailto:gwydir8@gmail.com) & [Jerego Orlino](mailto:jjo498@email.tamu.edu) & [Vincent Valenti](mailto:vincentv18@email.tamu.edu)
+[Christopher Findeisen](mailto:cfindeisen7@gmail.com) & [Sam Gwydir](mailto:gwydir8@gmail.com) & [Jerego Orlino](mailto:jjo498@email.tamu.edu) & [Vincent Valenti](mailto:vincentv18@email.tamu.edu)
 
 ----------
+[![Build Status](https://travis-ci.org/gwydirsam/Eugenics.svg?branch=develop)](https://travis-ci.org/gwydirsam/Eugenics)
+
 # Development Notes
+
 ## Directories
 
-- src := source code for project. this is the *need to know*
-- sys := environment and a lot of details regarding some of the frameworks and
-  configs that we're using. feel free to ask about it at any point for more
-  info. a more detailed README can be found here
+- eugenics := Eugenics Engine Server source code
+- lookingglass := LookingGlass Circuit Visualizer source code
+
+- eugenics-system := eugenics-system build files
 
 ## Branches
 
-The most salient point of our branching structure is to stay on the 'develop'
-branch when working. This is the default, so unless there's a reason to, don't checkout a different branch.
-If you want more info, see [this article](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
+* Main Branches
+  - master := latest *compiling* code
+  - develop := latest code, compiling or not. Default branch.
 
-#Production Notes
+* Other Branches
+  - feature/name := feature branch, merged into develop. note feature/ is a prefix. (e.g. feature/add-logging)
+  - experimental/<name> := a contributors experimental branch.
+
+# Production Notes
+
 ## Building
 ### Dependencies
 - gflags 2.1.1

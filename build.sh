@@ -28,36 +28,50 @@ if [ "$HOSTNAME" = "sun2.cs.tamu.edu" ]; then
 elif [ "$HOSTNAME" = "compute-linux1" ]; then
     # hell yeah
     CORES=32
-    # CC=/usr/bin/gcc-4.7
-    # CXX=/usr/bin/g++-4.7
+    CC=/usr/bin/gcc-4.7
+    CXX=/usr/bin/g++-4.7
 elif [ "$HOSTNAME" = "Tron" ]; then
     CORES=4
-    CXX="/usr/local/opt/ccache/libexec/clang++-3.6 -stdlib=libc++"
-    CXXFLAGS="$CXXFLAGS -nostdinc++ -I/usr/local/opt/llvm36/lib/llvm-3.6/include/c++/v1"
-    LDFLAGS="$LDFLAGS -L/usr/local/opt/llvm36/lib/llvm-3.6/lib"
+    # CXX="/usr/local/opt/ccache/libexec/clang++-3.6 -std=gnu++11 -stdlib=libc++"
+    # #CXXFLAGS="$CXXFLAGS -nostdinc++ -I/usr/local/opt/llvm36/lib/llvm-3.6/include/c++/v1"
+    # LDFLAGS="$LDFLAGS -L/usr/local/opt/llvm36/lib/llvm-3.6/lib"
 else
     CORES=4
 fi
 
 # set some directories and files
 PROJECT_ROOT_DIR=`pwd`
+PROJECT_SYSTEM_DIR=$PROJECT_ROOT_DIR/eugenics-system
 
 # compile FLAGS
-LOCAL_LIBS=$PROJECT_ROOT_DIR/local/lib
+LOCAL_LIBS=$PROJECT_SYSTEM_DIR/local/lib
 CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS}
 
 
-RELEASE_BUILD_DIR="build"
-DEBUG_BUILD_DIR="debug"
+RELEASE_BUILD_DIR=$PROJECT_ROOT_DIR/build
+DEBUG_BUILD_DIR=$PROJECT_ROOT_DIR/debug
+
+if [ ! -d "$PROJECT_SYSTEM_DIR/local/include" ]; then
+    mkdir -p $PROJECT_SYSTEM_DIR/local/include
+fi
+if [ ! -d "$PROJECT_SYSTEM_DIR/local/lib" ]; then
+    mkdir -p $PROJECT_SYSTEM_DIR/local/lib
+fi
+
+
+echo "Updating Library Submodules..."
+git submodule update --init --recursive
+echo "Installing GoogleTest"
+./eugenics-system/share/scripts/install-gtest.sh
 
 echo "Starting Release Build..."
 
 # create and switch to build dir
-if [ ! -d "$RELEASE_BUILD_DIR" ]; then
+if [ ! -d "$RELEASE_BUILD_DIR/eugenics" ]; then
     mkdir "$RELEASE_BUILD_DIR";
     cd "$RELEASE_BUILD_DIR";
     # generate release build make files
-    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -DCMAKE_BUILD_TYPE=Release ..
+    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -Dtest=ON -DCMAKE_BUILD_TYPE=Release ../eugenics-system/.
     # make on all cores
     # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
     make -j"$CORES"
@@ -87,11 +101,11 @@ echo "Starting Debug Build..."
 # cd back to project root
 cd ..
 # create and switch to build dir
-if [ ! -d "$DEBUG_BUILD_DIR" ]; then
+if [ ! -d "$DEBUG_BUILD_DIR/eugenics" ]; then
     mkdir "$DEBUG_BUILD_DIR";
     cd "$DEBUG_BUILD_DIR";
     # generate debug build make files
-    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -DCMAKE_BUILD_TYPE=Debug ..
+    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -Dtest=ON -DCMAKE_BUILD_TYPE=Debug ../eugenics-system/.
     # make on all cores
     # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
     make -j"$CORES"
