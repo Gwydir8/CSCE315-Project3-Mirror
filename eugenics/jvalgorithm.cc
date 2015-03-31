@@ -30,7 +30,7 @@ void Ckt_Algo::add_not(int counter) {
   // generates different circuits based on the different
   // combinations of gates to wires, then pushes to queue
   for (int i = 0; i < counter; ++i) {
-    Circuit next = ex_list[0];
+    Circuit next = ex_list.front();
     next.addGate(NOT, i);
     // check if next circuit is equal to a circuit in vector
     bool equal_to_vector = false;
@@ -56,7 +56,7 @@ void Ckt_Algo::add_and(int counter) {
   // combinations of gates to wires, then pushes to queue
   for (int i = 0; i < counter - 1; ++i) {
     for (int j = i + 1; j < counter; ++j) {
-      Circuit next = ex_list[0];
+      Circuit next = ex_list.front();
       next.addGate(AND, i, j);
       // check if next circuit is equal to a circuit in vector
       bool equal_to_vector = false;
@@ -84,7 +84,7 @@ void Ckt_Algo::add_or(int counter) {
   // combinations of gates to wires, then pushes to queue
   for (int i = 0; i < counter - 1; ++i) {
     for (int j = i + 1; j < counter; ++j) {
-      Circuit next = ex_list[0];
+      Circuit next = ex_list.front();
       next.addGate(OR, i, j);
       // check if next circuit is equal to a circuit in vector
       bool equal_to_vector = false;
@@ -111,22 +111,22 @@ vector<vector<bool>> Ckt_Algo::search(vector<vector<bool>> desired) {
   // compares circuits wires to desired outputs
 
   // somehow use mapoutput function
-  if (circuit_matches_desired(ex_list[0], desired) == false) {
+  while (circuit_matches_desired(ex_list.front(), desired) == false) {
     errlog("Ckt_Algo::search circuit did not match desired, search continuing");
 
     // adds NOT/AND/OR gate
-    add_not(ex_list[0].getGateCount());
-    add_and(ex_list[0].getGateCount());
-    add_or(ex_list[0].getGateCount());
+    add_not(ex_list.front().getGateCount());
+    add_and(ex_list.front().getGateCount());
+    add_or(ex_list.front().getGateCount());
 
     // remove "first" element
     ex_list.erase(ex_list.begin());
 
     // search the next circuit
-    search(desired);
+    //search(desired);
 
-  } else {
+  } //else {
     errlog("Ckt_Algo::search found correct circuit!");
     return circ_output;
-  }
+  //}
 }

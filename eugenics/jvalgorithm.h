@@ -10,7 +10,7 @@ class Ckt_Algo {
   std::vector<Circuit> ex_list;
 
   // ex_list.front()'s output
-  std::vector<std::vector<bool>> circ_output;
+  
 
   void add_not(int counter);
   void add_and(int counter);
@@ -19,7 +19,7 @@ class Ckt_Algo {
  public:
   // Circuit Constructor
   Ckt_Algo(Circuit circuit);
-
+  std::vector<std::vector<bool>> circ_output;
   // returns true if circuit.evaluateAllInputs() matches desired
   bool circuit_matches_desired(Circuit circuit,
                                std::vector<std::vector<bool>> desired);
