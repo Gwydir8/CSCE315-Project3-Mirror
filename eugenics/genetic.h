@@ -9,7 +9,7 @@
 
 class Genetic {
  public:
-  Genetic() : expected_inputs(), expected_outputs(), population(){};
+  Genetic() : population(), expected_inputs(), expected_outputs(){};
   Genetic(BooleanTable inputs, BooleanTable outputs)
       : population(), expected_inputs(inputs), expected_outputs(outputs){};
   virtual ~Genetic();
