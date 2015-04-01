@@ -9,10 +9,25 @@ Ckt_Algo::Ckt_Algo(Circuit circuit) : circ_output() {
   ex_list.push_back(circuit);
 }
 
-bool Ckt_Algo::circuit_matches_desired(Circuit x,
-                                       vector<vector<bool>> desired) {
+bool Ckt_Algo::circuit_matches_desired(vector<vector<bool>> desired) {
+  
+  vector<vector<bool>> temp_eval = ex_list.front().get_eval();
+  for(int j = 0; j < desired[0].size(); ++j) {
+    vector<bool> col_desired;
+    vector<bool> col_eval;
+    for(int i = 0; i < desired.size(); ++i) {
+      col_desired.push_back(desired[i][j]);
+    }
+    for(int i = 0; i < temp_eval.size(); ++i) {
+      col_eval.push_back(temp_eval[i][j]);
+    }
+    if(col_desired == col_eval)
+      ex_list.front().mapGateToOutput(ex_list.front().getGateCount() - 1, j);
+  }
+  
+
   // generates an output set based on the circuit
-  circ_output = x.get_eval();
+  circ_output = ex_list.front().evaluateAllInputs();
 
   // compares output set of current circuit and desired
   // make sure generated set and desired are same size
@@ -121,7 +136,7 @@ vector<vector<bool>> Ckt_Algo::search(vector<vector<bool>> desired) {
   // compares circuits wires to desired outputs
 
   // somehow use mapoutput function
-  while (circuit_matches_desired(ex_list.front(), desired) == false) {
+  while (circuit_matches_desired(desired) == false) {
     errlog("Ckt_Algo::search circuit did not match desired, search continuing");
 
     // adds NOT/AND/OR gate
