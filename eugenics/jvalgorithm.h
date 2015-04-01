@@ -9,9 +9,6 @@ class Ckt_Algo {
   // exhaustive list, a vector of search-generated circuits
   std::vector<Circuit> ex_list;
 
-  // ex_list.front()'s output
-  
-
   void add_not(int counter);
   void add_and(int counter);
   void add_or(int counter);
@@ -19,6 +16,7 @@ class Ckt_Algo {
  public:
   // Circuit Constructor
   Ckt_Algo(Circuit circuit);
+  // ex_list.front()'s output
   std::vector<std::vector<bool>> circ_output;
   // returns true if circuit.evaluateAllInputs() matches desired
   bool circuit_matches_desired(Circuit circuit,

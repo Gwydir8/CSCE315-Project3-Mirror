@@ -136,6 +136,7 @@ vector<vector<bool>> Circuit::evaluateAllInputs() {
     outputs.push_back(evaluateInputSet(input));
   }
   assert(!outputs.empty());
+  eval_set = outputs;
   return outputs;
 }
 

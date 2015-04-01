@@ -10,7 +10,7 @@ TEST(JVAlgorithmTest, EmptyTest) {
   EXPECT_EQ(expected_output, Ckt_Algo(Circuit(1, 1)).search(expected_output));
 }
 
-TEST(JVAlgorithmTest, ANDMatch)  {
+/*TEST(JVAlgorithmTest, ANDMatch)  {
   bool expected_output = true;
   Circuit c (2,1);
   c.addGate(AND, 0,1);
@@ -18,7 +18,7 @@ TEST(JVAlgorithmTest, ANDMatch)  {
   Ckt_Algo check (c);
 
   EXPECT_EQ(expected_output, check.circuit_matches_desired(c, desired_output));
-}
+}*/
 
 /*TEST(JVAlgorithmTest, DifferentWireMatch)  {
   bool expected_output = true;
@@ -42,7 +42,7 @@ TEST(JVAlgorithmTest, XORTest){
 Ckt_Algo(Circuit(2,1)).search(expected_output));
 }
 
-/*TEST(JVAlgorithmTest, FullAdderTest){
+TEST(JVAlgorithmTest, FullAdderTest){
         vector<vector<bool>> expected_output = {{false, false},
                                            {false, true},
                                            {false, true},
@@ -52,7 +52,7 @@ Ckt_Algo(Circuit(2,1)).search(expected_output));
                                            {true, false},
                                            {true, true}};
     EXPECT_EQ(expected_output, Ckt_Algo(Circuit(3,2)).search(expected_output));
-}*/
+}
 
 ///./build/eugenics/test-jv_algorithm
 ///./debug/eugenics/test-jv_algorithm

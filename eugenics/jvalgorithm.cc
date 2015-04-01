@@ -5,13 +5,14 @@
 using namespace std;
 
 Ckt_Algo::Ckt_Algo(Circuit circuit) : circ_output() {
+  circuit.evaluateAllInputs();
   ex_list.push_back(circuit);
 }
 
 bool Ckt_Algo::circuit_matches_desired(Circuit x,
                                        vector<vector<bool>> desired) {
   // generates an output set based on the circuit
-  circ_output = x.evaluateAllInputs();
+  circ_output = x.get_eval();
 
   // compares output set of current circuit and desired
   // make sure generated set and desired are same size
@@ -32,10 +33,11 @@ void Ckt_Algo::add_not(int counter) {
   for (int i = 0; i < counter; ++i) {
     Circuit next = ex_list.front();
     next.addGate(NOT, i);
+    next.evaluateAllInputs();
     // check if next circuit is equal to a circuit in vector
     bool equal_to_vector = false;
     for (int j = 0; j < ex_list.size(); ++j) {
-      if (next.evaluateAllInputs() == ex_list[j].evaluateAllInputs()) {
+      if (next.get_eval() == ex_list[j].get_eval()) {
         // it's a duplicate so don't put into vector
         equal_to_vector = true;
         break;
@@ -58,10 +60,11 @@ void Ckt_Algo::add_and(int counter) {
     for (int j = i + 1; j < counter; ++j) {
       Circuit next = ex_list.front();
       next.addGate(AND, i, j);
+      next.evaluateAllInputs();
       // check if next circuit is equal to a circuit in vector
       bool equal_to_vector = false;
       for (int k = 0; k < ex_list.size(); ++k) {
-        if (next.evaluateAllInputs() == ex_list[k].evaluateAllInputs()) {
+        if (next.get_eval() == ex_list[k].get_eval()) {
           // it's a duplicate so don't put into vector
           equal_to_vector = true;
           break;
@@ -86,10 +89,11 @@ void Ckt_Algo::add_or(int counter) {
     for (int j = i + 1; j < counter; ++j) {
       Circuit next = ex_list.front();
       next.addGate(OR, i, j);
+      next.evaluateAllInputs();
       // check if next circuit is equal to a circuit in vector
       bool equal_to_vector = false;
       for (int k = 0; k < ex_list.size(); ++k) {
-        if (next.evaluateAllInputs() == ex_list[k].evaluateAllInputs()) {
+        if (next.get_eval() == ex_list[k].get_eval()) {
           // it's a duplicate so don't put into vector
           equal_to_vector = true;
           break;
