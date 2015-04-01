@@ -10,12 +10,13 @@ TEST(JVAlgorithmTest, EmptyTest) {
   EXPECT_EQ(expected_output, Ckt_Algo(Circuit(1, 1)).search(expected_output));
 }
 
+
 /*TEST(JVAlgorithmTest, ANDMatch)  {
   bool expected_output = true;
-  Circuit c (2,1);
-  c.addGate(AND, 0,1);
+  Circuit c(2, 1);
+  c.addGate(AND, 0, 1);
   vector<vector<bool>> desired_output = {{false}, {false}, {false}, {true}};
-  Ckt_Algo check (c);
+  Ckt_Algo check(c);
 
   EXPECT_EQ(expected_output, check.circuit_matches_desired(c, desired_output));
 }*/
@@ -35,11 +36,9 @@ TEST(JVAlgorithmTest, ANDTest) {
   EXPECT_EQ(expected_output, Ckt_Algo(Circuit(2, 1)).search(expected_output));
 }
 
-TEST(JVAlgorithmTest, XORTest){
-        vector<vector<bool>> expected_output = {{false}, {true}, {true},
-{false}};
-        EXPECT_EQ(expected_output,
-Ckt_Algo(Circuit(2,1)).search(expected_output));
+TEST(JVAlgorithmTest, XORTest) {
+  vector<vector<bool>> expected_output = {{false}, {true}, {true}, {false}};
+  EXPECT_EQ(expected_output, Ckt_Algo(Circuit(2, 1)).search(expected_output));
 }
 
 TEST(JVAlgorithmTest, FullAdderTest){

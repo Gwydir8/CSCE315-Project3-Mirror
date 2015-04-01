@@ -127,10 +127,10 @@ vector<vector<bool>> Ckt_Algo::search(vector<vector<bool>> desired) {
     ex_list.erase(ex_list.begin());
 
     // search the next circuit
-    //search(desired);
+    // search(desired);
 
-  } //else {
-    errlog("Ckt_Algo::search found correct circuit!");
-    return circ_output;
+  }  // else {
+  errlog("Ckt_Algo::search found correct circuit!");
+  return circ_output;
   //}
 }
