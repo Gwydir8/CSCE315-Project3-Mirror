@@ -9,8 +9,9 @@
 
 class Genetic {
  public:
-  Genetic(): expected_inputs(0), expected_outputs(0), population(){};
-  Genetic(BooleanTable inputs, BooleanTable outputs): expected_inputs(0), expected_outputs(0), population(){};
+  Genetic() : expected_inputs(), expected_outputs(), population(){};
+  Genetic(BooleanTable inputs, BooleanTable outputs)
+      : population(), expected_inputs(inputs), expected_outputs(outputs){};
   virtual ~Genetic();
 
   int fitness();
@@ -22,7 +23,6 @@ class Genetic {
   BooleanTable getExpectedInputs() const { return expected_inputs; }
   BooleanTable getExpectedOutputs() const { return expected_outputs; }
   std::map<int, Circuit> getPopulation() const { return population; }
-
 
  private:
   std::map<int, Circuit> population;
