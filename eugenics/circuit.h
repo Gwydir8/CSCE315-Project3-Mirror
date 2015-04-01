@@ -2,6 +2,9 @@
 #define CIRCUIT_H
 #include <vector>
 #include "gate.h"
+
+typedef std::vector<std::vector<bool>> BooleanTable;
+
 enum GateType { NOT, WIRE, OR, AND };
 class Circuit {
  public:
