@@ -1,19 +1,18 @@
 #include "genetic.h"
 
 Circuit randomCircuit(int input_num, int output_num) {
-  
+
 
 }
 
-Genetic::Genetic() {}
 
 Genetic::~Genetic() {}
 
-void Genetic::fitness() {}
+int Genetic::fitness() { return 0;}
 
-void Genetic::spliceCircuit() {}
+void Genetic::splice() {}
 
-void Genetic::splitCircuit() {}
+void Genetic::split() {}
 
 void Genetic::splitAndSplice() {}
 

@@ -9,15 +9,20 @@
 
 class Genetic {
  public:
-  Genetic();
+  Genetic(): expected_inputs(0), expected_outputs(0), population(){};
+  Genetic(BooleanTable inputs, BooleanTable outputs): expected_inputs(0), expected_outputs(0), population(){};
   virtual ~Genetic();
 
-  void fitness();
+  int fitness();
 
-  void spliceCircuit();
-  void splitCircuit();
-
+  void splice();
+  void split();
   void splitAndSplice();
+
+  BooleanTable getExpectedInputs() const { return expected_inputs; }
+  BooleanTable getExpectedOutputs() const { return expected_outputs; }
+  std::map<int, Circuit> getPopulation() const { return population; }
+
 
  private:
   std::map<int, Circuit> population;
