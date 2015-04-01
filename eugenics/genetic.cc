@@ -1,14 +1,10 @@
 #include "genetic.h"
 
-Circuit randomCircuit(int input_num, int output_num) {
-
-
-}
-
+Circuit randomCircuit(int input_num, int output_num) {}
 
 Genetic::~Genetic() {}
 
-int Genetic::fitness() { return 0;}
+int Genetic::fitness() { return 0; }
 
 void Genetic::splice() {}
 
