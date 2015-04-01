@@ -36,19 +36,21 @@ void Ckt_Algo::add_not(int counter) {
     next.evaluateAllInputs();
     // check if next circuit is equal to a circuit in vector
     bool equal_to_vector = false;
-    for (int j = 0; j < ex_list.size(); ++j) {
-      if (next.get_eval() == ex_list[j].get_eval()) {
-        // it's a duplicate so don't put into vector
-        equal_to_vector = true;
-        break;
+    if(next.getNotCount() < 3) {
+      for (int j = 0; j < ex_list.size(); ++j) {
+        if (next.get_eval() == ex_list[j].get_eval()) {
+          // it's a duplicate so don't put into vector
+          equal_to_vector = true;
+          break;
+        }
       }
-    }
-    if (equal_to_vector == false) {
-      ex_list.push_back(next);
-      std::string errmsg = "Ckt_Algo::add_not [" + std::to_string(i) + "] = " +
-                           std::to_string(next.getGateCount()) + " NOT " +
-                           std::to_string(i);
-      errlog(errmsg);
+      if (equal_to_vector == false) {
+        ex_list.push_back(next);
+        std::string errmsg = "Ckt_Algo::add_not [" + std::to_string(i) + "] = " +
+                             std::to_string(next.getGateCount()) + " NOT " +
+                             std::to_string(i);
+        errlog(errmsg);
+      }
     }
   }
 }
@@ -63,20 +65,22 @@ void Ckt_Algo::add_and(int counter) {
       next.evaluateAllInputs();
       // check if next circuit is equal to a circuit in vector
       bool equal_to_vector = false;
-      for (int k = 0; k < ex_list.size(); ++k) {
-        if (next.get_eval() == ex_list[k].get_eval()) {
-          // it's a duplicate so don't put into vector
-          equal_to_vector = true;
-          break;
+      if(next.getNotCount() < 3) {
+        for (int k = 0; k < ex_list.size(); ++k) {
+          if (next.get_eval() == ex_list[k].get_eval()) {
+            // it's a duplicate so don't put into vector
+            equal_to_vector = true;
+            break;
+          }
         }
-      }
-      if (equal_to_vector == false) {
-        ex_list.push_back(next);
-        std::string errmsg = "Ckt_Algo::add_and [" + std::to_string(i) + "][" +
-                             std::to_string(j) + "] = " +
-                             std::to_string(next.getGateCount()) + " AND " +
-                             std::to_string(i) + " " + std::to_string(j);
-        errlog(errmsg);
+        if (equal_to_vector == false) {
+          ex_list.push_back(next);
+          std::string errmsg = "Ckt_Algo::add_and [" + std::to_string(i) + "][" +
+                               std::to_string(j) + "] = " +
+                               std::to_string(next.getGateCount()) + " AND " +
+                               std::to_string(i) + " " + std::to_string(j);
+          errlog(errmsg);
+        }
       }
     }
   }
@@ -92,20 +96,22 @@ void Ckt_Algo::add_or(int counter) {
       next.evaluateAllInputs();
       // check if next circuit is equal to a circuit in vector
       bool equal_to_vector = false;
-      for (int k = 0; k < ex_list.size(); ++k) {
-        if (next.get_eval() == ex_list[k].get_eval()) {
-          // it's a duplicate so don't put into vector
-          equal_to_vector = true;
-          break;
+      if(next.getNotCount() < 3) {
+        for (int k = 0; k < ex_list.size(); ++k) {
+          if (next.get_eval() == ex_list[k].get_eval()) {
+            // it's a duplicate so don't put into vector
+            equal_to_vector = true;
+            break;
+          }
         }
-      }
-      if (equal_to_vector == false) {
-        ex_list.push_back(next);
-        std::string errmsg = "Ckt_Algo::add_or [" + std::to_string(i) + "][" +
-                             std::to_string(j) + "] = " +
-                             std::to_string(next.getGateCount()) + " OR " +
-                             std::to_string(i) + " " + std::to_string(j);
-        errlog(errmsg);
+        if (equal_to_vector == false) {
+          ex_list.push_back(next);
+          std::string errmsg = "Ckt_Algo::add_or [" + std::to_string(i) + "][" +
+                               std::to_string(j) + "] = " +
+                               std::to_string(next.getGateCount()) + " OR " +
+                               std::to_string(i) + " " + std::to_string(j);
+          errlog(errmsg);
+        }
       }
     }
   }
