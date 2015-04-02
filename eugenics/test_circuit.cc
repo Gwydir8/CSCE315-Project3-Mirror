@@ -8,14 +8,14 @@
 // }
 
 TEST(WireTest, Wire) {
-  Wire wire_1 = Wire(true);
+  Wire wire_1 = Wire(true, 0);
   EXPECT_EQ(1, wire_1.evaluate());
 }
 class WireSetup : public testing::Test {
  protected:
   virtual void SetUp() {
-    wire_1 = new Wire(true);
-    wire_0 = new Wire(false);
+    wire_1 = new Wire(true, 0);
+    wire_0 = new Wire(false, 1);
   }
   Wire* wire_1;
   Wire* wire_0;
@@ -133,7 +133,9 @@ class FullAdderTest : public testing::Test {
     c->addGate(20, OR, 17, 18);
     c->addGate(21, OR, 20, 19);
 
-    c->addGate(22, WIRE, 16);
+    // c->addGate(22, WIRE, 16);
+     c->mapGateToOutput((16), 1);  // maps input 1 to output 2
+     c->mapGateToOutput((21), 0);  // maps input 1 to output 2
 
     matrix = {{false, false},
               {false, true},
@@ -153,6 +155,7 @@ TEST_F(FullAdderTest, FAMatrixSize) {
   EXPECT_EQ(matrix.size(), c->evaluateAllInputs().size());
 }
 TEST_F(FullAdderTest, FAEvalTotal) {
+  c->writeCircuitToFile();
   EXPECT_EQ(matrix, c->evaluateAllInputs());
 }
 

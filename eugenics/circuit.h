@@ -26,8 +26,8 @@ class Circuit {
   int getWireCount() const { return wire_no; }
   int getGateCount() const { return gates.size(); }
 
-  // gate indexes which gate we want to always have as ouput
-  // desired_output indexes which output to map it to
+  // gate_index := which gate we want to always have as ouput
+  // desired_output_index := which output to map it to
   void mapGateToOutput(int gate_index, int desired_output_index);
 
   // Valid Gate types with 1 input { NOT, WIRE}
@@ -41,7 +41,7 @@ class Circuit {
 
   // evaluate a circuit for all sets of inputs
   // e.g. the entire set of inputs for an XOR gate
-  std::vector<std::vector<bool>> evaluateAllInputs();
+  BooleanTable evaluateAllInputs();
 
   // evaluate a circuit for just one row of inputs
   // e.g. {false,false,true}
@@ -49,7 +49,7 @@ class Circuit {
 
   // generate all combinations of input_no number of inputs
   // e.g. if input_no is 3, returns 2^3 sets of input_no wide inputs
-  std::vector<std::vector<bool>> generateInputSet();
+  BooleanTable generateInputSet();
 
   /*---end of usefulness for algorithm folks----*/
   // DEPRECATED Constructor
@@ -72,19 +72,21 @@ class Circuit {
   // friend std::ifstream& operator>>(std::ifstream& is, Circuit& circuit);
 
   // file print
-  // friend std::ofstream &operator<<(std::ofstream &os, const Circuit
-  // &circuit);
+  friend std::ofstream &operator<<(std::ofstream &os, const Circuit &circuit);
 
   // this is the function that should be used to print gates
-  void writeGateToFile(const Gate& gate, int output_index, std::string type,
-                       int input_index);
+  void writeGateToFile(const Gate &gate, int output_index, std::string type,
+                       int input_index) const;
 
-  void writeGateToFile(const Gate& gate, int output_index, std::string type,
-                       int input_index1, int input_index2);
+  void writeGateToFile(const Gate &gate, int output_index, std::string type,
+                       int input_index1, int input_index2) const;
+
+  void writeGateToFile(const Gate &gate) const;
+  void writeCircuitToFile() const;
 
  private:
   // gates and wires storage
-  std::vector<Gate*> gates;
+  std::vector<Gate *> gates;
   std::vector<int> mapped_outputs;
   // number of outputs
   int output_no;
