@@ -62,6 +62,11 @@ int Circuit::addGate(GateType gate_type, int index_1) {
     std::string errmsg = "Circuit::addGate: " + std::to_string(gates.size()) +
                          " NOT  " + std::to_string(index_1);
     errlog(errmsg);
+    // warning if not_no exceeds 2
+    if (not_no > 2) {
+      std::string errmsg = "Circuit::addGate: WARNING more than 2 NOTs in circuit";
+      errlog(errmsg);
+    }
 
     // write wire to file
     writeGateToFile(*built_gate, getGateCount(), " NOT  ", index_1);
