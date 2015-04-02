@@ -65,23 +65,10 @@ class Circuit {
   // NOTE: output_index is checked if it is correct, not set to output_index
   int addGate(int output_index, GateType gate_type, int index_1);
 
-  // stdout printer
-  // friend std::ostream& operator<<(std::ostream& os, const Circuit& circuit);
+  // friend std::istream& operator>>(std::istream& is, Circuit& circuit);
 
-  // file read
-  // friend std::ifstream& operator>>(std::ifstream& is, Circuit& circuit);
+  friend std::ostream &operator<<(std::ostream &os, const Circuit &circuit);
 
-  // file print
-  friend std::ofstream &operator<<(std::ofstream &os, const Circuit &circuit);
-
-  // this is the function that should be used to print gates
-  void writeGateToFile(const Gate &gate, int output_index, std::string type,
-                       int input_index) const;
-
-  void writeGateToFile(const Gate &gate, int output_index, std::string type,
-                       int input_index1, int input_index2) const;
-
-  void writeGateToFile(const Gate &gate) const;
   void writeCircuitToFile() const;
 
  private:

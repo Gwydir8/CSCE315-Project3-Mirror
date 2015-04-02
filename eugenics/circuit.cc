@@ -218,12 +218,11 @@ void Circuit::mapGateToOutput(int gate_index, int desired_output_index) {
   // int actual_output_index = output_no - 1 - desired_output_index;
   int actual_output_index = mapped_outputs.size() - 1 - desired_output_index;
   std::string errmsg = "Circuit::mapGateToOutput actual_output_index: " +
-    std::to_string(mapped_outputs.size()) + " - 1 - " +
+                       std::to_string(mapped_outputs.size()) + " - 1 - " +
                        std::to_string(desired_output_index);
   errlog(errmsg);
-  errmsg = "Circuit::mapGateToOutput mapping: " +
-                       std::to_string(gate_index) + " -> " +
-                       std::to_string(actual_output_index);
+  errmsg = "Circuit::mapGateToOutput mapping: " + std::to_string(gate_index) +
+           " -> " + std::to_string(actual_output_index);
   errlog(errmsg);
   mapped_outputs[actual_output_index] = gate_index;
 }
@@ -236,113 +235,14 @@ void Circuit::printStatistics() {
   errlog(errmsg);
 }
 
-// this is the function that should be used to print gates
-void Circuit::writeGateToFile(const Gate& gate, int output_index,
-                              std::string type, int input_index) const {
-  // Create filepath
-  std::string directory = "";
-  std::string filename = "eugenics.circuit";
-  // std::string filepath = directory + filename;
-  std::string filepath = filename;
-
-  // Open filepath
-  std::ofstream circuitfile(filepath, std::ios::app);
-
-  // increment indexes
-  output_index++;
-  input_index++;
-
-  // Write circuit to circuitfile
-  circuitfile << output_index << " ";
-  circuitfile << type;
-  circuitfile << " " << input_index;
-  circuitfile << std::endl;
-
-  std::string errmsg = "Circuit::writeGateToFile: " +
-                       std::to_string(output_index) + type +
-                       std::to_string(input_index);
-  errlog(errmsg);
-
-  circuitfile.close();
-}
-
-void Circuit::writeGateToFile(const Gate& gate, int output_index,
-                              std::string type, int input_index1,
-                              int input_index2) const {
-  // Create filepath
-  std::string directory = "";
-  std::string filename = "eugenics.circuit";
-  // std::string filepath = directory + filename;
-  std::string filepath = filename;
-
-  // Open filepath
-  std::ofstream circuitfile(filepath, std::ios::app);
-
-  // increment indexes
-  output_index++;
-  input_index1++;
-  input_index2++;
-
-  // Write circuit to circuitfile
-  circuitfile << output_index << " ";
-  circuitfile << type;
-  circuitfile << " " << input_index1;
-  circuitfile << " " << input_index2;
-  circuitfile << std::endl;
-
-  std::string errmsg =
-      "Circuit::writeGateToFile: " + std::to_string(output_index) + type +
-      std::to_string(input_index1) + " " + std::to_string(input_index2);
-  errlog(errmsg);
-
-  circuitfile.close();
-}
-
-void Circuit::writeGateToFile(const Gate& gate) const {
-  // Create filepath
-  std::string directory = "";
-  std::string filename = "eugenics.circuit";
-  // std::string filepath = directory + filename;
-  std::string filepath = filename;
-
-  // Open filepath
-  std::ofstream circuitfile(filepath, std::ios::app);
-
-  // increment indexes
-  // output_index++;
-  // input_index1++;
-  // input_index2++;
-
-  // Write circuit to circuitfile
-  // circuitfile << output_index << " ";
-
-  // circuitfile << gate;
-  gate.writeToFile();
-
-  // circuitfile << type;
-  // circuitfile << " " << input_index1;
-  // circuitfile << " " << input_index2;
-  // circuitfile << std::endl;
-
-  // std::string errmsg =
-  //     "Circuit::writeGateToFile: " + std::to_string(output_index) + type +
-  //     std::to_string(input_index1) + " " + std::to_string(input_index2);
-  // errlog(errmsg);
-
-  circuitfile.close();
-}
-
-// std::ostream& operator<<(std::ostream& os, const Circuit& circuit) {
-//
-// }
-
-// std::ifstream& operator>>(std::ifstream& is, Circuit& circuit) {
+// std::istream& operator>>(std::istream& is, Circuit& circuit) {
 
 // }
 
-std::ofstream& operator<<(std::ofstream& os, const Circuit& circuit) {
+std::ostream& operator<<(std::ostream& os, const Circuit& circuit) {
   for (Gate* gate : circuit.gates) {
-    circuit.writeGateToFile(*gate);
+    // circuit.writeGateToFile(*gate);
+    os << *gate;
     // gate->
     // // write wire to file
     // writeGateToFile(*wire, getGateCount() - 1, " NONE ", input);
@@ -352,7 +252,20 @@ std::ofstream& operator<<(std::ofstream& os, const Circuit& circuit) {
 }
 
 void Circuit::writeCircuitToFile() const {
-  for (Gate* gate : this->gates) {
-    this->writeGateToFile(*gate);
-  }
+  // Create filepath
+  std::string directory = "";
+  std::string filename = "eugenics.circuit";
+  // std::string filepath = directory + filename;
+  std::string filepath = filename;
+
+  // Open filepath
+  std::ofstream circuitfile(filepath, std::ios::app);
+
+  std::string errmsg = "Circuit::writeCircuitToFile: " + filepath;
+  errlog(errmsg);
+
+  // Write circuit to circuitfile
+  circuitfile << *this;
+
+  circuitfile.close();
 }

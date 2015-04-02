@@ -85,6 +85,7 @@ TEST_F(XORTest, XOR2) {
   EXPECT_EQ(expected_output1, c->evaluateInputSet({false, true}));
 }
 TEST_F(XORTest, XOR3) {
+  c->writeCircuitToFile();
   EXPECT_EQ(expected_output1, c->evaluateInputSet({true, false}));
 }
 
@@ -134,8 +135,8 @@ class FullAdderTest : public testing::Test {
     c->addGate(21, OR, 20, 19);
 
     // c->addGate(22, WIRE, 16);
-     c->mapGateToOutput((16), 1);  // maps input 1 to output 2
-     c->mapGateToOutput((21), 0);  // maps input 1 to output 2
+    c->mapGateToOutput((16), 1);  // maps input 1 to output 2
+    c->mapGateToOutput((21), 0);  // maps input 1 to output 2
 
     matrix = {{false, false},
               {false, true},
@@ -165,6 +166,7 @@ class CircuitTest : public testing::Test {
 };
 
 TEST_F(CircuitTest, MappingOutput) {
+  c.writeCircuitToFile();
   c.mapGateToOutput(0, 1);  // maps input 1 to output 2
   std::vector<bool> expected_output{true, true};
   EXPECT_EQ(expected_output, c.evaluateInputSet({true, false}));
@@ -180,6 +182,7 @@ TEST_F(CircuitTest, LessSimple) {
   // Circuit c(2, 2);
   EXPECT_EQ(2, c.addGate(2, AND, 1, 1));
   EXPECT_EQ(3, c.addGate(WIRE, 0));
+  c.writeCircuitToFile();
   std::vector<bool> expected_output{false, true};
   EXPECT_EQ(expected_output, c.evaluateInputSet({true, false}));
 }

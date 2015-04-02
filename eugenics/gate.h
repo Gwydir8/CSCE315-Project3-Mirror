@@ -72,8 +72,8 @@ class Gate {
   // write gate to file
   virtual void writeToFile() const = 0;
 
-  // // // print gate to ofstream
-  // friend std::ofstream& operator<<(std::ofstream& os, const Gate& gate);
+  // print gate to ofstream
+  friend std::ostream& operator<<(std::ostream& os, const Gate& gate);
 
  protected:
   // first input (also only input for Not gates and Wires)
@@ -94,13 +94,6 @@ class Gate {
   // type can be and, or, not or wire
   std::string type;
 };
-
-// std::ofstream& operator<<(std::ofstream& os, const Gate& gate) {
-//   // right now this only prints the type, but it can and should be extended
-//   // later
-//   os << gate.writeToFile();
-//   return os;
-// }
 
 class Not : public Gate {
  public:
@@ -301,16 +294,16 @@ class Or : public Gate {
     std::ofstream circuitfile(filepath, std::ios::app);
 
     // Write circuit to circuitfile
-    circuitfile << ( output_index + 1) << " ";
+    circuitfile << (output_index + 1) << " ";
     circuitfile << type;
-    circuitfile << " " << ( input_1_index + 1);
-    circuitfile << " " << ( input_2_index + 1);
+    circuitfile << " " << (input_1_index + 1);
+    circuitfile << " " << (input_2_index + 1);
     circuitfile << std::endl;
 
     std::string errmsg = "Circuit::writeGateToFile: " +
-                         std::to_string(( output_index + 1)) + " " + type + " " +
-                         std::to_string(( input_1_index + 1)) + " " +
-                         std::to_string(( input_2_index + 1));
+                         std::to_string((output_index + 1)) + " " + type + " " +
+                         std::to_string((input_1_index + 1)) + " " +
+                         std::to_string((input_2_index + 1));
     errlog(errmsg);
 
     circuitfile.close();
