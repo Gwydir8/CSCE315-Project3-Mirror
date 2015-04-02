@@ -134,14 +134,14 @@ class Not : public Gate {
     std::ofstream circuitfile(filepath, std::ios::app);
 
     // Write circuit to circuitfile
-    circuitfile << output_index << " ";
+    circuitfile << (output_index + 1) << " ";
     circuitfile << type;
-    circuitfile << " " << input_1_index;
+    circuitfile << " " << (input_1_index + 1);
     circuitfile << std::endl;
 
     std::string errmsg = "Circuit::writeGateToFile: " +
-                         std::to_string(output_index) + " " + type + " " +
-                         std::to_string(input_1_index);
+                         std::to_string((output_index + 1)) + " " + type + " " +
+                         std::to_string((input_1_index + 1));
     errlog(errmsg);
 
     circuitfile.close();
@@ -204,17 +204,17 @@ class Wire : public Gate {
 
     if (type == "NONE") {
       // Write circuit to circuitfile
-      circuitfile << output_index << " ";
+      circuitfile << (output_index + 1) << " ";
       circuitfile << "NONE";
-      circuitfile << " " << input_1_index;
+      circuitfile << " " << (input_1_index + 1);
       circuitfile << std::endl;
     } else {
       errlog("Gate::writeToFile() Wires are not printed to file.");
     }
 
     std::string errmsg = "Circuit::writeGateToFile: " +
-                         std::to_string(output_index) + " " + type + " " +
-                         std::to_string(input_1_index);
+                         std::to_string((output_index + 1)) + " " + type + " " +
+                         std::to_string((input_1_index + 1));
     errlog(errmsg);
 
     circuitfile.close();
@@ -253,16 +253,16 @@ class And : public Gate {
     std::ofstream circuitfile(filepath, std::ios::app);
 
     // Write circuit to circuitfile
-    circuitfile << output_index << " ";
+    circuitfile << (output_index + 1) << " ";
     circuitfile << type;
-    circuitfile << " " << input_1_index;
-    circuitfile << " " << input_2_index;
+    circuitfile << " " << (input_1_index + 1);
+    circuitfile << " " << (input_2_index + 1);
     circuitfile << std::endl;
 
     std::string errmsg = "Circuit::writeGateToFile: " +
-                         std::to_string(output_index) + " " + type + " " +
-                         std::to_string(input_1_index) + " " +
-                         std::to_string(input_2_index);
+                         std::to_string((output_index + 1)) + " " + type + " " +
+                         std::to_string((input_1_index + 1)) + " " +
+                         std::to_string((input_2_index + 1));
     errlog(errmsg);
 
     circuitfile.close();
@@ -301,16 +301,16 @@ class Or : public Gate {
     std::ofstream circuitfile(filepath, std::ios::app);
 
     // Write circuit to circuitfile
-    circuitfile << output_index << " ";
+    circuitfile << ( output_index + 1) << " ";
     circuitfile << type;
-    circuitfile << " " << input_1_index;
-    circuitfile << " " << input_2_index;
+    circuitfile << " " << ( input_1_index + 1);
+    circuitfile << " " << ( input_2_index + 1);
     circuitfile << std::endl;
 
     std::string errmsg = "Circuit::writeGateToFile: " +
-                         std::to_string(output_index) + " " + type + " " +
-                         std::to_string(input_1_index) + " " +
-                         std::to_string(input_2_index);
+                         std::to_string(( output_index + 1)) + " " + type + " " +
+                         std::to_string(( input_1_index + 1)) + " " +
+                         std::to_string(( input_2_index + 1));
     errlog(errmsg);
 
     circuitfile.close();
