@@ -4,6 +4,6 @@ set(SRCS
     src/circuit.cc
     src/genetic.cc
     src/utility.cc
-    src/algorithm.cc
-    src/traditional_algorithm.cc
+    # src/algorithm.cc
+    # src/traditional_algorithm.cc
 )

@@ -1,13 +1,17 @@
 #ifndef GENETIC_H
 #define GENETIC_H
 
-#include "genetic_circuit.h"
 #include <vector>
 #include <map>
 #include <utility>
+#include <random>     // std::mt19937
+#include <algorithm>  // std::max
 
+#include "genetic_circuit.h"
 #include "circuit.h"
 
+// 2^((2^3)*2)
+// 2^
 class Genetic {
  public:
   Genetic() : population(), input_no(), expected_outputs(){};
@@ -25,8 +29,6 @@ class Genetic {
   // perform split and splice in one function
   void splitAndSplice();
 
-
-
   int getExpectedInputs() const { return input_no; }
   BooleanTable getExpectedOutputs() const { return expected_outputs; }
   std::map<int, Circuit> getPopulation() const { return population; }
@@ -38,6 +40,12 @@ class Genetic {
   int input_no;
   BooleanTable expected_outputs;
 
+  // mersenne_twister_engine(mt19937)
+  std::mt19937 rand_engine;
+  // random numbers should be in normal distribution
+  std::uniform_int_distribution<> dist;
 };
+
+size_t hash_circ(GeneticCircuit c);
 
 #endif /* GENETIC_H */

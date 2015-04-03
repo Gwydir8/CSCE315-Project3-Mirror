@@ -112,7 +112,6 @@ class Not : public Gate {
     }
     return q;
   }
-
 };
 
 // a Wire is an usually used as an input node
@@ -158,7 +157,6 @@ class Wire : public Gate {
       errlog("Wire isn't an input wire", true);
     }
   }
-
 };
 
 class And : public Gate {
@@ -181,7 +179,6 @@ class And : public Gate {
     }
     return q;
   }
-
 };
 
 class Or : public Gate {
