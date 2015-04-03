@@ -21,10 +21,19 @@ using std::time;
 
 // don't we want this in genetic.h (outside class)? if it's here it's global
 
-Genetic::Genetic(int n, BooleanTable outputs) : population(), input_no(n), expected_outputs(outputs), rand_engine(std::random_device{}()){ population = spawnPopulation(1000);}
+Genetic::Genetic(int n, BooleanTable outputs)
+    : population(),
+      input_no(n),
+      expected_outputs(outputs),
+      rand_engine(std::random_device{}()) {
+  population = spawnPopulation(1000);
+}
 
 Genetic::Genetic(int n, BooleanTable outputs, std::map<int, Circuit> pop)
-    : population(pop), input_no(n), expected_outputs(outputs), rand_engine(std::random_device{}()) { };
+    : population(pop),
+      input_no(n),
+      expected_outputs(outputs),
+      rand_engine(std::random_device{}()){};
 Genetic::~Genetic() {}
 
 int Genetic::fitness(GeneticCircuit c) {
