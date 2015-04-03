@@ -81,21 +81,3 @@ std::map<int, Circuit> Genetic::spawnPopulation(int populationSize) {
   }
   return population;
 }
-
-size_t hash_circ(GeneticCircuit c) {
-  std::string s = "";
-  std::hash<std::string> hash_fn;
-  BooleanTable outputs = c.evaluateAllInputs();
-  for (std::vector<bool> column : outputs) {
-    for (bool bit : column) {
-      s += std::to_string((int)bit);
-    }
-  }
-
-  errlog("hash_circ Hashing...");
-  size_t hash = hash_fn(s);
-  std::cout << "hash_circ Done Hashing..: " << hash << std::endl;
-  std::cout << " NOT: " << c.getNotCount() << " AND: " << c.getAndCount()
-            << " OR: " << c.getOrCount();
-  return hash;
-}
