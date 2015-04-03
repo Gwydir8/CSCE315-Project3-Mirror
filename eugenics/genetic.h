@@ -10,11 +10,13 @@
 
 class Genetic {
  public:
-  Genetic() : population(), expected_inputs(), expected_outputs(){};
-  Genetic(BooleanTable inputs, BooleanTable outputs)
-      : population(), expected_inputs(inputs), expected_outputs(outputs) {
+  Genetic() : population(), input_no(), expected_outputs(){};
+  Genetic(int n, BooleanTable outputs)
+      : population(), input_no(n), expected_outputs(outputs) {
     spawnPopulation(1000);
   };
+  Genetic(int n, BooleanTable outputs, std::map<int, Circuit> pop)
+      : population(pop), input_no(n), expected_outputs(outputs) { };
   virtual ~Genetic();
 
   int fitness(GeneticCircuit c);
@@ -27,17 +29,19 @@ class Genetic {
   // perform split and splice in one function
   void splitAndSplice();
 
-  BooleanTable getExpectedInputs() const { return expected_inputs; }
+
+
+  int getExpectedInputs() const { return input_no; }
   BooleanTable getExpectedOutputs() const { return expected_outputs; }
   std::map<int, Circuit> getPopulation() const { return population; }
+  std::map<int, Circuit> spawnPopulation(int populationSize);
 
  private:
   std::map<int, Circuit> population;
 
-  BooleanTable expected_inputs;
+  int input_no;
   BooleanTable expected_outputs;
 
-  void spawnPopulation(int populationSize);
 };
 
 #endif /* GENETIC_H */
