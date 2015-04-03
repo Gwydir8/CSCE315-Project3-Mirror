@@ -20,17 +20,21 @@ class GeneticSetup : public testing::Test {
 
 TEST_F(GeneticSetup, Fitness) {
   Circuit c = Circuit(2, 2);
-  EXPECT_GT(0, dolly.fitness(c));
+  // It's expect EXPECTED is less than ACTUAL
+  EXPECT_LT(0, dolly.fitness(c));
 }
 TEST_F(GeneticSetup, ConstructorTest) {
-  int expected_population_size = 1000;  // This may change
+  unsigned long expected_population_size = 1000;  // This may change
   EXPECT_EQ(expected_inputs, dolly.getExpectedInputs());
   EXPECT_EQ(expected_outputs, dolly.getExpectedOutputs());
   EXPECT_EQ(expected_population_size, dolly.getPopulation().size());
 }
-/* TEST_F(GeneticSetup, Splice) { */
 
-/* } */
+TEST_F(GeneticSetup, Splice) {
+  unsigned expected_population_size = 1000;  // This may change
+  EXPECT_EQ(expected_population_size, dolly.getPopulation().size());
+  // dolly.split(dolly.getPopulation()[3], dolly.getPopulation()[900]);
+}
 
 /* TEST_F(GeneticSetup, Split) { */
 

@@ -18,8 +18,12 @@ class Genetic {
 
   int fitness(Circuit c);
 
+  // "cut" two circuits at random point
+  void split(Circuit c1, Circuit c2);
+  // splice together c1a and c2b, and c2a and c1b
   void splice();
-  void split();
+
+  // perform split and splice in one function
   void splitAndSplice();
 
   BooleanTable getExpectedInputs() const { return expected_inputs; }

@@ -71,7 +71,7 @@ if [ ! -d "$RELEASE_BUILD_DIR/eugenics" ]; then
     mkdir "$RELEASE_BUILD_DIR";
     cd "$RELEASE_BUILD_DIR";
     # generate release build make files
-    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -Dtest=ON -DCMAKE_BUILD_TYPE=Release ../eugenics-system/.
+    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -Dtest=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ../eugenics-system/.
     # make on all cores
     # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
     make -j"$CORES"
@@ -105,7 +105,7 @@ if [ ! -d "$DEBUG_BUILD_DIR/eugenics" ]; then
     mkdir "$DEBUG_BUILD_DIR";
     cd "$DEBUG_BUILD_DIR";
     # generate debug build make files
-    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -Dtest=ON -DCMAKE_BUILD_TYPE=Debug ../eugenics-system/.
+    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -Dtest=ON -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ../eugenics-system/.
     # make on all cores
     # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
     make -j"$CORES"
