@@ -1,8 +1,9 @@
 #include "genetic.h"
+
 #include <string>
 #include <iostream>
 #include <functional>
-#include <utility>    //std::map
+#include <utility>    // std::map
 #include <algorithm>  // std::max
 #include <random>     // std::mt19937
 
@@ -31,21 +32,11 @@ int Genetic::fitness(GeneticCircuit c) {
 }
 
 void Genetic::split(Circuit c1, Circuit c2) {
-  // create mersenne_twister_engine(mt19937)
-  std::mt19937 rand_engine{std::random_device{}()};
-
-  int num_inputs = std::max(c1.getInputCount(), c2.getInputCount());
-
-  int max_split_index = (std::max(c1.getGateCount(), c2.getGateCount()) - 1);
-
-  // random numbers should be in normal distribution
-  std::uniform_int_distribution<> dist{num_inputs, max_split_index};
-
   for (int i = 0; i < 50; ++i) {
-    std::cout << dist(rand_engine) << '\n';
+    std::cout << this->dist(rand_engine) << '\n';
 
-    std::string errmsg =
-        "Genetic::split: random number: " + std::to_string(dist(rand_engine));
+    std::string errmsg = "Genetic::split: random number: " +
+                         std::to_string(this->dist(rand_engine));
     errlog(errmsg);
   }
 }
@@ -54,28 +45,11 @@ void Genetic::splice() {}
 
 void Genetic::splitAndSplice() {}
 
-size_t hash_circ(GeneticCircuit c){
-    string s = "";
-    std::hash<std::string> hash_fn;
-    BooleanTable outputs = c.evaluateAllInputs();
-    for(vector<bool> column : outputs ){
-      for(bool bit : column){
-        s += std::to_string((int)bit);
-      }
-    }
-
-    std::cout << "Hashing..." << std::endl;
-    size_t hash = hash_fn(s);
-    std::cout << "Done Hashing..: " << hash << std::endl;
-    std::cout << " NOT: " << c.getNotCount() << " AND: " << c.getAndCount() << " OR: " << c.getOrCount();
-    return hash;
-}
-
 void Genetic::spawnPopulation(int populationSize) {
   srand(time(NULL));
   for (int i = 0; i < populationSize; ++i) {
-    int initial_fitness = 0;
-    GeneticCircuit c = GeneticCircuit(expected_inputs.size(), expected_outputs.size());
+    GeneticCircuit c =
+        GeneticCircuit(expected_inputs.size(), expected_outputs.size());
     int circuit_fitness = fitness(c);
     c.setFitness(circuit_fitness);
     std::string errmsg =
@@ -84,7 +58,24 @@ void Genetic::spawnPopulation(int populationSize) {
     errlog(errmsg);
     std::pair<int, Circuit> zergling(hash_circ(c), c);
     population.insert(zergling);
-    //std::pair<iterator,bool> result_of_insert =
+    // std::pair<iterator,bool> result_of_insert =
   }
 }
 
+size_t hash_circ(GeneticCircuit c) {
+  std::string s = "";
+  std::hash<std::string> hash_fn;
+  BooleanTable outputs = c.evaluateAllInputs();
+  for (std::vector<bool> column : outputs) {
+    for (bool bit : column) {
+      s += std::to_string((int)bit);
+    }
+  }
+
+  errlog("hash_circ Hashing...");
+  size_t hash = hash_fn(s);
+  std::cout << "hash_circ Done Hashing..: " << hash << std::endl;
+  std::cout << " NOT: " << c.getNotCount() << " AND: " << c.getAndCount()
+            << " OR: " << c.getOrCount();
+  return hash;
+}

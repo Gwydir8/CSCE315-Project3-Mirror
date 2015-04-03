@@ -31,7 +31,7 @@ TEST_F(GeneticSetup, ConstructorTest) {
 }
 
 TEST_F(GeneticSetup, Splice) {
-  unsigned expected_population_size = 1000;  // This may change
+  unsigned long expected_population_size = 1000;  // This may change
   EXPECT_EQ(expected_population_size, dolly.getPopulation().size());
   // dolly.split(dolly.getPopulation()[3], dolly.getPopulation()[900]);
 }

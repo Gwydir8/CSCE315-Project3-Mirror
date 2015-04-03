@@ -1,18 +1,24 @@
 #ifndef GENETIC_H
 #define GENETIC_H
 
-#include "genetic_circuit.h"
 #include <vector>
 #include <map>
 #include <utility>
+#include <random>     // std::mt19937
+#include <algorithm>  // std::max
 
+#include "genetic_circuit.h"
 #include "circuit.h"
 
 class Genetic {
  public:
   Genetic() : population(), expected_inputs(), expected_outputs(){};
   Genetic(BooleanTable inputs, BooleanTable outputs)
-      : population(), expected_inputs(inputs), expected_outputs(outputs) {
+      : population(),
+        expected_inputs(inputs),
+        expected_outputs(outputs),
+        rand_engine(std::random_device{}()),
+        dist(inputs.front().size(), outputs.front().size()) {
     spawnPopulation(1000);
   };
   virtual ~Genetic();
@@ -38,6 +44,13 @@ class Genetic {
   BooleanTable expected_outputs;
 
   void spawnPopulation(int populationSize);
+
+  // mersenne_twister_engine(mt19937)
+  std::mt19937 rand_engine;
+  // random numbers should be in normal distribution
+  std::uniform_int_distribution<> dist;
 };
+
+size_t hash_circ(GeneticCircuit c);
 
 #endif /* GENETIC_H */
