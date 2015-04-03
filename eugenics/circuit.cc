@@ -64,7 +64,8 @@ int Circuit::addGate(GateType gate_type, int index_1) {
     errlog(errmsg);
     // warning if not_no exceeds 2
     if (not_no > 2) {
-      std::string errmsg = "Circuit::addGate: WARNING more than 2 NOTs in circuit";
+      std::string errmsg =
+          "Circuit::addGate: WARNING more than 2 NOTs in circuit";
       errlog(errmsg);
     }
 

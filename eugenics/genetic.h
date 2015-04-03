@@ -11,7 +11,9 @@ class Genetic {
  public:
   Genetic() : population(), expected_inputs(), expected_outputs(){};
   Genetic(BooleanTable inputs, BooleanTable outputs)
-    : population(), expected_inputs(inputs), expected_outputs(outputs){spawnPopulation(1000);};
+      : population(), expected_inputs(inputs), expected_outputs(outputs) {
+    spawnPopulation(1000);
+  };
   virtual ~Genetic();
 
   int fitness(Circuit c);

@@ -19,8 +19,9 @@ class GeneticSetup : public testing::Test {
 };
 
 TEST_F(GeneticSetup, Fitness) {
-  Circuit c = Circuit(2,2);
-  EXPECT_GT(0, dolly.fitness(c)); }
+  Circuit c = Circuit(2, 2);
+  EXPECT_GT(0, dolly.fitness(c));
+}
 TEST_F(GeneticSetup, ConstructorTest) {
   int expected_population_size = 1000;  // This may change
   EXPECT_EQ(expected_inputs, dolly.getExpectedInputs());
