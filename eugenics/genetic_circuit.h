@@ -11,7 +11,7 @@
 class GeneticCircuit : public Circuit {
  public:
   GeneticCircuit(int input_num, int output_num)
-      : Circuit(input_num, output_num) {
+      : Circuit(input_num, output_num), fitness(0) {
     if (input_num < 2) {
       std::string errmsg = "Need more than 2 inputs to create gate";
       errlog(errmsg);
