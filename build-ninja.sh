@@ -64,39 +64,40 @@ git submodule update --init --recursive
 echo "Installing GoogleTest"
 ./eugenics-system/share/scripts/install-gtest.sh
 
-echo "Starting Release Build..."
+# echo "Starting Release Build..."
 
-# create and switch to build dir
-if [ ! -d "$RELEASE_BUILD_DIR/eugenics" ]; then
-    mkdir "$RELEASE_BUILD_DIR";
-    cd "$RELEASE_BUILD_DIR";
-    # generate release build make files
-    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -GNinja -Dtest=ON -DCMAKE_BUILD_TYPE=Release ../eugenics-system/.
-    # make on all cores
-    # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
-    # make -j"$CORES"
-    ninja
-    # get return code
-    RESULT=$?
-    if [ $RESULT -ne 0 ]; then
-        echo "Release Build Failed"
-        exit 1
-    fi
-else
-    echo "Running make clean in $RELEASE_BUILD_DIR"
-    cd "$RELEASE_BUILD_DIR"
-    # make clean
-    # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
-    # make -j"$CORES"
-    ninja
-    # get return code
-    RESULT=$?
-    if [ $RESULT -ne 0 ]; then
-        echo "Release Build Failed"
-        exit 1
-    fi
-fi
-echo "Release Build Done!"
+# # create and switch to build dir
+# if [ ! -d "$RELEASE_BUILD_DIR/eugenics" ]; then
+#     mkdir "$RELEASE_BUILD_DIR";
+#     cd "$RELEASE_BUILD_DIR";
+#     # generate release build make files
+#     CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -GNinja -Dtest=ON -DCMAKE_BUILD_TYPE=Release ../eugenics-system/.
+#     # make on all cores
+#     # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
+#     # make -j"$CORES"
+#     ninja
+#     # get return code
+#     RESULT=$?
+#     if [ $RESULT -ne 0 ]; then
+#         echo "Release Build Failed"
+#         exit 1
+#     fi
+# else
+#     echo "Running make clean in $RELEASE_BUILD_DIR"
+#     cd "$RELEASE_BUILD_DIR"
+#     # make clean
+#     # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
+#     # make -j"$CORES"
+#     # ninja -t clean
+#     ninja
+#     # get return code
+#     RESULT=$?
+#     if [ $RESULT -ne 0 ]; then
+#         echo "Release Build Failed"
+#         exit 1
+#     fi
+# fi
+# echo "Release Build Done!"
 
 echo "Starting Debug Build..."
 
@@ -124,6 +125,7 @@ else
     # make clean
     # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
     # make -j"$CORES"
+    # ninja -t clean
     ninja
     # get return code
     RESULT=$?
