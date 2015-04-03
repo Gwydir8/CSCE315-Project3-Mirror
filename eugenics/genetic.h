@@ -15,15 +15,17 @@
 class Genetic {
  public:
   Genetic() : population(), input_no(), expected_outputs(){};
-  Genetic(int num_inputs, BooleanTable outputs)
-      : population(),
-        input_no(num_inputs),
-        expected_outputs(outputs),
-        rand_engine(std::random_device{}()) {
-    spawnPopulation(1000);
-  }
-  Genetic(int num_inputs, BooleanTable outputs, std::map<int, Circuit> pop)
-      : population(pop), input_no(num_inputs), expected_outputs(outputs) {}
+  // Genetic(int num_inputs, BooleanTable outputs)
+  //     : population(),
+  //       input_no(num_inputs),
+  //       expected_outputs(outputs),
+  //       rand_engine(std::random_device{}()) {
+  //   spawnPopulation(1000);
+  // }
+  // Genetic(int num_inputs, BooleanTable outputs, std::map<int, Circuit> pop)
+  //     : population(pop), input_no(num_inputs), expected_outputs(outputs) {}
+  Genetic(int input_no, BooleanTable outputs);
+  Genetic(int input_no, BooleanTable outputs, std::map<int, Circuit> pop);
   virtual ~Genetic();
 
   int fitness(GeneticCircuit c);
