@@ -19,7 +19,7 @@ class GeneticSetup : public testing::Test {
 };
 
 TEST_F(GeneticSetup, Fitness) {
-  Circuit c = Circuit(2, 2);
+  GeneticCircuit c = GeneticCircuit(2, 2);
   EXPECT_GT(0, dolly.fitness(c));
 }
 TEST_F(GeneticSetup, ConstructorTest) {

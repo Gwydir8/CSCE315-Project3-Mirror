@@ -1,36 +1,16 @@
 #include "genetic.h"
 #include <stdio.h>
+#include <iostream>
 #include <stdlib.h>
+#include <functional>
+#include <string>
 #include <time.h>
 using namespace std;
 
-Circuit randomCircuit(int input_num, int output_num) {
-  if (input_num < 2) {
-    std::string errmsg = "Need more than 2 inputs to create gate";
-    errlog(errmsg);
-    exit(-1);
-  }
-  Circuit c = Circuit(input_num, output_num);
-  vector<GateType> gate = {NOT, OR, AND};
-  int num_of_gates = 2;  // arbitrary...
-  srand(time(NULL));
-  for (int i = 0; i < num_of_gates; ++i) {
-    num_of_gates = 0 + rand() % 30;  // random number between 1 and 30
-    // random number between 0 and 2
-    GateType rand_gate = gate[rand() % 2];
-
-    if (rand_gate == NOT) {
-      c.addGate(rand_gate, c.getGateCount());
-    } else if (rand_gate == OR || rand_gate == AND) {
-      c.addGate(rand_gate, c.getGateCount() - 2, c.getGateCount() - 1);
-    }
-  }
-  return c;
-}
 
 Genetic::~Genetic() {}
 
-int Genetic::fitness(Circuit c) {
+int Genetic::fitness(GeneticCircuit c) {
   int score = 0;
   score += c.getNotCount() * 10000;
   score += c.getAndCount() * 10;
@@ -44,11 +24,32 @@ void Genetic::split() {}
 
 void Genetic::splitAndSplice() {}
 
+size_t hash_circ(GeneticCircuit c){
+    string s = "";
+    std::hash<std::string> hash_fn;
+    BooleanTable outputs = c.evaluateAllInputs();
+    for(vector<bool> column : outputs ){
+      for(bool bit : column){
+        s += to_string((int)bit);
+      }
+    }
+
+    cout << "Hashing..." << endl;
+    size_t hash = hash_fn(s);
+    cout << "Done Hashing..: " << hash << endl;
+    cout << " NOT: " << c.getNotCount() << " AND: " << c.getAndCount() << " OR: " << c.getOrCount();
+    return hash;
+}
+
 void Genetic::spawnPopulation(int populationSize) {
+  srand(time(NULL));
   for (int i = 0; i < populationSize; ++i) {
     int initial_fitness = 0;
-    Circuit c = randomCircuit(expected_inputs.size(), expected_outputs.size());
-    std::pair<int, Circuit> zergling(fitness(c), c);
+    GeneticCircuit c = GeneticCircuit(expected_inputs.size(), expected_outputs.size());
+    c.setFitness(fitness(c));
+    std::pair<int, Circuit> zergling(hash_circ(c), c);
     population.insert(zergling);
+    //std::pair<iterator,bool> result_of_insert =
   }
 }
+

@@ -1,6 +1,7 @@
 #ifndef GENETIC_H
 #define GENETIC_H
 
+#include "genetic_circuit.h"
 #include <vector>
 #include <map>
 #include <utility>
@@ -16,7 +17,7 @@ class Genetic {
   };
   virtual ~Genetic();
 
-  int fitness(Circuit c);
+  int fitness(GeneticCircuit c);
 
   void splice();
   void split();
