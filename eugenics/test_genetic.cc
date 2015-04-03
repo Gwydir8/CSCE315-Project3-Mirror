@@ -46,6 +46,14 @@ TEST_F(GeneticSetup, Splice) {
   // dolly.split(dolly.getPopulation()[3], dolly.getPopulation()[900]);
 }
 
+/* TEST(InnocuousAttempt, NumberTwo){ */
+/*   std::mt19937 rand(std::random_device{}()); */
+/*   GeneticCircuit c = GeneticCircuit(3,3, &rand); */
+/*   while(c.evaluateAllInputs() != expected_o){ */
+/*     c = GeneticCircuit(3, 3, &rand); */
+/*   } */
+/* } */
+
 }  // end of namespace
 /* TEST_F(GeneticSetup, Split) { */
 
