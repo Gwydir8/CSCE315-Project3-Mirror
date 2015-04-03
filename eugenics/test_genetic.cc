@@ -20,14 +20,16 @@ class GeneticSetup : public ::testing::Test {
   virtual void SetUp() {
     // FUN FACT: dolly was the first cloned sheep! In honor of her...we send our
     // test genetic class into space with her title
-    dolly = Genetic(2, expected_o, pop);
+    dolly = Genetic(expected_i, expected_o, pop);
   }
   GeneticSetup() {}
   Genetic dolly;
 };
 
 TEST_F(GeneticSetup, Fitness) {
-  GeneticCircuit c = GeneticCircuit(2, 2);
+
+  std::mt19937 rand(std::random_device{}());
+  GeneticCircuit c = GeneticCircuit(3, 3, &rand);
   // It's expect EXPECTED is less than ACTUAL
   EXPECT_LT(0, dolly.fitness(c));
 }

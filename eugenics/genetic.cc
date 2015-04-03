@@ -37,8 +37,7 @@ int Genetic::fitness(GeneticCircuit c) {
 
 void Genetic::split(Circuit c1, Circuit c2) {
   // random numbers should be in normal distribution
-  std::uniform_int_distribution<> dist{input_no,
-                                       (int)expected_outputs.front().size()};
+  std::uniform_int_distribution<> dist{input_no, (int)expected_outputs.front().size()};
   for (int i = 0; i < 50; ++i) {
     std::string errmsg =
         "Genetic::split: random number: " + std::to_string(dist(rand_engine));
@@ -50,11 +49,15 @@ void Genetic::splice() {}
 
 void Genetic::splitAndSplice() {}
 
+
+
+
 std::map<int, Circuit> Genetic::spawnPopulation(int populationSize) {
+  std::map<std::string, Circuit> fake_pop;
   std::map<int, Circuit> spawned_pop;
-  for (int i = 0; i < populationSize; ++i) {
+  while(spawned_pop.size() < 1000) {
     GeneticCircuit c =
-        GeneticCircuit(input_no, expected_outputs.front().size());
+        GeneticCircuit(input_no, expected_outputs.front().size(), &rand_engine);
     int circuit_fitness = fitness(c);
     c.setFitness(circuit_fitness);
 
@@ -65,6 +68,7 @@ std::map<int, Circuit> Genetic::spawnPopulation(int populationSize) {
 
     std::pair<int, Circuit> zergling(hash_circ(c), c);
     spawned_pop.insert(zergling);
+    std::cout << "Currently has found: " << fake_pop.size() << " --  "<< spawned_pop.size() << std::endl;
   }
   return spawned_pop;
 }
@@ -79,10 +83,11 @@ size_t hash_circ(GeneticCircuit c) {
     }
   }
 
-  std::cout << "Hashing..." << std::endl;
+  /* std::cout << "Hashing..." << std::endl; */
   size_t hash = hash_fn(s);
-  std::cout << "Done Hashing..: " << hash << std::endl;
+  /* std::cout << "Done Hashing..: " << hash << std::endl; */
   std::cout << " NOT: " << c.getNotCount() << " AND: " << c.getAndCount()
-            << " OR: " << c.getOrCount();
+            << " OR: " << c.getOrCount() << std::endl;
   return hash;
 }
+
