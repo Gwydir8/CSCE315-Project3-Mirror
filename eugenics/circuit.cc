@@ -27,9 +27,6 @@ Circuit::Circuit(vector<bool> inputs, int o)
 
     Gate* wire = new Wire(inputs[i], i);
     gates.push_back(wire);
-
-    // write wire to file
-    // writeGateToFile(*wire, i, " NONE ", inputs[i]);
   }
 }
 
@@ -46,9 +43,6 @@ Circuit::Circuit(int inputs, int o) : output_no(o), input_no(inputs) {
 
     Gate* wire = new Wire(false, i);
     gates.push_back(wire);
-
-    // write wire to file
-    // writeGateToFile(*wire, i, " NONE ", i);
   }
 }
 
@@ -68,9 +62,6 @@ int Circuit::addGate(GateType gate_type, int index_1) {
           "Circuit::addGate: WARNING more than 2 NOTs in circuit";
       errlog(errmsg);
     }
-
-    // write wire to file
-    // writeGateToFile(*built_gate, getGateCount(), " NOT  ", index_1);
   } else if (gate_type == WIRE) {
     built_gate = new Wire(input_1, index_1);
     // increment number of wires
@@ -78,9 +69,9 @@ int Circuit::addGate(GateType gate_type, int index_1) {
     std::string errmsg = "Circuit::addGate: " + std::to_string(gates.size()) +
                          " WIRE " + std::to_string(index_1);
     errlog(errmsg);
-
-    // // write wire to file
-    // writeGateToFile(*built_gate, getGateCount(), " NONE ", index_1);
+    errlog(
+        "Circuit::addGate: WARNING you probably want to use mapGateToOutput "
+        "instead of adding a Wire");
   }
   assert(built_gate != nullptr);
   gates.push_back(built_gate);
@@ -106,9 +97,6 @@ int Circuit::addGate(GateType gate_type, int index_1, int index_2) {
                          " AND  " + std::to_string(index_1) + " " +
                          std::to_string(index_2);
     errlog(errmsg);
-
-    // write wire to file
-    // writeGateToFile(*built_gate, getGateCount(), " AND  ", index_1, index_2);
   } else if (gate_type == OR) {
     built_gate = new Or(gates.size(), input_1, input_2);
     // increment number of or
@@ -117,9 +105,6 @@ int Circuit::addGate(GateType gate_type, int index_1, int index_2) {
                          " OR   " + std::to_string(index_1) + " " +
                          std::to_string(index_2);
     errlog(errmsg);
-
-    // write wire to file
-    // writeGateToFile(*built_gate, getGateCount(), " OR   ", index_1, index_2);
   }
   assert(built_gate != nullptr);
   gates.push_back(built_gate);
@@ -143,6 +128,15 @@ BooleanTable Circuit::evaluateAllInputs() {
     outputs.push_back(output);
   }
   assert(!outputs.empty());
+
+  for (std::vector<bool> row : outputs) {
+    std::string errmsg = "Circuit::evaluateAllInputs { ";
+    for (bool val : row) {
+      errmsg += std::to_string(val) + " ";
+    }
+    errmsg += "}";
+    errlog(errmsg);
+  }
   return outputs;
 }
 
@@ -205,7 +199,7 @@ BooleanTable Circuit::generateInputSet() {
       row.push_back(current_bit);
       errmsg += std::to_string(current_bit) + " ";
     }
-    errmsg += " }";
+    errmsg += "}";
     errlog(errmsg);
 
     assert(row.size() == (unsigned int)input_no);
@@ -241,11 +235,7 @@ void Circuit::printStatistics() {
 
 std::ostream& operator<<(std::ostream& os, const Circuit& circuit) {
   for (Gate* gate : circuit.gates) {
-    // circuit.writeGateToFile(*gate);
     os << *gate;
-    // gate->
-    // // write wire to file
-    // writeGateToFile(*wire, getGateCount() - 1, " NONE ", input);
   }
 
   return os;
@@ -266,6 +256,7 @@ void Circuit::writeCircuitToFile() const {
 
   // Write circuit to circuitfile
   circuitfile << *this;
+  errlog("Circuit::writeCircuitToFile: write complete");
 
   circuitfile.close();
 }

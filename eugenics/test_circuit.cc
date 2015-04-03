@@ -152,11 +152,9 @@ class FullAdderTest : public testing::Test {
   std::vector<std::vector<bool>> matrix;
 };
 
-TEST_F(FullAdderTest, FAMatrixSize) {
-  EXPECT_EQ(matrix.size(), c->evaluateAllInputs().size());
-}
 TEST_F(FullAdderTest, FAEvalTotal) {
   c->writeCircuitToFile();
+  EXPECT_EQ(matrix.size(), c->evaluateAllInputs().size());
   EXPECT_EQ(matrix, c->evaluateAllInputs());
 }
 

@@ -69,9 +69,6 @@ class Gate {
   // evaluate returns the output of a gate
   virtual bool evaluate() = 0;
 
-  // write gate to file
-  virtual void writeToFile() const = 0;
-
   // print gate to ofstream
   friend std::ostream& operator<<(std::ostream& os, const Gate& gate);
 
@@ -116,29 +113,6 @@ class Not : public Gate {
     return q;
   }
 
-  void writeToFile() const {
-    // Create filepath
-    std::string directory = "";
-    std::string filename = "eugenics.circuit";
-    // std::string filepath = directory + filename;
-    std::string filepath = filename;
-
-    // Open filepath
-    std::ofstream circuitfile(filepath, std::ios::app);
-
-    // Write circuit to circuitfile
-    circuitfile << (output_index + 1) << " ";
-    circuitfile << type;
-    circuitfile << " " << (input_1_index + 1);
-    circuitfile << std::endl;
-
-    std::string errmsg = "Circuit::writeGateToFile: " +
-                         std::to_string((output_index + 1)) + " " + type + " " +
-                         std::to_string((input_1_index + 1));
-    errlog(errmsg);
-
-    circuitfile.close();
-  }
 };
 
 // a Wire is an usually used as an input node
@@ -185,33 +159,6 @@ class Wire : public Gate {
     }
   }
 
-  void writeToFile() const {
-    // Create filepath
-    std::string directory = "";
-    std::string filename = "eugenics.circuit";
-    // std::string filepath = directory + filename;
-    std::string filepath = filename;
-
-    // Open filepath
-    std::ofstream circuitfile(filepath, std::ios::app);
-
-    if (type == "NONE") {
-      // Write circuit to circuitfile
-      circuitfile << (output_index + 1) << " ";
-      circuitfile << "NONE";
-      circuitfile << " " << (input_1_index + 1);
-      circuitfile << std::endl;
-    } else {
-      errlog("Gate::writeToFile() Wires are not printed to file.");
-    }
-
-    std::string errmsg = "Circuit::writeGateToFile: " +
-                         std::to_string((output_index + 1)) + " " + type + " " +
-                         std::to_string((input_1_index + 1));
-    errlog(errmsg);
-
-    circuitfile.close();
-  }
 };
 
 class And : public Gate {
@@ -235,31 +182,6 @@ class And : public Gate {
     return q;
   }
 
-  void writeToFile() const {
-    // Create filepath
-    std::string directory = "";
-    std::string filename = "eugenics.circuit";
-    // std::string filepath = directory + filename;
-    std::string filepath = filename;
-
-    // Open filepath
-    std::ofstream circuitfile(filepath, std::ios::app);
-
-    // Write circuit to circuitfile
-    circuitfile << (output_index + 1) << " ";
-    circuitfile << type;
-    circuitfile << " " << (input_1_index + 1);
-    circuitfile << " " << (input_2_index + 1);
-    circuitfile << std::endl;
-
-    std::string errmsg = "Circuit::writeGateToFile: " +
-                         std::to_string((output_index + 1)) + " " + type + " " +
-                         std::to_string((input_1_index + 1)) + " " +
-                         std::to_string((input_2_index + 1));
-    errlog(errmsg);
-
-    circuitfile.close();
-  }
 };
 
 class Or : public Gate {
@@ -282,31 +204,6 @@ class Or : public Gate {
     }
 
     return q;
-  }
-  void writeToFile() const {
-    // Create filepath
-    std::string directory = "";
-    std::string filename = "eugenics.circuit";
-    // std::string filepath = directory + filename;
-    std::string filepath = filename;
-
-    // Open filepath
-    std::ofstream circuitfile(filepath, std::ios::app);
-
-    // Write circuit to circuitfile
-    circuitfile << (output_index + 1) << " ";
-    circuitfile << type;
-    circuitfile << " " << (input_1_index + 1);
-    circuitfile << " " << (input_2_index + 1);
-    circuitfile << std::endl;
-
-    std::string errmsg = "Circuit::writeGateToFile: " +
-                         std::to_string((output_index + 1)) + " " + type + " " +
-                         std::to_string((input_1_index + 1)) + " " +
-                         std::to_string((input_2_index + 1));
-    errlog(errmsg);
-
-    circuitfile.close();
   }
 };
 
