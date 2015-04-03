@@ -2,16 +2,18 @@
 #define JVALGORITHM_H
 
 #include <vector>
+#include <queue>
 #include "circuit.h"
 
 class Ckt_Algo {
  private:
   // exhaustive list, a vector of search-generated circuits
-  std::vector<Circuit> ex_list;
+  std::queue<Circuit> ex_list;
 
   void add_not(int counter);
   void add_and(int counter);
   void add_or(int counter);
+  std::vector<std::vector<std::vector<bool>>>* output_set;
 
  public:
   // Circuit Constructor

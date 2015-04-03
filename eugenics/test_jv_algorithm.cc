@@ -31,17 +31,17 @@ TEST(JVAlgorithmTest, EmptyTest) {
   EXPECT_EQ(expected_output, check.circuit_matches_desired(c, desired_output));
 }*/
 
-TEST(JVAlgorithmTest, ANDTest) {
+/*TEST(JVAlgorithmTest, ANDTest) {
   vector<vector<bool>> expected_output = {{false}, {false}, {false}, {true}};
   EXPECT_EQ(expected_output, Ckt_Algo(Circuit(2, 1)).search(expected_output));
-}
+}*/
 
-TEST(JVAlgorithmTest, XORTest) {
+/*TEST(JVAlgorithmTest, XORTest) {
   vector<vector<bool>> expected_output = {{false}, {true}, {true}, {false}};
   EXPECT_EQ(expected_output, Ckt_Algo(Circuit(2, 1)).search(expected_output));
-}
+}*/
 
-/*TEST(JVAlgorithmTest, FullAdderTest){
+TEST(JVAlgorithmTest, FullAdderTest){
         vector<vector<bool>> expected_output = {{false, false},
                                            {false, true},
                                            {false, true},
@@ -51,9 +51,9 @@ TEST(JVAlgorithmTest, XORTest) {
                                            {true, false},
                                            {true, true}};
     EXPECT_EQ(expected_output, Ckt_Algo(Circuit(3,2)).search(expected_output));
-}*/
+}
 
-TEST(JVAlgorithmTest, Inverter1){
+/*TEST(JVAlgorithmTest, Inverter1){
   vector<vector<bool>> expected_output = {{true}, {true}, {true};
   vector<bool> inputs = {false, false, false};
   EXPECT_EQ(expected_output, Ckt_Algo(Circuit(inputs, 3)).search(expected_output));
@@ -100,7 +100,7 @@ TEST(JVAlgorithmTest, Inverter8){
   vector<vector<bool>> expected_output = {{false}, {false}, {false};
   vector<bool> inputs = {true, true, true};
   EXPECT_EQ(expected_output, Ckt_Algo(Circuit(inputs, 3)).search(expected_output));
-}
+}*/
 
 
 
