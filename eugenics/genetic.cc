@@ -1,12 +1,24 @@
 #include "genetic.h"
-#include <stdio.h>
-#include <iostream>
-#include <stdlib.h>
-#include <functional>
 #include <string>
-#include <time.h>
-using namespace std;
+#include <iostream>
+#include <functional>
+#include <utility>    //std::map
+#include <algorithm>  // std::max
+#include <random>     // std::mt19937
 
+#include <cstdio>
+#include <cstdlib>
+#include <ctime>  // std::time
+
+#include "utility.h"
+
+using std::string;
+using std::vector;
+using std::srand;
+using std::rand;
+using std::time;
+
+// don't we want this in genetic.h (outside class)? if it's here it's global
 
 Genetic::~Genetic() {}
 
@@ -18,9 +30,27 @@ int Genetic::fitness(GeneticCircuit c) {
   return score;
 }
 
-void Genetic::splice() {}
+void Genetic::split(Circuit c1, Circuit c2) {
+  // create mersenne_twister_engine(mt19937)
+  std::mt19937 rand_engine{std::random_device{}()};
 
-void Genetic::split() {}
+  int num_inputs = std::max(c1.getInputCount(), c2.getInputCount());
+
+  int max_split_index = (std::max(c1.getGateCount(), c2.getGateCount()) - 1);
+
+  // random numbers should be in normal distribution
+  std::uniform_int_distribution<> dist{num_inputs, max_split_index};
+
+  for (int i = 0; i < 50; ++i) {
+    std::cout << dist(rand_engine) << '\n';
+
+    std::string errmsg =
+        "Genetic::split: random number: " + std::to_string(dist(rand_engine));
+    errlog(errmsg);
+  }
+}
+
+void Genetic::splice() {}
 
 void Genetic::splitAndSplice() {}
 
@@ -30,14 +60,14 @@ size_t hash_circ(GeneticCircuit c){
     BooleanTable outputs = c.evaluateAllInputs();
     for(vector<bool> column : outputs ){
       for(bool bit : column){
-        s += to_string((int)bit);
+        s += std::to_string((int)bit);
       }
     }
 
-    cout << "Hashing..." << endl;
+    std::cout << "Hashing..." << std::endl;
     size_t hash = hash_fn(s);
-    cout << "Done Hashing..: " << hash << endl;
-    cout << " NOT: " << c.getNotCount() << " AND: " << c.getAndCount() << " OR: " << c.getOrCount();
+    std::cout << "Done Hashing..: " << hash << std::endl;
+    std::cout << " NOT: " << c.getNotCount() << " AND: " << c.getAndCount() << " OR: " << c.getOrCount();
     return hash;
 }
 
@@ -46,7 +76,12 @@ void Genetic::spawnPopulation(int populationSize) {
   for (int i = 0; i < populationSize; ++i) {
     int initial_fitness = 0;
     GeneticCircuit c = GeneticCircuit(expected_inputs.size(), expected_outputs.size());
-    c.setFitness(fitness(c));
+    int circuit_fitness = fitness(c);
+    c.setFitness(circuit_fitness);
+    std::string errmsg =
+        "Genetic::spawnPopulation inserting Circuit fitness: " +
+        std::to_string(circuit_fitness);
+    errlog(errmsg);
     std::pair<int, Circuit> zergling(hash_circ(c), c);
     population.insert(zergling);
     //std::pair<iterator,bool> result_of_insert =
