@@ -2,18 +2,16 @@
 #define GENETIC_CIRCUIT_H
 
 #include <vector>
-
 #include <cstdio>
 #include <cstdlib>
 #include <random>
-
 #include "circuit.h"
-using std::srand;
+
 class GeneticCircuit : public Circuit {
  public:
 
   GeneticCircuit(int input_num, int output_num, std::mt19937* rand_eng)
-      : Circuit(input_num, output_num), rand_engine(rand_eng){
+      : Circuit(input_num, output_num), rand_engine(rand_eng), fitness(0){
     if (input_num < 2) {
       std::string errmsg = "Need more than 2 inputs to create gate";
       errlog(errmsg);
