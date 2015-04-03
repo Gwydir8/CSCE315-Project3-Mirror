@@ -11,12 +11,8 @@
 class Genetic {
  public:
   Genetic() : population(), input_no(), expected_outputs(){};
-  Genetic(int n, BooleanTable outputs)
-      : population(), input_no(n), expected_outputs(outputs) {
-    spawnPopulation(1000);
-  };
-  Genetic(int n, BooleanTable outputs, std::map<int, Circuit> pop)
-      : population(pop), input_no(n), expected_outputs(outputs) { };
+  Genetic(int input_no, BooleanTable outputs);
+  Genetic(int input_no, BooleanTable outputs, std::map<int, Circuit> pop);
   virtual ~Genetic();
 
   int fitness(GeneticCircuit c);

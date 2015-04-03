@@ -20,6 +20,10 @@ using std::time;
 
 // don't we want this in genetic.h (outside class)? if it's here it's global
 
+Genetic::Genetic(int n, BooleanTable outputs)
+    : population(), input_no(n), expected_outputs(outputs) { population = spawnPopulation(1000);};
+Genetic::Genetic(int n, BooleanTable outputs, std::map<int, Circuit> pop)
+    : population(pop), input_no(n), expected_outputs(outputs) { };
 Genetic::~Genetic() {}
 
 int Genetic::fitness(GeneticCircuit c) {
@@ -74,6 +78,7 @@ size_t hash_circ(GeneticCircuit c){
 std::map<int, Circuit> Genetic::spawnPopulation(int populationSize) {
   srand(time(NULL));
 
+  std::map<int, Circuit> spawned_pop;
   for (int i = 0; i < populationSize; ++i) {
     GeneticCircuit c = GeneticCircuit(input_no, expected_outputs[0].size());
     int circuit_fitness = fitness(c);
@@ -85,8 +90,8 @@ std::map<int, Circuit> Genetic::spawnPopulation(int populationSize) {
     errlog(errmsg);
 
     std::pair<int, Circuit> zergling(hash_circ(c), c);
-    population.insert(zergling);
+    spawned_pop.insert(zergling);
   }
-  return population;
+  return spawned_pop;
 }
 
