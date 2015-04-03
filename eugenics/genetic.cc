@@ -19,8 +19,6 @@ using std::srand;
 using std::rand;
 using std::time;
 
-// don't we want this in genetic.h (outside class)? if it's here it's global
-
 Genetic::~Genetic() {}
 
 int Genetic::fitness(GeneticCircuit c) {
@@ -32,11 +30,12 @@ int Genetic::fitness(GeneticCircuit c) {
 }
 
 void Genetic::split(Circuit c1, Circuit c2) {
+  // random numbers should be in normal distribution
+  std::uniform_int_distribution<> dist{input_no,
+                                       (int)expected_outputs.front().size()};
   for (int i = 0; i < 50; ++i) {
-    std::cout << this->dist(rand_engine) << '\n';
-
-    std::string errmsg = "Genetic::split: random number: " +
-                         std::to_string(this->dist(rand_engine));
+    std::string errmsg =
+        "Genetic::split: random number: " + std::to_string(dist(rand_engine));
     errlog(errmsg);
   }
 }
@@ -45,29 +44,10 @@ void Genetic::splice() {}
 
 void Genetic::splitAndSplice() {}
 
-size_t hash_circ(GeneticCircuit c) {
-  string s = "";
-  std::hash<std::string> hash_fn;
-  BooleanTable outputs = c.evaluateAllInputs();
-  for (vector<bool> row : outputs) {
-    for (bool bit : row) {
-      s += std::to_string((int)bit);
-    }
-  }
-
-  std::cout << "Hashing..." << std::endl;
-  size_t hash = hash_fn(s);
-  std::cout << "Done Hashing..: " << hash << std::endl;
-  std::cout << " NOT: " << c.getNotCount() << " AND: " << c.getAndCount()
-            << " OR: " << c.getOrCount();
-  return hash;
-}
-
 std::map<int, Circuit> Genetic::spawnPopulation(int populationSize) {
-  srand(time(NULL));
-
   for (int i = 0; i < populationSize; ++i) {
-    GeneticCircuit c = GeneticCircuit(input_no, expected_outputs[0].size());
+    GeneticCircuit c =
+        GeneticCircuit(input_no, expected_outputs.front().size());
     int circuit_fitness = fitness(c);
     c.setFitness(circuit_fitness);
 
@@ -80,4 +60,22 @@ std::map<int, Circuit> Genetic::spawnPopulation(int populationSize) {
     population.insert(zergling);
   }
   return population;
+}
+
+size_t hash_circ(GeneticCircuit c) {
+  std::string s = "";
+  std::hash<std::string> hash_fn;
+  BooleanTable outputs = c.evaluateAllInputs();
+  for (std::vector<bool> row : outputs) {
+    for (bool bit : row) {
+      s += std::to_string((int)bit);
+    }
+  }
+
+  std::cout << "Hashing..." << std::endl;
+  size_t hash = hash_fn(s);
+  std::cout << "Done Hashing..: " << hash << std::endl;
+  std::cout << " NOT: " << c.getNotCount() << " AND: " << c.getAndCount()
+            << " OR: " << c.getOrCount();
+  return hash;
 }

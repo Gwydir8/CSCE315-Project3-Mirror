@@ -19,12 +19,11 @@ class Genetic {
       : population(),
         input_no(num_inputs),
         expected_outputs(outputs),
-        rand_engine(std::random_device{}()),
-        dist(num_inputs, outputs.front().size()) {
+        rand_engine(std::random_device{}()) {
     spawnPopulation(1000);
   }
   Genetic(int num_inputs, BooleanTable outputs, std::map<int, Circuit> pop)
-      : population(pop), input_no(num_inputs), expected_outputs(outputs){};
+      : population(pop), input_no(num_inputs), expected_outputs(outputs) {}
   virtual ~Genetic();
 
   int fitness(GeneticCircuit c);
@@ -50,8 +49,6 @@ class Genetic {
 
   // mersenne_twister_engine(mt19937)
   std::mt19937 rand_engine;
-  // random numbers should be in normal distribution
-  std::uniform_int_distribution<> dist;
 };
 
 size_t hash_circ(GeneticCircuit c);
