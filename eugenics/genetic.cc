@@ -45,20 +45,41 @@ void Genetic::splice() {}
 
 void Genetic::splitAndSplice() {}
 
-void Genetic::spawnPopulation(int populationSize) {
+size_t hash_circ(GeneticCircuit c) {
+  string s = "";
+  std::hash<std::string> hash_fn;
+  BooleanTable outputs = c.evaluateAllInputs();
+  for (vector<bool> row : outputs) {
+    for (bool bit : row) {
+      s += std::to_string((int)bit);
+    }
+  }
+
+  std::cout << "Hashing..." << std::endl;
+  size_t hash = hash_fn(s);
+  std::cout << "Done Hashing..: " << hash << std::endl;
+  std::cout << " NOT: " << c.getNotCount() << " AND: " << c.getAndCount()
+            << " OR: " << c.getOrCount();
+  return hash;
+}
+
+std::map<int, Circuit> Genetic::spawnPopulation(int populationSize) {
+  srand(time(NULL));
+
   for (int i = 0; i < populationSize; ++i) {
-    GeneticCircuit c =
-        GeneticCircuit(expected_inputs.size(), expected_outputs.size());
+    GeneticCircuit c = GeneticCircuit(input_no, expected_outputs[0].size());
     int circuit_fitness = fitness(c);
     c.setFitness(circuit_fitness);
+
     std::string errmsg =
         "Genetic::spawnPopulation inserting Circuit fitness: " +
         std::to_string(circuit_fitness);
     errlog(errmsg);
+
     std::pair<int, Circuit> zergling(hash_circ(c), c);
     population.insert(zergling);
-    // std::pair<iterator,bool> result_of_insert =
   }
+  return population;
 }
 
 size_t hash_circ(GeneticCircuit c) {

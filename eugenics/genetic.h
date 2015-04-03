@@ -10,20 +10,21 @@
 #include "genetic_circuit.h"
 #include "circuit.h"
 
-
 // 2^((2^3)*2)
 // 2^
 class Genetic {
  public:
-  Genetic() : population(), expected_inputs(), expected_outputs(){};
-  Genetic(BooleanTable inputs, BooleanTable outputs)
+  Genetic() : population(), input_no(), expected_outputs(){};
+  Genetic(int num_inputs, BooleanTable outputs)
       : population(),
-        expected_inputs(inputs),
+        input_no(num_inputs),
         expected_outputs(outputs),
         rand_engine(std::random_device{}()),
-        dist(inputs.front().size(), outputs.front().size()) {
+        dist(num_inputs, outputs.front().size()) {
     spawnPopulation(1000);
-  };
+  }
+  Genetic(int num_inputs, BooleanTable outputs, std::map<int, Circuit> pop)
+      : population(pop), input_no(num_inputs), expected_outputs(outputs){};
   virtual ~Genetic();
 
   int fitness(GeneticCircuit c);
@@ -36,17 +37,16 @@ class Genetic {
   // perform split and splice in one function
   void splitAndSplice();
 
-  BooleanTable getExpectedInputs() const { return expected_inputs; }
+  int getExpectedInputs() const { return input_no; }
   BooleanTable getExpectedOutputs() const { return expected_outputs; }
   std::map<int, Circuit> getPopulation() const { return population; }
+  std::map<int, Circuit> spawnPopulation(int populationSize);
 
  private:
   std::map<int, Circuit> population;
 
-  BooleanTable expected_inputs;
+  int input_no;
   BooleanTable expected_outputs;
-
-  void spawnPopulation(int populationSize);
 
   // mersenne_twister_engine(mt19937)
   std::mt19937 rand_engine;
