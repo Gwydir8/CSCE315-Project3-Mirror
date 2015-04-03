@@ -11,10 +11,10 @@ class Genetic {
  public:
   Genetic() : population(), expected_inputs(), expected_outputs(){};
   Genetic(BooleanTable inputs, BooleanTable outputs)
-      : population(), expected_inputs(inputs), expected_outputs(outputs){};
+    : population(), expected_inputs(inputs), expected_outputs(outputs){spawnPopulation(1000);};
   virtual ~Genetic();
 
-  int fitness();
+  int fitness(Circuit c);
 
   void splice();
   void split();
