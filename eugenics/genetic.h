@@ -10,6 +10,9 @@
 #include "genetic_circuit.h"
 #include "circuit.h"
 
+
+// 2^((2^3)*2)
+// 2^
 class Genetic {
  public:
   Genetic() : population(), expected_inputs(), expected_outputs(){};

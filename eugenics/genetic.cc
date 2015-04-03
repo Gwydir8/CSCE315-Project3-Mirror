@@ -46,7 +46,6 @@ void Genetic::splice() {}
 void Genetic::splitAndSplice() {}
 
 void Genetic::spawnPopulation(int populationSize) {
-  srand(time(NULL));
   for (int i = 0; i < populationSize; ++i) {
     GeneticCircuit c =
         GeneticCircuit(expected_inputs.size(), expected_outputs.size());

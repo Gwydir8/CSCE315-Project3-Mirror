@@ -1,5 +1,6 @@
 #ifndef GENETIC_CIRCUIT_H
 #define GENETIC_CIRCUIT_H
+
 #include "circuit.h"
 #include <stdio.h>
 #include <stdlib.h>
