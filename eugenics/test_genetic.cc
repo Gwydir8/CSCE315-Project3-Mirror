@@ -52,6 +52,19 @@ TEST_F(GeneticSetup, Splice) {
   // dolly.split(dolly.getPopulation()[3], dolly.getPopulation()[900]);
 }
 
+TEST_F(GeneticSetup, SplitAndSplice) {
+  GeneticCircuit gc_1 = GeneticCircuit(3, 3, &rand);
+  GeneticCircuit gc_2 = GeneticCircuit(3, 3, &rand);
+  std::pair<GeneticCircuit, GeneticCircuit> = gc_pair dolly.splitAndSplice(g_1, g_2);
+
+  gc_1 = gc_pair.first;
+  gc_2 = gc_pair.second;
+
+  EXPECT_EQ(expected_population_size, dolly.getPopulation().size());
+  // dolly.split(dolly.getPopulation()[3], dolly.getPopulation()[900]);
+}
+
+
 /* TEST(InnocuousAttempt, NumberTwo){ */
 /*   std::mt19937 rand(std::random_device{}()); */
 /*   GeneticCircuit c = GeneticCircuit(3,3, &rand); */

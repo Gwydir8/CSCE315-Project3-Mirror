@@ -53,8 +53,8 @@ void Genetic::split(Circuit c1, Circuit c2) {
 }
 
 GeneticCircuit Genetic::splice(Circuit base_part, Circuit appended_part) {
-  std::vector<Circuit> combined_gates = base_part.getGates();
-  std::vector<Circuit> a = appended_part.getGates();
+  std::vector<Gate> combined_gates = base_part.getGates();
+  std::vector<Gate> a = appended_part.getGates();
 
   combined_gates.reserve(combined_gates.size() + a.size());
   combined_gates.insert(combined_gates.end(), a.begin(), a.end());

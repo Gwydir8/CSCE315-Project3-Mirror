@@ -33,7 +33,7 @@ class Genetic {
   // "cut" two circuits at random point
   void split(Circuit c1, Circuit c2);
   // splice together c1a and c2b, and c2a and c1b
-  /* GeneticCircuit splice(Circuit base_part, Circuit appended_part); */
+  GeneticCircuit splice(Circuit base_part, Circuit appended_part);
 
   // perform split and splice in one function
   std::pair<GeneticCircuit, GeneticCircuit> splitAndSplice(GeneticCircuit c_1, GeneticCircuit c_2);
