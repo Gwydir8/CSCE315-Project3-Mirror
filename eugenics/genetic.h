@@ -33,10 +33,10 @@ class Genetic {
   // "cut" two circuits at random point
   void split(Circuit c1, Circuit c2);
   // splice together c1a and c2b, and c2a and c1b
-  void splice();
+  /* GeneticCircuit splice(Circuit base_part, Circuit appended_part); */
 
   // perform split and splice in one function
-  void splitAndSplice();
+  std::pair<GeneticCircuit, GeneticCircuit> splitAndSplice(GeneticCircuit c_1, GeneticCircuit c_2);
 
   int getExpectedInputs() const { return input_no; }
   BooleanTable getExpectedOutputs() const { return expected_outputs; }

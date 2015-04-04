@@ -11,6 +11,8 @@ namespace {
 
 class GeneticSetup : public ::testing::Test {
  protected:
+
+
   virtual void SetUp() {
     // FUN FACT: dolly was the first cloned sheep! In honor of her...we send our
     // test genetic class into space with her title
@@ -56,6 +58,29 @@ TEST_F(GeneticSetup, Splice) {
 /*   while(c.evaluateAllInputs() != expected_o){ */
 /*     c = GeneticCircuit(3, 3, &rand); */
 /*   } */
+/* } */
+
+
+
+/* TEST(MatrixEquality, Checking) { */
+/*     BooleanTable mat_1 = {{true, true, true}, */
+/*                   {true, true, false}, */
+/*                   {true, false, true}, */
+/*                   {true, false, false}, */
+/*                   {false, true, true}, */
+/*                   {false, true, false}, */
+/*                   {false, false, true}, */
+/*                   {false, false, false}}; */
+
+/*     BooleanTable mat_2 = {{true, true, true}, */
+/*                   {true, true, false}, */
+/*                   {true, false, true}, */
+/*                   {true, false, false}, */
+/*                   {false, true, true}, */
+/*                   {false, true, false}, */
+/*                   {false, false, true}, */
+/*                   {false, false, false}}; */
+/*     EXPECT_EQ(true, (mat_1 == mat_2)); */
 /* } */
 
 

@@ -52,9 +52,33 @@ void Genetic::split(Circuit c1, Circuit c2) {
   }
 }
 
-void Genetic::splice() {}
+GeneticCircuit Genetic::splice(Circuit base_part, Circuit appended_part) {
+  std::vector<Circuit> combined_gates = base_part.getGates();
+  std::vector<Circuit> a = appended_part.getGates();
 
-void Genetic::splitAndSplice() {}
+  combined_gates.reserve(combined_gates.size() + a.size());
+  combined_gates.insert(combined_gates.end(), a.begin(), a.end());
+
+  GeneticCircuit new_circuit(input_no, expected_outputs.size(), combined_gates);
+  return new_circuit;
+}
+
+std::pair<GeneticCircuit, GeneticCircuit> Genetic::splitAndSplice(GeneticCircuit c_1, GeneticCircuit c_2){
+  std::pair<GeneticCircuit, GeneticCircuit> swapped_circuits(c_1, c_2);
+
+  //Generate random index to split at
+  int limiting_index = (c_1.getGateCount() < c_2.getGateCount())? c_1.getGateCount() : c_2.getGateCount();
+  std::uniform_int_distribution<> dist{input_no, limiting_index - 1};
+  int split_index = dist(rand_engine);
+
+  std::pair<GeneticCircuit, GeneticCircuit> c_1_halves = split(c_1, split_index);
+  std::pair<GeneticCircuit, GeneticCircuit> c_2_halves = split(c_2, split_index);
+
+  swapped_circuits.first = splice(c_1_halves.first, c_2_halves.second);
+  swapped_circuits.second = splice(c_2_halves.first, c_1_halves.second);
+
+  return swapped_circuits;
+}
 
 
 
@@ -64,13 +88,13 @@ std::map<int, Circuit> Genetic::spawnPopulation(int populationSize) {
   std::map<int, Circuit> spawned_pop;
   while(spawned_pop.size() < 1000) {
     GeneticCircuit c =
-        GeneticCircuit(input_no, expected_outputs.front().size(), &rand_engine);
+      GeneticCircuit(input_no, expected_outputs.front().size(), &rand_engine);
     int circuit_fitness = fitness(c);
     c.setFitness(circuit_fitness);
 
     std::string errmsg =
-        "Genetic::spawnPopulation inserting Circuit fitness: " +
-        std::to_string(circuit_fitness);
+      "Genetic::spawnPopulation inserting Circuit fitness: " +
+      std::to_string(circuit_fitness);
     errlog(errmsg);
 
     std::pair<int, Circuit> zergling(hash_circ(c), c);
@@ -94,7 +118,7 @@ size_t hash_circ(GeneticCircuit c) {
   size_t hash = hash_fn(s);
   /* std::cout << "Done Hashing..: " << hash << std::endl; */
   std::cout << " NOT: " << c.getNotCount() << " AND: " << c.getAndCount()
-            << " OR: " << c.getOrCount() << std::endl;
+    << " OR: " << c.getOrCount() << std::endl;
   return hash;
 }
 
