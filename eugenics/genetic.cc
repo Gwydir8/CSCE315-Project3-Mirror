@@ -87,18 +87,22 @@ std::map<int, GeneticCircuit> Genetic::spawnPopulation(int populationSize) {
     GeneticCircuit c(input_no, expected_outputs.front().size(), &rand_engine);
     int circuit_fitness = c.generateFitness();
 
-    std::string errmsg =
-        "Genetic::spawnPopulation inserting Circuit "
-        "fitness: " +
-        std::to_string(circuit_fitness);
-    errlog(errmsg);
+    if (SHOW_POPULATION_LOG) {
+      std::string errmsg =
+          "Genetic::spawnPopulation inserting Circuit "
+          "fitness: " +
+          std::to_string(circuit_fitness);
+      errlog(errmsg);
+    }
 
     std::pair<int, GeneticCircuit> zergling(c.hash_circ(), c);
     spawned_pop.insert(zergling);
 
-    std::ostringstream errstream;
-    errstream << "Genetic::spawnPopulation --  " << spawned_pop.size();
-    errlog(errstream.str(), SHOW_POPULATION_LOG);
+    if (SHOW_POPULATION_LOG) {
+      std::ostringstream errstream;
+      errstream << "Genetic::spawnPopulation --  " << spawned_pop.size();
+      errlog(errstream.str(), SHOW_POPULATION_LOG);
+    }
   }
   return spawned_pop;
 }

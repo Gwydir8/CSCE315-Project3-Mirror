@@ -11,8 +11,6 @@ namespace {
 
 class GeneticSetup : public ::testing::Test {
  protected:
-
-
   virtual void SetUp() {
     // FUN FACT: dolly was the first cloned sheep! In honor of her...we send our
     // test genetic class into space with her title
@@ -54,9 +52,10 @@ TEST_F(GeneticSetup, Splice) {
 }
 TEST_F(GeneticSetup, SplitAndSplice) {
   std::mt19937 rand(std::random_device{}());
-  GeneticCircuit gc_1 = GeneticCircuit(3, 3, &rand);
-  GeneticCircuit gc_2 = GeneticCircuit(3, 3, &rand);
-  std::pair<GeneticCircuit, GeneticCircuit> gc_pair = dolly.splitAndSplice(gc_1, gc_2);
+  GeneticCircuit gc_1(3, 3, &rand);
+  GeneticCircuit gc_2(3, 3, &rand);
+  std::pair<GeneticCircuit, GeneticCircuit> gc_pair =
+      dolly.splitAndSplice(gc_1, gc_2);
 
   GeneticCircuit spliced_gc_1 = gc_pair.first;
   GeneticCircuit spliced_gc_2 = gc_pair.second;
@@ -64,15 +63,6 @@ TEST_F(GeneticSetup, SplitAndSplice) {
   EXPECT_EQ(1, spliced_gc_1.getGateCount() + spliced_gc_2.getGateCount());
   // dolly.split(dolly.getPopulation()[3], dolly.getPopulation()[900]);
 }
-
-
-/* TEST(InnocuousAttempt, NumberTwo){ */
-/*   std::mt19937 rand(std::random_device{}()); */
-/*   GeneticCircuit c = GeneticCircuit(3,3, &rand); */
-/*   while(c.evaluateAllInputs() != expected_o){ */
-/*     c = GeneticCircuit(3, 3, &rand); */
-/*   } */
-/* } */
 
 }  // end of namespace
 

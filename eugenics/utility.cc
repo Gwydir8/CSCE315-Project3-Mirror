@@ -47,14 +47,14 @@ void errlog(std::string message) {
   std::cerr << setcolor(color::RED, message) << std::endl;
 #endif
 
-  std::ofstream logfile("debuglog.log", std::ios::out);
+  std::ofstream logfile("debuglog.log", std::ios::app);
   logfile << currentDateTime() << std::endl;
   logfile << "\t" << message << std::endl;
   logfile.close();
 }
 
 void endlog() {
-  std::ofstream logfile("debuglog.log", std::ios::out);
+  std::ofstream logfile("debuglog.log", std::ios::app);
   logfile << "─────────────────────────────────────────────────────────────────"
              "───────────────" << std::endl;
   logfile.close();

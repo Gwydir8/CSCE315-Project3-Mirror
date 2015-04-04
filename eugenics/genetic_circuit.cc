@@ -41,15 +41,20 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
     : Circuit(input_num, output_num), rand_engine_ptr(nullptr), fitness(0) {
   for (Gate* gate : gates) {
     if (gate->type == "WIRE") {
-      addGate(GateType(WIRE), gate->input_1_index);
+      errlog("GeneticCircuit::GeneticCircuit Wires are not added");
+    } else if (gate->type == "NONE") {
+      errlog("GeneticCircuit::GeneticCircuit NONE Wires are not added");
     } else if (gate->type == "NOT") {
       addGate(GateType(NOT), gate->input_1_index);
     } else if (gate->type == "AND") {
       addGate(GateType(AND), gate->input_1_index, gate->input_2_index);
     } else if (gate->type == "OR") {
       addGate(GateType(OR), gate->input_1_index, gate->input_2_index);
+    } else if (gate->type == "INVALID") {
+      errlog("GeneticCircuit::GeneticCircuit FATAL Invalid Gate Encountered");
+      std::exit(EXIT_FAILURE);
     } else {
-      errlog("GeneticCircuit::GeneticCircuit Unknown Gate Encountered");
+      errlog("GeneticCircuit::GeneticCircuit FATAL Unknown Gate Encountered");
       std::exit(EXIT_FAILURE);
     }
   }
@@ -81,9 +86,11 @@ std::size_t GeneticCircuit::hash_circ() {
   /* std::cout << "Hashing..." << std::endl; */
   std::size_t hash = hash_fn(s);
   /* std::cout << "Done Hashing..: " << hash << std::endl; */
-  std::ostringstream errstream;
-  errstream << " NOT: " << getNotCount() << " AND: " << getAndCount()
-            << " OR: " << getOrCount();
-  errlog(errstream.str(), SHOW_POPULATION_LOG);
+  if (SHOW_POPULATION_LOG) {
+    std::ostringstream errstream;
+    errstream << " NOT: " << getNotCount() << " AND: " << getAndCount()
+              << " OR: " << getOrCount();
+    errlog(errstream.str(), SHOW_POPULATION_LOG);
+  }
   return hash;
 }
