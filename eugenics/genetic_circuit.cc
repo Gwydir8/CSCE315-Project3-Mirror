@@ -1,8 +1,12 @@
+#include "genetic_circuit.h"
+
 #include <vector>
 
 #include <cstdlib>
+#include <functional>  // std::hash
+#include <sstream>
 
-#include "genetic_circuit.h"
+#include "utility.h"
 
 GeneticCircuit::GeneticCircuit(int input_num, int output_num,
                                std::mt19937* rand_eng)
@@ -20,14 +24,15 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
   gate.push_back(AND);
 
   int num_of_gates =
-      number_dist(*rand_engine);  // random number between 0 and 30
+      number_dist(*rand_engine);  // random number between 0 and 40
   for (int i = 0; i < num_of_gates; ++i) {
     // random number between 0 and 2
     GateType rand_gate = gate[gate_dist(*rand_engine)];
 
-    if (rand_gate == NOT) {
-      addGate(rand_gate, number_dist(*rand_engine) % getGateCount());
-    } else if (rand_gate == OR || rand_gate == AND) {
+    if ((rand_gate == NOT) && (getNotCount() < 2)) {
+      // only add a NOT if we don't have 2 already
+      addGate(rand_gate, number_dist(*rand_engine) % 2);
+    } else if ((rand_gate == OR) || (rand_gate == AND)) {
       addGate(rand_gate, number_dist(*rand_engine) % getGateCount(),
               number_dist(*rand_engine) % getGateCount());
     }
@@ -35,3 +40,25 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
 }
 
 void GeneticCircuit::setFitness(int f) { fitness = f; }
+
+std::size_t GeneticCircuit::hash_circ() {
+  std::string s = "";
+  std::hash<std::string> hash_fn;
+
+  BooleanTable outputs = evaluateAllInputs();
+
+  for (std::vector<bool> row : outputs) {
+    for (bool bit : row) {
+      s += std::to_string((int)bit);
+    }
+  }
+
+  /* std::cout << "Hashing..." << std::endl; */
+  std::size_t hash = hash_fn(s);
+  /* std::cout << "Done Hashing..: " << hash << std::endl; */
+  std::ostringstream errstream;
+  errstream << " NOT: " << getNotCount() << " AND: " << getAndCount()
+            << " OR: " << getOrCount();
+  errlog(errstream.str(), SHOW_POPULATION_LOG);
+  return hash;
+}

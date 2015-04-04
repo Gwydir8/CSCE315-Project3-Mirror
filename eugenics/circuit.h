@@ -65,11 +65,20 @@ class Circuit {
   // NOTE: output_index is checked if it is correct, not set to output_index
   int addGate(int output_index, GateType gate_type, int index_1);
 
+  // Manual Constructor, Sets everything
+  Circuit(int input_no, int output_no, std::vector<Gate *> gates);
+  // return gates
+  std::vector<Gate *> getGates() { return gates; }
+  void setGates(std::vector<Gate *> gates_) { gates = gates_; }
+
   // friend std::istream& operator>>(std::istream& is, Circuit& circuit);
 
   friend std::ostream &operator<<(std::ostream &os, const Circuit &circuit);
 
   void writeCircuitToFile() const;
+
+  // print stats
+  void printStatistics();
 
  private:
   // gates and wires storage
@@ -81,7 +90,6 @@ class Circuit {
   int input_no;
 
   //// Statistics
-  void printStatistics();
   // number of And gates
   int and_no;
   // number of Or gates

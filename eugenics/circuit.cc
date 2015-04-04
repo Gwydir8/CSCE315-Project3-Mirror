@@ -11,13 +11,11 @@
 
 #include "utility.h"
 
-using namespace std;
-
-Circuit::Circuit(vector<bool> inputs, int o)
+Circuit::Circuit(std::vector<bool> inputs, int o)
     : output_no(o), input_no(inputs.size()) {
   // initialize statistics to 0
   and_no = or_no = not_no = wire_no = 0;
-  mapped_outputs = vector<int>(output_no, -1);
+  mapped_outputs = std::vector<int>(output_no, -1);
   // create initial input wires
   for (unsigned long i = 0; i < inputs.size(); ++i) {
     wire_no++;
@@ -33,7 +31,7 @@ Circuit::Circuit(vector<bool> inputs, int o)
 Circuit::Circuit(int inputs, int o) : output_no(o), input_no(inputs) {
   // initialize statistics to 0
   and_no = or_no = not_no = wire_no = 0;
-  mapped_outputs = vector<int>(output_no, -1);
+  mapped_outputs = std::vector<int>(output_no, -1);
   // create initial input wires
   for (int i = 0; i < input_no; ++i) {
     wire_no++;
@@ -123,7 +121,7 @@ BooleanTable Circuit::evaluateAllInputs() {
   printStatistics();
   BooleanTable inputs = generateInputSet();
   BooleanTable outputs;
-  for (vector<bool> input : inputs) {
+  for (std::vector<bool> input : inputs) {
     std::vector<bool> output = evaluateInputSet(input);
     outputs.push_back(output);
   }
@@ -140,7 +138,7 @@ BooleanTable Circuit::evaluateAllInputs() {
   return outputs;
 }
 
-vector<bool> Circuit::evaluateInputSet(vector<bool> input_set) {
+std::vector<bool> Circuit::evaluateInputSet(std::vector<bool> input_set) {
   printStatistics();
   // initalize input wires to input_set values
   for (int i = 0; i < input_no; ++i) {
@@ -152,9 +150,9 @@ vector<bool> Circuit::evaluateInputSet(vector<bool> input_set) {
     errlog(errmsg);
   }
 
-  vector<bool> result;
+  std::vector<bool> result;
   // evaluate gates in reverse order, i.e. from input to output
-  reverse_iterator<vector<Gate*>::iterator> r = gates.rbegin();
+  std::reverse_iterator<std::vector<Gate*>::iterator> r = gates.rbegin();
   for (int i = output_no - 1; i >= 0; --i) {
     Gate* output_gate =
         ((mapped_outputs[i] != -1) ? gates[mapped_outputs[i]] : r[i]);
@@ -193,7 +191,7 @@ BooleanTable Circuit::generateInputSet() {
     std::string errmsg =
         "Circuit::generateInputSet: row[" + std::to_string(i) + "] = { ";
 
-    vector<bool> row;
+    std::vector<bool> row;
     for (int j = input_no - 1; j >= 0; --j) {
       int current_bit = (i >> j) & 1;
       row.push_back(current_bit);
