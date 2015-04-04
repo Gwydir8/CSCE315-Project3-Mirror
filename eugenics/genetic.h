@@ -20,11 +20,11 @@ class Genetic {
   virtual ~Genetic() {}
 
   // "cut" two circuits at random point
-  std::pair<GeneticCircuit, GeneticCircuit> split(GeneticCircuit circuit,
+  std::pair<std::vector<Gate *>, std::vector<Gate *>> split(GeneticCircuit circuit,
                                                   int split_index);
 
   // splice together c1a and c2b, and c2a and c1b
-  GeneticCircuit splice(Circuit base_part, Circuit appended_part);
+  GeneticCircuit splice(std::vector<Gate *> base_part, std::vector<Gate *> appended_part);
 
   // perform split and splice in one function
   std::pair<GeneticCircuit, GeneticCircuit> splitAndSplice(

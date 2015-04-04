@@ -55,24 +55,24 @@ TEST_F(GeneticSetup, SplitAndSplice) {
   std::mt19937 rand1(std::random_device{}());
   GeneticCircuit gc_1(3, 3, &rand1);
   GeneticCircuit gc_2(3, 3, &rand1);
-  /* std::pair<GeneticCircuit, GeneticCircuit> gc_pair = */
+  std::pair<GeneticCircuit, GeneticCircuit> gc_pair =
   dolly.splitAndSplice(gc_1, gc_2);
 
-  /* int total_and_gates = gc_1.getAndCount() + gc_2.getAndCount(); */
-  /* int total_or_gates =  gc_1.getOrCount() +  gc_2.getOrCount(); */
-  /* int total_not_gates = gc_1.getNotCount() + gc_2.getNotCount(); */
+  int total_and_gates = gc_1.getAndCount() + gc_2.getAndCount();
+  int total_or_gates =  gc_1.getOrCount() +  gc_2.getOrCount();
+  int total_not_gates = gc_1.getNotCount() + gc_2.getNotCount();
 
-  /* GeneticCircuit spliced_gc_1 = gc_pair.first; */
-  /* GeneticCircuit spliced_gc_2 = gc_pair.second; */
+  GeneticCircuit spliced_gc_1 = gc_pair.first;
+  GeneticCircuit spliced_gc_2 = gc_pair.second;
 
-  /* int spliced_total_and_gates = spliced_gc_1.getAndCount() + spliced_gc_2.getAndCount(); */
-  /* int spliced_total_or_gates =  spliced_gc_1.getOrCount() +  spliced_gc_2.getOrCount(); */
-  /* int spliced_total_not_gates = spliced_gc_1.getNotCount() + spliced_gc_2.getNotCount(); */
+  int spliced_total_and_gates = spliced_gc_1.getAndCount() + spliced_gc_2.getAndCount();
+  int spliced_total_or_gates =  spliced_gc_1.getOrCount() +  spliced_gc_2.getOrCount();
+  int spliced_total_not_gates = spliced_gc_1.getNotCount() + spliced_gc_2.getNotCount();
 
 
-  /* EXPECT_EQ(total_and_gates, spliced_total_and_gates); */
-  /* EXPECT_EQ(total_or_gates, spliced_total_or_gates); */
-  /* EXPECT_EQ(total_not_gates, spliced_total_not_gates); */
+  EXPECT_EQ(total_and_gates, spliced_total_and_gates);
+  EXPECT_EQ(total_or_gates, spliced_total_or_gates);
+  EXPECT_EQ(total_not_gates, spliced_total_not_gates);
   // dolly.split(dolly.getPopulation()[3], dolly.getPopulation()[900]);
 }
 
