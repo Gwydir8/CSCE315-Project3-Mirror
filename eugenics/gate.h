@@ -72,7 +72,6 @@ class Gate {
   // print gate to ofstream
   friend std::ostream& operator<<(std::ostream& os, const Gate& gate);
 
- protected:
   // first input (also only input for Not gates and Wires)
   Gate* input_1;
   // first input index

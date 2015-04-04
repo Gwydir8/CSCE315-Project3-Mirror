@@ -10,7 +10,7 @@
 
 GeneticCircuit::GeneticCircuit(int input_num, int output_num,
                                std::mt19937* rand_eng)
-    : Circuit(input_num, output_num), rand_engine(rand_eng), fitness(0) {
+    : Circuit(input_num, output_num), rand_engine_ptr(rand_eng), fitness(0) {
   if (input_num < 2) {
     std::string errmsg =
         "GeneticCircuit::GeneticCircuit FATAL Need more than 2 inputs to "
@@ -18,23 +18,39 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
     errlog(errmsg);
     std::exit(EXIT_FAILURE);
   }
-  std::vector<GateType> gate;
-  gate.push_back(NOT);
-  gate.push_back(OR);
-  gate.push_back(AND);
+  std::vector<GateType> gate_types{NOT, OR, AND};
 
   int num_of_gates =
-      number_dist(*rand_engine);  // random number between 0 and 40
+      number_dist(*rand_engine_ptr);  // random number between 0 and 40
   for (int i = 0; i < num_of_gates; ++i) {
     // random number between 0 and 2
-    GateType rand_gate = gate[gate_dist(*rand_engine)];
+    GateType rand_gate = gate_types[gate_dist(*rand_engine_ptr)];
 
     if ((rand_gate == NOT) && (getNotCount() < 2)) {
       // only add a NOT if we don't have 2 already
-      addGate(rand_gate, number_dist(*rand_engine) % 2);
+      addGate(rand_gate, number_dist(*rand_engine_ptr) % 2);
     } else if ((rand_gate == OR) || (rand_gate == AND)) {
-      addGate(rand_gate, number_dist(*rand_engine) % getGateCount(),
-              number_dist(*rand_engine) % getGateCount());
+      addGate(rand_gate, number_dist(*rand_engine_ptr) % getGateCount(),
+              number_dist(*rand_engine_ptr) % getGateCount());
+    }
+  }
+}
+
+GeneticCircuit::GeneticCircuit(int input_num, int output_num,
+                               std::mt19937* rand_eng, std::vector<Gate*> gates)
+    : Circuit(input_num, output_num), rand_engine_ptr(nullptr), fitness(0) {
+  for (Gate* gate : gates) {
+    if (gate->type == "WIRE") {
+      addGate(GateType(WIRE), gate->input_1_index);
+    } else if (gate->type == "NOT") {
+      addGate(GateType(NOT), gate->input_1_index);
+    } else if (gate->type == "AND") {
+      addGate(GateType(AND), gate->input_1_index, gate->input_2_index);
+    } else if (gate->type == "OR") {
+      addGate(GateType(OR), gate->input_1_index, gate->input_2_index);
+    } else {
+      errlog("GeneticCircuit::GeneticCircuit Unknown Gate Encountered");
+      std::exit(EXIT_FAILURE);
     }
   }
 }

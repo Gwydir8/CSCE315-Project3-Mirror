@@ -41,32 +41,34 @@ int Genetic::fitness(GeneticCircuit c) {
   return score;
 }
 
-void Genetic::split(GeneticCircuit c1, GeneticCircuit c2) {
+std::pair<GeneticCircuit, GeneticCircuit> Genetic::split(GeneticCircuit circuit,
+                                                         int split_index) {
+  // split circuit and c2 into a and b at dist(rand_engine)
+  GeneticCircuit c1a(circuit.getInputCount(), circuit.getOutputCount(),
+                     &rand_engine);
+  GeneticCircuit c1b(circuit.getInputCount(), circuit.getOutputCount(),
+                     &rand_engine);
+
+  std::vector<Gate *> lhs_gates(std::begin(circuit.getGates()),
+                                std::begin(circuit.getGates()) + split_index);
+  std::vector<Gate *> rhs_gates(std::begin(circuit.getGates()) + split_index,
+                                std::end(circuit.getGates()) + split_index);
+}
+
+GeneticCircuit Genetic::splice(GeneticCircuit circuit_lhs,
+                               GeneticCircuit circuit_rhs) {
+
+}
+
+std::pair<GeneticCircuit, GeneticCircuit> Genetic::splitAndSplice(
+    GeneticCircuit circuit_1, GeneticCircuit circuit_2) {
   // random numbers should be in normal distribution
   std::uniform_int_distribution<> dist{input_no,
                                        (int)expected_outputs.front().size()};
 
   // first half size
-  int split_num = dist(rand_engine);
-
-  // split c1 and c2 into a and b at dist(rand_engine)
-  GeneticCircuit c1a(c1);
-  GeneticCircuit c1b(c1);
-  std::vector<Gate *> c1agates(std::begin(c1.getGates()),
-                               std::begin(c1.getGates()) + split_num);
-  std::vector<Gate *> c1bgates(std::begin(c1.getGates()) + split_num,
-                               std::end(c1.getGates()) + split_num);
-  GeneticCircuit c2a(c2);
-  GeneticCircuit c2b(c2);
-  std::vector<Gate *> c2agates(std::begin(c2.getGates()),
-                               std::begin(c2.getGates()) + split_num);
-  std::vector<Gate *> c2bgates(std::begin(c2.getGates()) + split_num,
-                               std::end(c2.getGates()) + split_num);
+  int split_index = dist(rand_engine);
 }
-
-void Genetic::splice() {}
-
-void Genetic::splitAndSplice() {}
 
 std::map<int, GeneticCircuit> Genetic::spawnPopulation(int populationSize) {
   std::map<int, GeneticCircuit> spawned_pop;

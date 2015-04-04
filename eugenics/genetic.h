@@ -10,9 +10,6 @@
 
 #include "genetic_circuit.h"
 
-// 2^((2^3)*2)
-// 2^
-
 class Genetic {
  public:
   Genetic() : population(), input_no(), expected_outputs() {}
@@ -25,12 +22,15 @@ class Genetic {
   int fitness(GeneticCircuit c);
 
   // "cut" two circuits at random point
-  void split(GeneticCircuit c1, GeneticCircuit c2);
+  std::pair<GeneticCircuit, GeneticCircuit> split(GeneticCircuit circuit,
+                                                  int split_index);
+
   // splice together c1a and c2b, and c2a and c1b
-  void splice();
+  GeneticCircuit splice(GeneticCircuit circuit_lhs, GeneticCircuit circuit_rhs);
 
   // perform split and splice in one function
-  void splitAndSplice();
+  std::pair<GeneticCircuit, GeneticCircuit> splitAndSplice(
+      GeneticCircuit circuit_1, GeneticCircuit circuit_2);
 
   int getExpectedInputs() const { return input_no; }
   BooleanTable getExpectedOutputs() const { return expected_outputs; }
