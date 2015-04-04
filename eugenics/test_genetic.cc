@@ -58,10 +58,6 @@ TEST_F(GeneticSetup, Splice) {
 /*   } */
 /* } */
 
-}  // end of namespace
-/* TEST_F(GeneticSetup, Split) { */
-
-/* } */
 
 }  // end of namespace
 
