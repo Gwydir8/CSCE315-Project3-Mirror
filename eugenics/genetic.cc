@@ -54,10 +54,9 @@ GeneticCircuit Genetic::splice(Circuit base_part, Circuit appended_part) {
   std::vector<Gate *> combined_gates = base_part.getGates();
   std::vector<Gate *> a = appended_part.getGates();
 
-  combined_gates.reserve(combined_gates.size() + a.size());
   combined_gates.insert(combined_gates.end(), a.begin(), a.end());
 
-  GeneticCircuit new_circuit(input_no, expected_outputs.size(), combined_gates);
+  GeneticCircuit new_circuit(input_no, expected_outputs.front().size(), combined_gates);
   return new_circuit;
 }
 
