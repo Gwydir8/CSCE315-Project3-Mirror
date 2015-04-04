@@ -7,6 +7,9 @@ using namespace std;
 
 Ckt_Algo::Ckt_Algo(Circuit circuit) : circ_output(), output_set(new std::vector<std::vector<std::vector<bool>>>)  {
   ex_list.push(circuit);
+  addAnd(circuit.getGateCount());
+  addOr(circuit.getGateCount());
+  ex_list.pop();
 }
 
 bool Ckt_Algo::circuitMatchesDesired(vector<vector<bool>> desired) {
@@ -48,7 +51,7 @@ bool Ckt_Algo::circuitMatchesDesired(vector<vector<bool>> desired) {
           break;
         }
       }
-      if (equal_to_vector == false) {
+      if (equal_to_vector == false && ex_list.front().getGateCount() <= 3) {
         std::string errmsg = "Ckt_Algo::circuitMatchesDesired: push_back(circ_output)";
         errlog(errmsg);
         // if output of current circuit is unique push into output_set
@@ -66,7 +69,7 @@ bool Ckt_Algo::circuitMatchesDesired(vector<vector<bool>> desired) {
 void Ckt_Algo::addNot(int counter) {
   // generates different circuits based on the different
   // combinations of gates to wires, then pushes to queue
-  for (int i = 0; i < counter; ++i) {
+  for (int i = 2; i < counter; ++i) {
     Circuit next = ex_list.front();
     next.addGate(NOT, i);
     std::string errmsg = "Ckt_Algo::addNot: " + std::to_string(next.getGateCount()) +
