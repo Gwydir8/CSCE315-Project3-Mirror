@@ -51,8 +51,8 @@ std::pair<GeneticCircuit, GeneticCircuit> Genetic::split(GeneticCircuit circuit,
 }
 
 GeneticCircuit Genetic::splice(Circuit base_part, Circuit appended_part) {
-  std::vector<Gate> combined_gates = base_part.getGates();
-  std::vector<Gate> a = appended_part.getGates();
+  std::vector<Gate *> combined_gates = base_part.getGates();
+  std::vector<Gate *> a = appended_part.getGates();
 
   combined_gates.reserve(combined_gates.size() + a.size());
   combined_gates.insert(combined_gates.end(), a.begin(), a.end());
@@ -76,17 +76,6 @@ std::pair<GeneticCircuit, GeneticCircuit> Genetic::splitAndSplice(GeneticCircuit
   swapped_circuits.second = splice(c_2_halves.first, c_1_halves.second);
 
   return swapped_circuits;
-}
-
-
-std::pair<GeneticCircuit, GeneticCircuit> Genetic::splitAndSplice(
-    GeneticCircuit circuit_1, GeneticCircuit circuit_2) {
-  // random numbers should be in normal distribution
-  std::uniform_int_distribution<> dist{input_no,
-                                       (int)expected_outputs.front().size()};
-
-  // first half size
-  int split_index = dist(rand_engine);
 }
 
 std::map<int, GeneticCircuit> Genetic::spawnPopulation(int populationSize) {
