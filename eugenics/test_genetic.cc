@@ -50,14 +50,23 @@ TEST_F(GeneticSetup, Splice) {
   // dolly.split(dolly.getPopulation()[3], dolly.getPopulation()[900]);
 }
 
-/* TEST(InnocuousAttempt, NumberTwo){ */
-/*   std::mt19937 rand(std::random_device{}()); */
-/*   GeneticCircuit c = GeneticCircuit(3,3, &rand); */
-/*   while(c.evaluateAllInputs() != expected_o){ */
-/*     c = GeneticCircuit(3, 3, &rand); */
-/*   } */
-/* } */
-
+// TEST(InnocuousAttempt, NumberTwo) {
+//   BooleanTable expected_o = {{true, true, true},
+//                              {true, true, false},
+//                              {true, false, true},
+//                              {true, false, false},
+//                              {false, true, true},
+//                              {false, true, false},
+//                              {false, false, true},
+//                              {false, false, false}};
+//   std::mt19937 rand(std::random_device{}());
+//   // std::minstd_rand0 rand(std::random_device{}());
+//   GeneticCircuit * c = new GeneticCircuit(3, 3, &rand);
+//   while (c->evaluateAllInputs() != expected_o) {
+//     delete c;
+//     c = new GeneticCircuit(3, 3, &rand);
+//   }
+// }
 
 }  // end of namespace
 
