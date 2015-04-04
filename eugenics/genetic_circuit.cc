@@ -37,13 +37,16 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
 }
 
 GeneticCircuit::GeneticCircuit(int input_num, int output_num,
-                               std::vector<Gate*> gates)
-    : Circuit(input_num, output_num), rand_engine_ptr(nullptr), fitness(0) {
+                               std::mt19937* rand_eng, std::vector<Gate*> gates)
+    : Circuit(input_num, output_num), rand_engine_ptr(rand_eng), fitness(0) {
+  std::cerr << "HERE I AM!!!" << std::endl;
   for (Gate* gate : gates) {
+    std::string errmsg = "GateType = " + gate->type;
+    errlog(errmsg, true);
     if (gate->type == "WIRE") {
-      errlog("GeneticCircuit::GeneticCircuit Wires are not added");
+      errlog("GeneticCircuit::GeneticCircuit Wires are not added", true);
     } else if (gate->type == "NONE") {
-      errlog("GeneticCircuit::GeneticCircuit NONE Wires are not added");
+      errlog("GeneticCircuit::GeneticCircuit NONE Wires are not added", true);
     } else if (gate->type == "NOT") {
       addGate(GateType(NOT), gate->input_1_index);
     } else if (gate->type == "AND") {
@@ -51,10 +54,12 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
     } else if (gate->type == "OR") {
       addGate(GateType(OR), gate->input_1_index, gate->input_2_index);
     } else if (gate->type == "INVALID") {
-      errlog("GeneticCircuit::GeneticCircuit FATAL Invalid Gate Encountered");
+      errlog("GeneticCircuit::GeneticCircuit FATAL Invalid Gate Encountered",
+             true);
       std::exit(EXIT_FAILURE);
     } else {
-      errlog("GeneticCircuit::GeneticCircuit FATAL Unknown Gate Encountered");
+      errlog("GeneticCircuit::GeneticCircuit FATAL Unknown Gate Encountered",
+             true);
       std::exit(EXIT_FAILURE);
     }
   }

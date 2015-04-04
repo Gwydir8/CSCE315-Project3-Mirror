@@ -42,12 +42,13 @@ std::pair<GeneticCircuit, GeneticCircuit> Genetic::split(GeneticCircuit circuit,
                                 std::end(circuit.getGates()));
 
   // split circuit and c2 into a and b at dist(rand_engine)
-  GeneticCircuit c1a(circuit.getInputCount(), circuit.getOutputCount(),
+  GeneticCircuit c1a(circuit.getInputCount(), circuit.getOutputCount(), &rand_engine,
                      lhs_gates);
-  GeneticCircuit c1b(circuit.getInputCount(), circuit.getOutputCount(),
+  GeneticCircuit c1b(circuit.getInputCount(), circuit.getOutputCount(), &rand_engine,
                      rhs_gates);
 
-  return std::pair<GeneticCircuit, GeneticCircuit>(c1a, c1b);
+  std::pair<GeneticCircuit, GeneticCircuit> split_pair(c1a, c1b);
+  return split_pair;
 }
 
 GeneticCircuit Genetic::splice(Circuit base_part, Circuit appended_part) {
@@ -56,7 +57,7 @@ GeneticCircuit Genetic::splice(Circuit base_part, Circuit appended_part) {
 
   combined_gates.insert(std::end(combined_gates), std::begin(a), std::end(a));
 
-  GeneticCircuit new_circuit(input_no, expected_outputs.front().size(), combined_gates);
+  GeneticCircuit new_circuit(input_no, expected_outputs.front().size(), &rand_engine, combined_gates);
   return new_circuit;
 }
 

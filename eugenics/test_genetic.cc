@@ -55,12 +55,12 @@ TEST_F(GeneticSetup, SplitAndSplice) {
   std::mt19937 rand(std::random_device{}());
   GeneticCircuit gc_1(3, 3, &rand);
   GeneticCircuit gc_2(3, 3, &rand);
-  std::pair<GeneticCircuit, GeneticCircuit> gc_pair =
-      dolly.splitAndSplice(gc_1, gc_2);
-
   int total_and_gates = gc_1.getAndCount() + gc_2.getAndCount();
   int total_or_gates =  gc_1.getOrCount() +  gc_2.getOrCount();
   int total_not_gates = gc_1.getNotCount() + gc_2.getNotCount();
+
+  std::pair<GeneticCircuit, GeneticCircuit> gc_pair =
+      dolly.splitAndSplice(gc_1, gc_2);
 
   GeneticCircuit spliced_gc_1 = gc_pair.first;
   GeneticCircuit spliced_gc_2 = gc_pair.second;
