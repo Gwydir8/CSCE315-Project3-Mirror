@@ -39,7 +39,7 @@ std::pair<GeneticCircuit, GeneticCircuit> Genetic::split(GeneticCircuit circuit,
   std::vector<Gate *> lhs_gates(std::begin(circuit.getGates()),
                                 std::begin(circuit.getGates()) + split_index);
   std::vector<Gate *> rhs_gates(std::begin(circuit.getGates()) + split_index,
-                                std::end(circuit.getGates()) + split_index);
+                                std::end(circuit.getGates()));
 
   // split circuit and c2 into a and b at dist(rand_engine)
   GeneticCircuit c1a(circuit.getInputCount(), circuit.getOutputCount(),
