@@ -39,7 +39,6 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
 GeneticCircuit::GeneticCircuit(int input_num, int output_num,
                                std::mt19937* rand_eng, std::vector<Gate*> gates)
     : Circuit(input_num, output_num), rand_engine_ptr(rand_eng), fitness(0) {
-  std::cerr << "HERE I AM!!!" << std::endl;
   for (Gate* gate : gates) {
     std::string errmsg = "GateType = " + gate->type;
     errlog(errmsg, true);
@@ -63,6 +62,7 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
       std::exit(EXIT_FAILURE);
     }
   }
+  generateFitness();
 }
 
 int GeneticCircuit::generateFitness() {
