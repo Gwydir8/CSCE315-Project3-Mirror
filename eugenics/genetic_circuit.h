@@ -12,7 +12,7 @@
 #include "circuit.h"
 
 // show debug logging for spawnPopulation
-const bool SHOW_POPULATION_LOG = false;
+const bool SHOW_POPULATION_LOG = true;
 
 class GeneticCircuit : public Circuit {
  public:

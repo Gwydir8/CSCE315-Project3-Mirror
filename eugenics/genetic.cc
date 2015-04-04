@@ -83,7 +83,6 @@ std::map<int, GeneticCircuit> Genetic::spawnPopulation(int populationSize) {
   while (spawned_pop.size() < populationSize) {
     GeneticCircuit c(input_no, expected_outputs.front().size(), &rand_engine);
     int circuit_fitness = c.generateFitness();
-    c.setFitness(circuit_fitness);
 
     std::string errmsg =
         "Genetic::spawnPopulation inserting Circuit "
