@@ -1,11 +1,11 @@
+#include "../../local/include/gtest/gtest.h"
+
 #include <vector>
 
 #include "genetic.h"
 #include "genetic_circuit.h"
 #include "circuit.h"
 #include "utility.h"
-
-#include "../../local/include/gtest/gtest.h"
 
 namespace {
 
@@ -37,10 +37,11 @@ class GeneticSetup : public ::testing::Test {
 
 TEST_F(GeneticSetup, Fitness) {
   std::mt19937 rand(std::random_device{}());
-  GeneticCircuit c = GeneticCircuit(3, 3, &rand);
+  GeneticCircuit c(3, 3, &rand);
   // It's expect EXPECTED is less than ACTUAL
-  EXPECT_LT(0, dolly.fitness(c));
+  EXPECT_LT(0, c.generateFitness());
 }
+
 TEST_F(GeneticSetup, ConstructorTest) {
   EXPECT_EQ(expected_i, dolly.getExpectedInputs());
   EXPECT_EQ(expected_o, dolly.getExpectedOutputs());
@@ -51,7 +52,6 @@ TEST_F(GeneticSetup, Splice) {
   EXPECT_EQ(expected_population_size, dolly.getPopulation().size());
   // dolly.split(dolly.getPopulation()[3], dolly.getPopulation()[900]);
 }
-
 TEST_F(GeneticSetup, SplitAndSplice) {
   GeneticCircuit gc_1 = GeneticCircuit(3, 3, &rand);
   GeneticCircuit gc_2 = GeneticCircuit(3, 3, &rand);
@@ -72,30 +72,6 @@ TEST_F(GeneticSetup, SplitAndSplice) {
 /*     c = GeneticCircuit(3, 3, &rand); */
 /*   } */
 /* } */
-
-
-
-/* TEST(MatrixEquality, Checking) { */
-/*     BooleanTable mat_1 = {{true, true, true}, */
-/*                   {true, true, false}, */
-/*                   {true, false, true}, */
-/*                   {true, false, false}, */
-/*                   {false, true, true}, */
-/*                   {false, true, false}, */
-/*                   {false, false, true}, */
-/*                   {false, false, false}}; */
-
-/*     BooleanTable mat_2 = {{true, true, true}, */
-/*                   {true, true, false}, */
-/*                   {true, false, true}, */
-/*                   {true, false, false}, */
-/*                   {false, true, true}, */
-/*                   {false, true, false}, */
-/*                   {false, false, true}, */
-/*                   {false, false, false}}; */
-/*     EXPECT_EQ(true, (mat_1 == mat_2)); */
-/* } */
-
 
 }  // end of namespace
 
