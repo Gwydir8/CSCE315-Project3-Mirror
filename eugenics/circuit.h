@@ -67,6 +67,7 @@ class Circuit {
 
   // Manual Constructor, Sets everything
   Circuit(int input_no, int output_no, std::vector<Gate *> gates);
+
   // return gates
   std::vector<Gate *> getGates() { return gates; }
   void setGates(std::vector<Gate *> gates_) { gates = gates_; }

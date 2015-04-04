@@ -19,8 +19,6 @@ class Genetic {
           std::map<int, GeneticCircuit> pop);
   virtual ~Genetic() {}
 
-  int fitness(GeneticCircuit c);
-
   // "cut" two circuits at random point
   std::pair<GeneticCircuit, GeneticCircuit> split(GeneticCircuit circuit,
                                                   int split_index);

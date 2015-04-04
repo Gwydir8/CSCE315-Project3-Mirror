@@ -35,10 +35,11 @@ class GeneticSetup : public ::testing::Test {
 
 TEST_F(GeneticSetup, Fitness) {
   std::mt19937 rand(std::random_device{}());
-  GeneticCircuit c = GeneticCircuit(3, 3, &rand);
+  GeneticCircuit c(3, 3, &rand);
   // It's expect EXPECTED is less than ACTUAL
-  EXPECT_LT(0, dolly.fitness(c));
+  EXPECT_LT(0, c.generateFitness());
 }
+
 TEST_F(GeneticSetup, ConstructorTest) {
   EXPECT_EQ(expected_i, dolly.getExpectedInputs());
   EXPECT_EQ(expected_o, dolly.getExpectedOutputs());

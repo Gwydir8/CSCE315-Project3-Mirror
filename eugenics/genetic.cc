@@ -33,32 +33,25 @@ Genetic::Genetic(int n, BooleanTable outputs, std::map<int, GeneticCircuit> pop)
       expected_outputs(outputs),
       rand_engine(std::random_device{}()) {}
 
-int Genetic::fitness(GeneticCircuit c) {
-  int score = 0;
-  score += c.getNotCount() * 10000;
-  score += c.getAndCount() * 10;
-  score += c.getOrCount() * 1;
-  return score;
-}
-
 std::pair<GeneticCircuit, GeneticCircuit> Genetic::split(GeneticCircuit circuit,
                                                          int split_index) {
-  // split circuit and c2 into a and b at dist(rand_engine)
-  GeneticCircuit c1a(circuit.getInputCount(), circuit.getOutputCount(),
-                     &rand_engine);
-  GeneticCircuit c1b(circuit.getInputCount(), circuit.getOutputCount(),
-                     &rand_engine);
-
+  // split gates
   std::vector<Gate *> lhs_gates(std::begin(circuit.getGates()),
                                 std::begin(circuit.getGates()) + split_index);
   std::vector<Gate *> rhs_gates(std::begin(circuit.getGates()) + split_index,
                                 std::end(circuit.getGates()) + split_index);
+
+  // split circuit and c2 into a and b at dist(rand_engine)
+  GeneticCircuit c1a(circuit.getInputCount(), circuit.getOutputCount(),
+                     lhs_gates);
+  GeneticCircuit c1b(circuit.getInputCount(), circuit.getOutputCount(),
+                     rhs_gates);
+
+  return std::pair<GeneticCircuit, GeneticCircuit>(c1a, c1b);
 }
 
 GeneticCircuit Genetic::splice(GeneticCircuit circuit_lhs,
-                               GeneticCircuit circuit_rhs) {
-
-}
+                               GeneticCircuit circuit_rhs) {}
 
 std::pair<GeneticCircuit, GeneticCircuit> Genetic::splitAndSplice(
     GeneticCircuit circuit_1, GeneticCircuit circuit_2) {
@@ -74,7 +67,7 @@ std::map<int, GeneticCircuit> Genetic::spawnPopulation(int populationSize) {
   std::map<int, GeneticCircuit> spawned_pop;
   while (spawned_pop.size() < populationSize) {
     GeneticCircuit c(input_no, expected_outputs.front().size(), &rand_engine);
-    int circuit_fitness = fitness(c);
+    int circuit_fitness = c.generateFitness();
     c.setFitness(circuit_fitness);
 
     std::string errmsg =

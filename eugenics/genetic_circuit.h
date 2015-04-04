@@ -17,9 +17,9 @@ const bool SHOW_POPULATION_LOG = false;
 class GeneticCircuit : public Circuit {
  public:
   GeneticCircuit(int input_num, int output_num, std::mt19937* rand_eng_ptr);
-  GeneticCircuit(int input_num, int output_num, std::mt19937* rand_eng_ptr,
-                 std::vector<Gate*> gates);
+  GeneticCircuit(int input_num, int output_num, std::vector<Gate*> gates);
 
+  int generateFitness();
   void setFitness(int f);
 
   std::size_t hash_circ();

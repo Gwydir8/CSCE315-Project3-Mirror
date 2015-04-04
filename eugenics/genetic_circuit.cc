@@ -37,7 +37,7 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
 }
 
 GeneticCircuit::GeneticCircuit(int input_num, int output_num,
-                               std::mt19937* rand_eng, std::vector<Gate*> gates)
+                               std::vector<Gate*> gates)
     : Circuit(input_num, output_num), rand_engine_ptr(nullptr), fitness(0) {
   for (Gate* gate : gates) {
     if (gate->type == "WIRE") {
@@ -53,6 +53,15 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
       std::exit(EXIT_FAILURE);
     }
   }
+}
+
+int GeneticCircuit::generateFitness() {
+  int score = 0;
+  score += getNotCount() * 10000;
+  score += getAndCount() * 10;
+  score += getOrCount() * 1;
+  fitness = score;
+  return score;
 }
 
 void GeneticCircuit::setFitness(int f) { fitness = f; }
