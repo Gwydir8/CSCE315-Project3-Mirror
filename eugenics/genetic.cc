@@ -33,34 +33,24 @@ Genetic::Genetic(int n, BooleanTable outputs, std::map<int, GeneticCircuit> pop)
       expected_outputs(outputs),
       rand_engine(std::random_device{}()) {}
 
-std::pair<GeneticCircuit, GeneticCircuit> Genetic::split(GeneticCircuit circuit,
+std::pair<std::vector<Gate *>, std::vector<Gate *>> Genetic::split(GeneticCircuit circuit,
                                                          int split_index) {
   // split gates
-  std::cout << "Past Here a0" << std::endl;
 
   std::vector<Gate *> a = circuit.getGates();
-  std::cout << a.size() << "  " << split_index << std::endl;
   std::vector<Gate *> lhs_gates(a.begin(),
                                 a.begin() + split_index);
-  std::cout << "Past Here a1" << std::endl;
   std::vector<Gate *> rhs_gates(a.begin() + split_index,
                                 a.end());
-  std::cout << "Past Here a2" << std::endl;
 
   // split circuit and c2 into a and b at dist(rand_engine)
-  GeneticCircuit c1a(circuit.getInputCount(), circuit.getOutputCount(),
-                     lhs_gates);
-  std::cout << "Past Here a3" << std::endl;
-  GeneticCircuit c1b(circuit.getInputCount(), circuit.getOutputCount(),
-                     rhs_gates);
-  std::cout << "Past Here a4" << std::endl;
 
-  return std::pair<GeneticCircuit, GeneticCircuit>(c1a, c1b);
+  return std::pair<std::vector<Gate *>, std::vector<Gate *>>(lhs_gates, rhs_gates);
 }
 
-GeneticCircuit Genetic::splice(Circuit base_part, Circuit appended_part) {
-  std::vector<Gate *> combined_gates = base_part.getGates();
-  std::vector<Gate *> a = appended_part.getGates();
+GeneticCircuit Genetic::splice(std::vector<Gate *> base_part, std::vector<Gate *> appended_part) {
+  std::vector<Gate *> combined_gates = base_part;
+  std::vector<Gate *> a = appended_part;
 
   combined_gates.insert(std::end(combined_gates), std::begin(a), std::end(a));
 
@@ -70,24 +60,19 @@ GeneticCircuit Genetic::splice(Circuit base_part, Circuit appended_part) {
 
 std::pair<GeneticCircuit, GeneticCircuit> Genetic::splitAndSplice(
     GeneticCircuit c_1, GeneticCircuit c_2) {
-  std::cout << "Past Here 1" << std::endl;
   std::pair<GeneticCircuit, GeneticCircuit> swapped_circuits(c_1, c_2);
 
   // Generate random index to split at
   std::uniform_int_distribution<> dist{
       input_no, (std::min(c_1.getGateCount(), c_2.getGateCount())) - 1};
   int split_index = dist(rand_engine);
-  std::cout << "Past Here 2" << std::endl;
 
-  std::pair<GeneticCircuit, GeneticCircuit> c_1_halves =
+  std::pair<std::vector<Gate *>, std::vector<Gate *>> c_1_halves =
       split(c_1, split_index);
-  std::cout << "Past Here 3" << std::endl;
-  std::pair<GeneticCircuit, GeneticCircuit> c_2_halves =
+  std::pair<std::vector<Gate *>, std::vector<Gate *>> c_2_halves =
       split(c_2, split_index);
-  std::cout << "Past Here 4" << std::endl;
 
   swapped_circuits.first = splice(c_1_halves.first, c_2_halves.second);
-  std::cout << "Past Here 5" << std::endl;
   swapped_circuits.second = splice(c_2_halves.first, c_1_halves.second);
 
   return swapped_circuits;

@@ -45,16 +45,10 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
     } else if (gate->type == "NONE") {
       errlog("GeneticCircuit::GeneticCircuit NONE Wires are not added");
     } else if (gate->type == "NOT") {
-      if(gate->input_1_index < 0)
-        std::cout << "Droppin Eaves!" << std::endl;
       addGate(GateType(NOT), gate->input_1_index);
     } else if (gate->type == "AND") {
-      if(gate->input_1_index < 0 || gate->input_2_index < 0)
-        std::cout << "Droppin Eaves!" << std::endl;
       addGate(GateType(AND), gate->input_1_index, gate->input_2_index);
     } else if (gate->type == "OR") {
-      if(gate->input_1_index < 0 || gate->input_2_index < 0)
-        std::cout << "Droppin Eaves!" << std::endl;
       addGate(GateType(OR), gate->input_1_index, gate->input_2_index);
     } else if (gate->type == "INVALID") {
       errlog("GeneticCircuit::GeneticCircuit FATAL Invalid Gate Encountered");
