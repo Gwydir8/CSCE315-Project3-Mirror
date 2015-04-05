@@ -119,15 +119,17 @@ std::map<std::size_t, GeneticCircuit> Genetic::spawnPopulation(
 void Genetic::cullHerd() {
   int avg = 0;
   double total = 0.0;
+
   std::map<std::size_t, GeneticCircuit>::iterator it;
   for (it = population.begin(); it != population.end(); ++it) {
-    int fit = generateFitness((*it).second);
+    int fit = generateFitness(it->second);
     total += fit;
     avg = total / population.size();
   }
+
   it = population.begin();
   while (it != population.end()) {
-    if (generateFitness((*it).second) < avg) {
+    if (generateFitness(it->second) < avg) {
       population.erase(it++);
     } else {
       ++it;
@@ -141,8 +143,8 @@ void Genetic::cullHerd() {
   errlog("I should be done", true);
 }
 
-void Genetic::evolve(){
-  while(true){
+void Genetic::evolve() {
+  while (true) {
     cullHerd();
     std::vector<GeneticCircuit *> breedable;
     std::map<std::size_t, GeneticCircuit>::iterator it;
@@ -178,7 +180,6 @@ int Genetic::generateFitness(GeneticCircuit c) {
   score += (c.getOrCount() + c.getAndCount()) * 10;
   if (score < 10000) {
     std::cout << "FOUND IT!!!!!!" << std::endl;
-    exit(EXIT_FAILURE);
   }
   return score;
 }
