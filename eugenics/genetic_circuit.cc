@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include <cassert>
 #include <cstdlib>
 #include <functional>  // std::hash
 #include <sstream>
@@ -11,13 +12,14 @@
 GeneticCircuit::GeneticCircuit(int input_num, int output_num,
                                std::minstd_rand* rand_eng)
     : Circuit(input_num, output_num), rand_engine_ptr(rand_eng), fitness(0) {
-  if (input_num < 2) {
-    std::string errmsg =
-        "GeneticCircuit::GeneticCircuit FATAL Need more than 2 inputs to "
-        "create gate";
-    errlog(errmsg);
-    std::exit(EXIT_FAILURE);
-  }
+  assert(input_num < 2);
+  // if (input_num < 2) {
+  //   std::string errmsg =
+  //       "GeneticCircuit::GeneticCircuit FATAL Need more than 2 inputs to "
+  //       "create gate";
+  //   errlog(errmsg);
+  //   std::exit(EXIT_FAILURE);
+  // }
   std::vector<GateType> gate_types{NOT, OR, AND};
 
   int num_of_gates =
@@ -37,7 +39,8 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
 }
 
 GeneticCircuit::GeneticCircuit(int input_num, int output_num,
-                               std::minstd_rand* rand_eng, std::vector<Gate*> gates)
+                               std::minstd_rand* rand_eng,
+                               std::vector<Gate*> gates)
     : Circuit(input_num, output_num), rand_engine_ptr(rand_eng), fitness(0) {
   for (Gate* gate : gates) {
     if (gate->type == "WIRE") {
