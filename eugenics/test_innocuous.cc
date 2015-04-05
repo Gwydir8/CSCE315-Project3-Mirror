@@ -10,7 +10,7 @@
 // #define VERBOSE_TEST
 
 TEST(InnocuousAttempt, XOR) {
-  BooleanTable expected_o = {{false}, {false}, {true}, {true}};
+  BooleanTable expected_o = {{false}, {true}, {true}, {false}};
 
   std::minstd_rand rand(std::random_device{}());
   // std::minstd_rand0 rand(std::random_device{}());
