@@ -28,7 +28,7 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
   for (int i = 0; i < num_of_gates; ++i) {
     // random number between 0 and 2
     //
-    GateType rand_gate = gate_types[gate_max_dist(*rand_engine_ptr) % 2];
+    GateType rand_gate = gate_types[gate_max_dist(*rand_engine_ptr) % 3];
 
     if ((rand_gate == NOT) && (getNotCount() < 2)) {
       // only add a NOT if we don't have 2 already
