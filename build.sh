@@ -36,6 +36,8 @@ elif [ "$HOSTNAME" = "Tron" ]; then
     # CXX="/usr/local/opt/ccache/libexec/clang++-3.6 -std=gnu++11 -stdlib=libc++"
     # #CXXFLAGS="$CXXFLAGS -nostdinc++ -I/usr/local/opt/llvm36/lib/llvm-3.6/include/c++/v1"
     # LDFLAGS="$LDFLAGS -L/usr/local/opt/llvm36/lib/llvm-3.6/lib"
+elif [ "$HOSTNAME" = "Clue" ]; then
+    CORES=12
 else
     CORES=4
 fi
