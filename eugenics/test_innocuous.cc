@@ -43,6 +43,7 @@ TEST(InnocuousAttempt, XOR) {
     answer = c->evaluateAllInputs();
   }
   EXPECT_EQ(expected_o, answer);
+  std::cerr << *c << std::endl;
   c->writeCircuitToFile();
 }
 
@@ -80,6 +81,7 @@ TEST(InnocuousAttempt, FullAdder) {
     answer = c->evaluateAllInputs();
   }
   EXPECT_EQ(expected_o, answer);
+  std::cerr << *c << std::endl;
   c->writeCircuitToFile();
 }
 
@@ -108,5 +110,6 @@ TEST(InnocuousAttempt, InvertInputs) {
     answer = c->evaluateAllInputs();
   }
   EXPECT_EQ(expected_o, answer);
+  std::cerr << *c << std::endl;
   c->writeCircuitToFile();
 }
