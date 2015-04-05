@@ -28,7 +28,7 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
 
     if ((rand_gate == NOT) && (getNotCount() < 2)) {
       // only add a NOT if we don't have 2 already
-      addGate(rand_gate, number_dist(*rand_engine_ptr) % 2);
+      addGate(rand_gate, number_dist(*rand_engine_ptr) % getGateCount());
     } else if ((rand_gate == OR) || (rand_gate == AND)) {
       addGate(rand_gate, number_dist(*rand_engine_ptr) % getGateCount(),
               number_dist(*rand_engine_ptr) % getGateCount());
