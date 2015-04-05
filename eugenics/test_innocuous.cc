@@ -23,14 +23,8 @@
 #include "utility.h"
 
 TEST(InnocuousAttempt, XOR) {
-  BooleanTable expected_o = {{false},
-                             {true},
-                             {false},
-                             {true}};
-  BooleanTable expected_o = {{false},
-                             {true},
-                             {true},
-                             {false}};
+  BooleanTable expected_o = {{false}, {true}, {false}, {true}};
+  BooleanTable expected_o_bar = {{false}, {true}, {true}, {false}};
 
   std::mt19937 rand(std::random_device{}());
   // std::minstd_rand0 rand(std::random_device{}());
