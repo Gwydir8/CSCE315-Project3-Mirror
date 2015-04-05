@@ -23,6 +23,56 @@
 #include "utility.h"
 
 TEST(InnocuousAttempt, XOR) {
+  BooleanTable expected_o = {{false},
+                             {true}
+                             {false},
+                             {true}};
+  BooleanTable expected_o = {{false},
+                             {true}
+                             {true},
+                             {false}};
+
+  std::mt19937 rand(std::random_device{}());
+  // std::minstd_rand0 rand(std::random_device{}());
+  GeneticCircuit* c = new GeneticCircuit(2, 1, &rand);
+  BooleanTable answer = c->evaluateAllInputs();
+  int i = 0;
+
+  // #ifdef THREADED
+  // std::vector<std::future<BooleanTable>> boolean_table_futures;
+  // #endif THREADED
+
+  while ((answer != expected_o) || (answer != expected_o_bar)) {
+    // #ifdef THREADED
+    // for (int i = 0; i < (NUM_CORES - 1); ++i) {
+    //   boolean_table_futures.push_back(
+    //       std::async(std::launch::async, , points));
+    // }
+    // #endif THREADED
+
+    // std::vector<Path> paths;  // vector of possible paths
+    // // Calculate a path on main thread while waiting for other threads
+    // // If we're doing more than 1 set, do NUM_SETS random path calculations
+    // on
+    // // main thread
+    // for (int i = 0; i < NUM_SETS; i++) {
+    //   paths.push_back(FindRandomPath(points));
+    // }
+
+    // // Get Paths from threads
+    // for (auto& pathfuture : pathfutures) {
+    //   paths.push_back(pathfuture.get());
+    // }
+
+    delete c;
+    c = new GeneticCircuit(2, 1, &rand);
+    std::cerr << "Iteration: " + std::to_string(++i) << std::endl;
+    // std::cerr << *c << std::endl;
+    answer = c->evaluateAllInputs();
+  }
+}
+
+TEST(InnocuousAttempt, FullAdder) {
   BooleanTable expected_o = {{false, false},
                              {false, true},
                              {false, true},
