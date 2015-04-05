@@ -12,7 +12,7 @@
 GeneticCircuit::GeneticCircuit(int input_num, int output_num,
                                std::minstd_rand* rand_eng)
     : Circuit(input_num, output_num), rand_engine_ptr(rand_eng), fitness(0) {
-  assert(input_num < 2);
+  assert(input_num >= 2);
   // if (input_num < 2) {
   //   std::string errmsg =
   //       "GeneticCircuit::GeneticCircuit FATAL Need more than 2 inputs to "
