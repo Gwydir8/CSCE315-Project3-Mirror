@@ -77,10 +77,8 @@ std::pair<GeneticCircuit, GeneticCircuit> Genetic::splitAndSplice(
   std::pair<std::vector<Gate *>, std::vector<Gate *>> c_2_halves =
     split(c_2, split_index);
 
-  errlog("Finished splits", true);
   swapped_circuits.first = splice(c_1_halves.first, c_2_halves.second);
   swapped_circuits.second = splice(c_2_halves.first, c_1_halves.second);
-  errlog("Finished splice", true);
 
   return swapped_circuits;
 }
@@ -122,7 +120,6 @@ std::map<std::size_t, GeneticCircuit> Genetic::spawnPopulation(
 void Genetic::cullHerd(){
   int avg = 0;
   double total = 0;
-  errlog("I am visible", true);
   std::map<std::size_t, GeneticCircuit>::iterator it;
   for(it = population.begin(); it != population.end(); ++it){
     int fit= generateFitness((*it).second);
@@ -139,7 +136,6 @@ void Genetic::cullHerd(){
     }
   }
 
-  errlog("I should be done", true);
   std::string errmsg = "Deleted stuff. Population is now: " + std::to_string(population.size());
   errlog(errmsg, true);
   errlog("I should be done", true);
@@ -147,7 +143,7 @@ void Genetic::cullHerd(){
 
 
 void Genetic::evolve(){
-  for(int i = 0; i < 5; ++i){
+  while(true){
     cullHerd();
     std::vector <GeneticCircuit *> breedable;
     std::map<std::size_t, GeneticCircuit>::iterator it;

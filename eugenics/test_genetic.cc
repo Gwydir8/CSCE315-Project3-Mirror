@@ -93,12 +93,29 @@ TEST_F(GeneticSetup, SplitAndSplice) {
   // dolly.split(dolly.getPopulation()[3], dolly.getPopulation()[900]);
 }
 
-TEST_F(GeneticSetup, Evolve) {
-  dolly.evolve();
-}
 
 
 }  // end of namespace
+
+class SimpleXOR : public ::testing::Test {
+ protected:
+  virtual void SetUp() {
+    // FUN FACT: dolly was the first cloned sheep! In honor of her...we send our
+    // test genetic class into space with her title
+    expected_population_size = 1000;
+    expected_i = 2;
+    expected_o = {{false}, {true}, {true}, {false}};
+    dolly = Genetic(expected_i, expected_o);
+  }
+
+  Genetic dolly;
+  std::size_t expected_population_size;
+  int expected_i;
+  BooleanTable expected_o;
+};
+TEST_F(SimpleXOR, Evolve) {
+  dolly.evolve();
+}
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
