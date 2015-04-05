@@ -32,11 +32,11 @@ const std::string currentDateTime() {
 
 void errlog(std::string message, bool show) {
   // if show is true and we're not in debug mode, show user the error
-#ifdef NDEBUG
   if (show) {
+#ifdef NDEBUG
     std::cerr << setcolor(color::RED, message) << std::endl;
-  }
 #endif
+  }
   errlog(message);
 }
 
