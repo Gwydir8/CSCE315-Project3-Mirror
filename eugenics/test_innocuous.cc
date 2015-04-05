@@ -7,7 +7,7 @@
 #include "circuit.h"
 #include "utility.h"
 
-#define VERBOSE_TEST
+// #define VERBOSE_TEST
 
 TEST(InnocuousAttempt, XOR) {
   BooleanTable expected_o = {{false}, {true}, {true}, {false}};
