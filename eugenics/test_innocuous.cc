@@ -24,11 +24,11 @@
 
 TEST(InnocuousAttempt, XOR) {
   BooleanTable expected_o = {{false},
-                             {true}
+                             {true},
                              {false},
                              {true}};
   BooleanTable expected_o = {{false},
-                             {true}
+                             {true},
                              {true},
                              {false}};
 
