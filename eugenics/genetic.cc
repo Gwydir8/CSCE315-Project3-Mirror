@@ -110,7 +110,7 @@ std::map<std::size_t, GeneticCircuit> Genetic::spawnPopulation(
 int Genetic::generateFitness(GeneticCircuit c) {
   int score = 0;
   BooleanTable actual_output = c.evaluateWithCache();
-  for (int i = 0; i < actual_output.size(); ++i) {
+  for (std::size_t i = 0; i < actual_output.size(); ++i) {
       if(actual_output[i] != expected_outputs[i]){
         score += 100000;
       }
