@@ -10,8 +10,7 @@
 // #define VERBOSE_TEST
 
 TEST(InnocuousAttempt, XOR) {
-  BooleanTable expected_o = {{false}, {true}, {false}, {true}};
-  BooleanTable expected_o_bar = {{false}, {true}, {true}, {false}};
+  BooleanTable expected_o = {{false}, {false}, {true}, {true}};
 
   std::minstd_rand rand(std::random_device{}());
   // std::minstd_rand0 rand(std::random_device{}());
@@ -19,7 +18,7 @@ TEST(InnocuousAttempt, XOR) {
   BooleanTable answer = c->evaluateAllInputs();
   int i = 0;
 
-  while ((answer != expected_o) || (answer != expected_o_bar)) {
+  while ((answer != expected_o)) {
     delete c;
     c = new GeneticCircuit(2, 1, &rand);
     answer = c->evaluateAllInputs();
