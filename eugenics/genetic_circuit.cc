@@ -34,7 +34,6 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
         --i; //didn't add a gate(prbly due to not constraints failing
     }
   }
-  generateFitness();
 }
 
 GeneticCircuit::GeneticCircuit(int input_num, int output_num,
