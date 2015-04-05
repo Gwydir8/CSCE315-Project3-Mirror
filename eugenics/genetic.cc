@@ -18,8 +18,6 @@
 #include "genetic_circuit.h"
 #include "utility.h"
 
-Genetic::Genetic(int n, BooleanTable outputs) : Genetic(n, outputs, 1000) {}
-
 Genetic::Genetic(int n, BooleanTable outputs, int population_size)
     : input_no(n),
       expected_outputs(outputs),
@@ -27,33 +25,35 @@ Genetic::Genetic(int n, BooleanTable outputs, int population_size)
   population = spawnPopulation(population_size);
 }
 
-Genetic::Genetic(int n, BooleanTable outputs, std::map<int, GeneticCircuit> pop)
+Genetic::Genetic(int n, BooleanTable outputs,
+                 std::map<std::size_t, GeneticCircuit> pop)
     : population(pop),
       input_no(n),
       expected_outputs(outputs),
       rand_engine(std::random_device{}()) {}
 
-std::pair<std::vector<Gate *>, std::vector<Gate *>> Genetic::split(GeneticCircuit circuit,
-                                                         int split_index) {
+std::pair<std::vector<Gate *>, std::vector<Gate *>> Genetic::split(
+    GeneticCircuit circuit, int split_index) {
   // split gates
 
   std::vector<Gate *> a = circuit.getGates();
-  std::vector<Gate *> lhs_gates(a.begin(),
-                                a.begin() + split_index);
-  std::vector<Gate *> rhs_gates(a.begin() + split_index,
-                                a.end());
+  std::vector<Gate *> lhs_gates(a.begin(), a.begin() + split_index);
+  std::vector<Gate *> rhs_gates(a.begin() + split_index, a.end());
 
   // split circuit and c2 into a and b at dist(rand_engine)
-  return std::pair<std::vector<Gate *>, std::vector<Gate *>>(lhs_gates, rhs_gates);
+  return std::pair<std::vector<Gate *>, std::vector<Gate *>>(lhs_gates,
+                                                             rhs_gates);
 }
 
-GeneticCircuit Genetic::splice(std::vector<Gate *> base_part, std::vector<Gate *> appended_part) {
+GeneticCircuit Genetic::splice(std::vector<Gate *> base_part,
+                               std::vector<Gate *> appended_part) {
   std::vector<Gate *> combined_gates = base_part;
   std::vector<Gate *> a = appended_part;
 
   combined_gates.insert(std::end(combined_gates), std::begin(a), std::end(a));
 
-  GeneticCircuit new_circuit(input_no, expected_outputs.front().size(), &rand_engine, combined_gates);
+  GeneticCircuit new_circuit(input_no, expected_outputs.front().size(),
+                             &rand_engine, combined_gates);
   return new_circuit;
 }
 
@@ -77,8 +77,10 @@ std::pair<GeneticCircuit, GeneticCircuit> Genetic::splitAndSplice(
   return swapped_circuits;
 }
 
-std::map<int, GeneticCircuit> Genetic::spawnPopulation(int populationSize) {
-  std::map<int, GeneticCircuit> spawned_pop;
+std::map<std::size_t, GeneticCircuit> Genetic::spawnPopulation(
+    std::size_t populationSize) {
+
+  std::map<std::size_t, GeneticCircuit> spawned_pop;
   while (spawned_pop.size() < populationSize) {
     GeneticCircuit c(input_no, expected_outputs.front().size(), &rand_engine);
     int circuit_fitness = generateFitness(c);
@@ -88,11 +90,11 @@ std::map<int, GeneticCircuit> Genetic::spawnPopulation(int populationSize) {
       std::string errmsg =
           "Genetic::spawnPopulation inserting Circuit "
           "fitness: " +
-          std::to_string(circuit_fitness);
+          std::to_string(c.getFitness());
       errlog(errmsg);
     }
 
-    std::pair<int, GeneticCircuit> zergling(c.hash_circ(), c);
+    std::pair<std::size_t, GeneticCircuit> zergling(c.hash_circ(), c);
     spawned_pop.insert(zergling);
 
     if (SHOW_POPULATION_LOG) {

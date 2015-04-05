@@ -66,6 +66,13 @@ class Gate {
         output_index(index),
         val(B) {}
 
+  virtual ~Gate() {
+    // std::cerr << __FUNCTION__ << std::endl;  // << *this << std::endl;
+    // std::cerr << "~Gate" << std::endl << *this << std::endl;
+    // input_1 = nullptr;
+    // input_2 = nullptr;
+  }
+
   // evaluate returns the output of a gate
   virtual bool evaluate() = 0;
 

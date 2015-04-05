@@ -13,18 +13,19 @@
 class Genetic {
  public:
   Genetic() : population(), input_no(), expected_outputs() {}
-  Genetic(int input_no, BooleanTable expect_outputs);
+  Genetic(int n, BooleanTable outputs) : Genetic(n, outputs, 1000) {}
   Genetic(int input_no, BooleanTable expect_outputs, int population_size);
   Genetic(int input_no, BooleanTable expect_outputs,
-          std::map<int, GeneticCircuit> pop);
-  virtual ~Genetic() {}
+          std::map<std::size_t, GeneticCircuit> pop);
+  // ~Genetic() { std::cerr << "~Genetic" << std::endl; }
 
   // "cut" two circuits at random point
-  std::pair<std::vector<Gate *>, std::vector<Gate *>> split(GeneticCircuit circuit,
-                                                  int split_index);
+  std::pair<std::vector<Gate *>, std::vector<Gate *>> split(
+      GeneticCircuit circuit, int split_index);
 
   // splice together c1a and c2b, and c2a and c1b
-  GeneticCircuit splice(std::vector<Gate *> base_part, std::vector<Gate *> appended_part);
+  GeneticCircuit splice(std::vector<Gate *> base_part,
+                        std::vector<Gate *> appended_part);
 
   // perform split and splice in one function
   std::pair<GeneticCircuit, GeneticCircuit> splitAndSplice(
@@ -32,13 +33,13 @@ class Genetic {
 
   int getExpectedInputs() const { return input_no; }
   BooleanTable getExpectedOutputs() const { return expected_outputs; }
-  std::map<int, GeneticCircuit> getPopulation() const { return population; }
+  std::map<std::size_t, GeneticCircuit> getPopulation() const { return population; }
 
-  std::map<int, GeneticCircuit> spawnPopulation(int populationSize);
+  std::map<std::size_t, GeneticCircuit> spawnPopulation(std::size_t populationSize);
 
   int generateFitness(GeneticCircuit c);
  private:
-  std::map<int, GeneticCircuit> population;
+  std::map<std::size_t, GeneticCircuit> population;
 
   int input_no;
   BooleanTable expected_outputs;

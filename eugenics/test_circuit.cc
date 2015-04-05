@@ -16,9 +16,39 @@ class WireSetup : public testing::Test {
   virtual void SetUp() {
     wire_1 = new Wire(true, 0);
     wire_0 = new Wire(false, 1);
+
+    and_00 = new And(wire_0, wire_0);
+    and_01 = new And(wire_0, wire_1);
+    and_10 = new And(wire_1, wire_0);
+    and_11 = new And(wire_1, wire_1);
+
+    or_00 = new Or(wire_0, wire_0);
+    or_01 = new Or(wire_0, wire_1);
+    or_10 = new Or(wire_1, wire_0);
+    or_11 = new Or(wire_1, wire_1);
   }
-  Wire* wire_1;
-  Wire* wire_0;
+  virtual void TearDown() {
+    delete wire_1;
+    delete wire_0;
+    delete and_00;
+    delete and_01;
+    delete and_10;
+    delete and_11;
+    delete or_00;
+    delete or_01;
+    delete or_10;
+    delete or_11;
+  }
+  Gate* wire_1;
+  Gate* wire_0;
+  Gate* and_00;
+  Gate* and_01;
+  Gate* and_10;
+  Gate* and_11;
+  Gate* or_00;
+  Gate* or_01;
+  Gate* or_10;
+  Gate* or_11;
 };
 
 TEST_F(WireSetup, And) {
@@ -41,17 +71,17 @@ TEST_F(WireSetup, Not) {
 }
 
 TEST_F(WireSetup, NAND) {
-  EXPECT_EQ(1, Not(new And(wire_0, wire_0)).evaluate());
-  EXPECT_EQ(1, Not(new And(wire_0, wire_1)).evaluate());
-  EXPECT_EQ(0, Not(new And(wire_1, wire_1)).evaluate());
-  EXPECT_EQ(1, Not(new And(wire_1, wire_0)).evaluate());
+  EXPECT_EQ(1, Not(and_00).evaluate());
+  EXPECT_EQ(1, Not(and_01).evaluate());
+  EXPECT_EQ(0, Not(and_11).evaluate());
+  EXPECT_EQ(1, Not(and_10).evaluate());
 }
 
 TEST_F(WireSetup, NOR) {
-  EXPECT_EQ(1, Not(new Or(wire_0, wire_0)).evaluate());
-  EXPECT_EQ(0, Not(new Or(wire_0, wire_1)).evaluate());
-  EXPECT_EQ(0, Not(new Or(wire_1, wire_1)).evaluate());
-  EXPECT_EQ(0, Not(new Or(wire_1, wire_0)).evaluate());
+  EXPECT_EQ(1, Not(or_00).evaluate());
+  EXPECT_EQ(0, Not(or_01).evaluate());
+  EXPECT_EQ(0, Not(or_11).evaluate());
+  EXPECT_EQ(0, Not(or_10).evaluate());
 }
 
 class XORTest : public testing::Test {
@@ -66,12 +96,14 @@ class XORTest : public testing::Test {
   }
   virtual void TearDown() { delete c; }
   Circuit* c;
-  Circuit cempty = Circuit(2, 1);
   std::vector<bool> expected_output0{false};
   std::vector<bool> expected_output1{true};
 };
 
-TEST_F(XORTest, XOR_wiretest) { EXPECT_EQ(2, cempty.getGateCount()); }
+TEST(XORWIRETest, XOR_wiretest) {
+  Circuit cempty = Circuit(2, 1);
+  EXPECT_EQ(2, cempty.getGateCount());
+}
 
 TEST_F(XORTest, XOR0) {
   // Circuit c(2, 1);
