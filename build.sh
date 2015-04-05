@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
 # build project3. should be run in root of project.
 # USAGE: cd $PROJECT_ROOT; ./build.sh
 
