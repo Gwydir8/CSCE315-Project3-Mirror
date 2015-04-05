@@ -17,11 +17,16 @@ const bool SHOW_POPULATION_LOG = false;
 class GeneticCircuit : public Circuit {
  public:
   GeneticCircuit(int input_num, int output_num, std::minstd_rand* rand_eng_ptr);
-  GeneticCircuit(int input_num, int output_num, std::minstd_rand* rand_eng,
+  GeneticCircuit(int input_num, int output_num, std::minstd_rand* rand_eng_ptr,
                  std::vector<Gate*> gates);
+  // virtual ~GeneticCircuit() {
+  //   std::cerr << __FUNCTION__ << std::endl;  // << *this << std::endl;
+  // }
 
   int generateFitness();
-  void setFitness(int f);
+
+  void setFitness(int f) { fitness = f; }
+  int getFitness() { return fitness; }
 
   std::size_t hash_circ();
 

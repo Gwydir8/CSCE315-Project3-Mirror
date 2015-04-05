@@ -44,6 +44,26 @@ Circuit::Circuit(int inputs, int o) : output_no(o), input_no(inputs) {
   }
 }
 
+// Circuit::~Circuit() {
+//   // std::cerr << __FUNCTION__ << std::endl << *this << std::endl;
+//   // std::cerr << "~Circuit :" << std::endl;// << *this << std::endl;
+//   // std::reverse_iterator<std::vector<Gate*>::iterator> r = gates.rbegin();
+//   // for (std::size_t i = 0; i < gates.size(); ++i) {
+//   //   // delete r[i];
+//   // }
+//   // for (Gate* gate: gates) {
+//   //   delete gate;
+//   // }
+//   for (std::size_t i = 0; i < gates.size(); ++i) {
+//     if (gates[i] != nullptr) {
+//       // std::cerr << "~Circuit Deleting: " << std::endl
+//       //           << *(gates[i]) << std::endl;
+//       delete gates[i];
+//       gates[i] = nullptr;
+//     }
+//   }
+// }
+
 int Circuit::addGate(GateType gate_type, int index_1) {
   Gate* built_gate = nullptr;
   Gate* input_1 = gates[index_1];

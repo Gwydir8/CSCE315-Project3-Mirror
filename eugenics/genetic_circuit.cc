@@ -13,21 +13,16 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
                                std::minstd_rand* rand_eng)
     : Circuit(input_num, output_num), rand_engine_ptr(rand_eng), fitness(0) {
   assert(input_num >= 2);
-  // if (input_num < 2) {
-  //   std::string errmsg =
-  //       "GeneticCircuit::GeneticCircuit FATAL Need more than 2 inputs to "
-  //       "create gate";
-  //   errlog(errmsg);
-  //   std::exit(EXIT_FAILURE);
-  // }
+
   std::vector<GateType> gate_types{NOT, OR, AND};
 
-  int num_of_gates =
-      number_dist(*rand_engine_ptr);  // random number between 0 and 40
+  // random number between 0 and 40
+  int num_of_gates = number_dist(*rand_engine_ptr);
+
   std::uniform_int_distribution<> gate_max_dist{0, num_of_gates};
+
   for (int i = 0; i < num_of_gates; ++i) {
     // random number between 0 and 2
-    //
     GateType rand_gate = gate_types[gate_max_dist(*rand_engine_ptr) % 3];
 
     if ((rand_gate == NOT) && (getNotCount() < 2)) {
@@ -38,12 +33,13 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
               gate_max_dist(*rand_engine_ptr) % getGateCount());
     }
   }
+  generateFitness();
 }
 
 GeneticCircuit::GeneticCircuit(int input_num, int output_num,
                                std::minstd_rand* rand_eng,
                                std::vector<Gate*> gates)
-    : Circuit(input_num, output_num), rand_engine_ptr(rand_eng), fitness(0) {
+    : Circuit(input_num, output_num), rand_engine_ptr(rand_eng) {
   for (Gate* gate : gates) {
     if (gate->type == "WIRE") {
       errlog("GeneticCircuit::GeneticCircuit Wires are not added");
@@ -75,7 +71,6 @@ int GeneticCircuit::generateFitness() {
   return score;
 }
 
-void GeneticCircuit::setFitness(int f) { fitness = f; }
 
 std::size_t GeneticCircuit::hash_circ() {
   std::string s = "";
