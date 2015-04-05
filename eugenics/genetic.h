@@ -36,6 +36,7 @@ class Genetic {
 
   std::map<int, GeneticCircuit> spawnPopulation(int populationSize);
 
+  int generateFitness(GeneticCircuit c);
  private:
   std::map<int, GeneticCircuit> population;
 

@@ -81,7 +81,8 @@ std::map<int, GeneticCircuit> Genetic::spawnPopulation(int populationSize) {
   std::map<int, GeneticCircuit> spawned_pop;
   while (spawned_pop.size() < populationSize) {
     GeneticCircuit c(input_no, expected_outputs.front().size(), &rand_engine);
-    int circuit_fitness = c.generateFitness();
+    int circuit_fitness = generateFitness(c);
+    c.setFitness(circuit_fitness);
 
     if (SHOW_POPULATION_LOG) {
       std::string errmsg =
@@ -102,3 +103,18 @@ std::map<int, GeneticCircuit> Genetic::spawnPopulation(int populationSize) {
   }
   return spawned_pop;
 }
+
+
+int Genetic::generateFitness(GeneticCircuit c) {
+  int score = 0;
+  BooleanTable actual_output = c.evaluateWithCache();
+  for (int i = 0; i < actual_output.size(); ++i) {
+      if(actual_output[i] != expected_outputs[i]){
+        score += 100000;
+      }
+  }
+  score += c.getNotCount() * 10000;
+  score += (c.getOrCount() + c.getAndCount()) * 10;
+  return score;
+}
+

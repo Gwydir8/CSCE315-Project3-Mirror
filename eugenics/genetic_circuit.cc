@@ -23,19 +23,21 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
   std::vector<GateType> gate_types{NOT, OR, AND};
 
   int num_of_gates =
-      number_dist(*rand_engine_ptr);  // random number between 0 and 40
+  number_dist(*rand_engine_ptr);  // random number between 0 and 28
   std::uniform_int_distribution<> gate_max_dist{0, num_of_gates};
   for (int i = 0; i < num_of_gates; ++i) {
     // random number between 0 and 2
-    //
     GateType rand_gate = gate_types[gate_max_dist(*rand_engine_ptr) % 3];
 
-    if ((rand_gate == NOT) && (getNotCount() < 2)) {
+    if ((rand_gate == NOT) && (getNotCount() < 2) && i % 4 == 0) {
       // only add a NOT if we don't have 2 already
       addGate(rand_gate, gate_max_dist(*rand_engine_ptr) % getGateCount());
     } else if ((rand_gate == OR) || (rand_gate == AND)) {
       addGate(rand_gate, gate_max_dist(*rand_engine_ptr) % getGateCount(),
               gate_max_dist(*rand_engine_ptr) % getGateCount());
+    }
+    else{
+        --i; //didn't add a gate(prbly due to not constraints failing
     }
   }
 }
@@ -63,25 +65,15 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
       std::exit(EXIT_FAILURE);
     }
   }
-  generateFitness();
 }
 
-int GeneticCircuit::generateFitness() {
-  int score = 0;
-  score += getNotCount() * 10000;
-  score += getAndCount() * 10;
-  score += getOrCount() * 1;
-  fitness = score;
-  return score;
-}
 
-void GeneticCircuit::setFitness(int f) { fitness = f; }
 
 std::size_t GeneticCircuit::hash_circ() {
   std::string s = "";
   std::hash<std::string> hash_fn;
 
-  BooleanTable outputs = evaluateAllInputs();
+  BooleanTable outputs = evaluateWithCache();
 
   for (std::vector<bool> row : outputs) {
     for (bool bit : row) {
@@ -100,3 +92,12 @@ std::size_t GeneticCircuit::hash_circ() {
   }
   return hash;
 }
+
+BooleanTable GeneticCircuit::evaluateWithCache(){
+  if(!has_memo){
+    memoized_output = evaluateAllInputs();
+    has_memo = true;
+  }
+  return memoized_output;
+}
+
