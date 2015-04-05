@@ -24,16 +24,17 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
 
   int num_of_gates =
       number_dist(*rand_engine_ptr);  // random number between 0 and 40
+  std::uniform_int_distribution<> gate_max_dist{0, num_of_gates};
   for (int i = 0; i < num_of_gates; ++i) {
     // random number between 0 and 2
     GateType rand_gate = gate_types[gate_dist(*rand_engine_ptr)];
 
     if ((rand_gate == NOT) && (getNotCount() < 2)) {
       // only add a NOT if we don't have 2 already
-      addGate(rand_gate, number_dist(*rand_engine_ptr) % getGateCount());
+      addGate(rand_gate, gate_max_dist(*rand_engine_ptr) % getGateCount());
     } else if ((rand_gate == OR) || (rand_gate == AND)) {
-      addGate(rand_gate, number_dist(*rand_engine_ptr) % getGateCount(),
-              number_dist(*rand_engine_ptr) % getGateCount());
+      addGate(rand_gate, gate_max_dist(*rand_engine_ptr) % getGateCount(),
+              gate_max_dist(*rand_engine_ptr) % getGateCount());
     }
   }
 }
