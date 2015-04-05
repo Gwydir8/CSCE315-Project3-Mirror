@@ -36,7 +36,7 @@ TEST(InnocuousAttempt, XOR) {
     ++i;
     delete c;
     c = new GeneticCircuit(2, 1, &rand);
-    if (i % 1000 == 0) {
+    if (i % 100000 == 0) {
       std::cerr << "Iteration: " + std::to_string(i) << std::endl;
       std::cerr << *c << std::endl;
     }
@@ -72,7 +72,7 @@ TEST(InnocuousAttempt, FullAdder) {
     ++i;
     delete c;
     c = new GeneticCircuit(2, 2, &rand);
-    if (i % 1000 == 0) {
+    if (i % 10000 == 0) {
       std::cerr << "Iteration: " + std::to_string(i) << std::endl;
       std::cerr << *c << std::endl;
     }
@@ -98,7 +98,7 @@ TEST(InnocuousAttempt, InvertInputs) {
     ++i;
     delete c;
     c = new GeneticCircuit(3, 3, &rand);
-    if (i % 1000 == 0) {
+    if (i % 10000 == 0) {
       std::cerr << "Iteration: " + std::to_string(i) << std::endl;
       std::cerr << *c << std::endl;
     }
