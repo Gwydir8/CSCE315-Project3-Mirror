@@ -38,7 +38,7 @@ class Genetic {
   std::map<std::size_t, GeneticCircuit> spawnPopulation(std::size_t populationSize);
 
   void cullHerd();
-  GeneticCircuit evolve();
+  void evolve();
 
   int generateFitness(GeneticCircuit c);
  private:

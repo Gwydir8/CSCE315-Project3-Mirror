@@ -120,8 +120,8 @@ std::map<std::size_t, GeneticCircuit> Genetic::spawnPopulation(
 }
 
 void Genetic::cullHerd(){
-  int avg;
-  double total;
+  int avg = 0;
+  double total = 0;
   errlog("I am visible", true);
   std::map<std::size_t, GeneticCircuit>::iterator it;
   for(it = population.begin(); it != population.end(); ++it){
@@ -146,10 +146,9 @@ void Genetic::cullHerd(){
 }
 
 
-GeneticCircuit Genetic::evolve(){
-  while(int i = 0; i < 5; ++i){
+void Genetic::evolve(){
+  for(int i = 0; i < 5; ++i){
     cullHerd();
-    GeneticCircuit *prev = NULL;
     std::vector <GeneticCircuit *> breedable;
     std::map<std::size_t, GeneticCircuit>::iterator it;
     for(it = population.begin(); it != population.end(); ++it){
@@ -166,7 +165,7 @@ GeneticCircuit Genetic::evolve(){
       population.insert(std::pair<std::size_t, GeneticCircuit>(twins.second.hash_circ(), twins.second));
 
     }
-      errlog("Done", true);
+    errlog("Done", true);
   }
 }
 
