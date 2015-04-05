@@ -17,7 +17,7 @@ class Circuit {
   //// 11
   // output_no is the number of outputs desired
   Circuit(int input_no, int output_no);
-  // virtual ~Circuit();
+  virtual ~Circuit();
 
   int getOutputCount() const { return output_no; }
   int getInputCount() const { return input_no; }

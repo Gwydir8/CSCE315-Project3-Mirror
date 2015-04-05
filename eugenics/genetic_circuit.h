@@ -24,7 +24,6 @@ class GeneticCircuit : public Circuit {
   // }
 
   void setFitness(int f) { fitness = f; }
-  BooleanTable evaluateWithCache();
   int getFitness() { return fitness; }
 
   std::size_t hash_circ();
@@ -34,8 +33,8 @@ class GeneticCircuit : public Circuit {
   std::uniform_int_distribution<> number_dist{0, 28};
   std::minstd_rand* rand_engine_ptr;
   int fitness;
-  BooleanTable memoized_output;//assuming that gates won't be added after evaluation
-  bool has_memo; //flag to determine if output has been already calculated
+  /* BooleanTable memoized_output;//assuming that gates won't be added after evaluation */
+  /* bool has_memo; //flag to determine if output has been already calculated */
 };
 
 #endif

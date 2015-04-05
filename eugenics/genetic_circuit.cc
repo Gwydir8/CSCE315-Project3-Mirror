@@ -30,9 +30,9 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
       addGate(rand_gate, gate_max_dist(*rand_engine_ptr) % getGateCount(),
               gate_max_dist(*rand_engine_ptr) % getGateCount());
     }
-    else{
-        --i; //didn't add a gate(prbly due to not constraints failing
-    }
+    /* else{ */
+    /*     --i; //didn't add a gate(prbly due to not constraints failing */
+    /* } */
   }
 }
 
@@ -67,7 +67,7 @@ std::size_t GeneticCircuit::hash_circ() {
   std::string s = "";
   std::hash<std::string> hash_fn;
 
-  BooleanTable outputs = evaluateWithCache();
+  BooleanTable outputs = evaluateAllInputs();
 
   for (std::vector<bool> row : outputs) {
     for (bool bit : row) {
@@ -87,11 +87,11 @@ std::size_t GeneticCircuit::hash_circ() {
   return hash;
 }
 
-BooleanTable GeneticCircuit::evaluateWithCache(){
-  if(!has_memo){
-    memoized_output = evaluateAllInputs();
-    has_memo = true;
-  }
-  return memoized_output;
-}
+/* BooleanTable GeneticCircuit::evaluateWithCache(){ */
+/*   if(!has_memo){ */
+/*     memoized_output = evaluateAllInputs(); */
+/*     has_memo = true; */
+/*   } */
+/*   return memoized_output; */
+/* } */
 
