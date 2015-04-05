@@ -9,7 +9,7 @@
 #include "utility.h"
 
 GeneticCircuit::GeneticCircuit(int input_num, int output_num,
-                               std::mt19937* rand_eng)
+                               std::minstd_rand* rand_eng)
     : Circuit(input_num, output_num), rand_engine_ptr(rand_eng), fitness(0) {
   if (input_num < 2) {
     std::string errmsg =
@@ -37,7 +37,7 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
 }
 
 GeneticCircuit::GeneticCircuit(int input_num, int output_num,
-                               std::mt19937* rand_eng, std::vector<Gate*> gates)
+                               std::minstd_rand* rand_eng, std::vector<Gate*> gates)
     : Circuit(input_num, output_num), rand_engine_ptr(rand_eng), fitness(0) {
   for (Gate* gate : gates) {
     if (gate->type == "WIRE") {

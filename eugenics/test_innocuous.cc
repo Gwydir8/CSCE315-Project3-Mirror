@@ -26,7 +26,7 @@ TEST(InnocuousAttempt, XOR) {
   BooleanTable expected_o = {{false}, {true}, {false}, {true}};
   BooleanTable expected_o_bar = {{false}, {true}, {true}, {false}};
 
-  std::mt19937 rand(std::random_device{}());
+  std::minstd_rand rand(std::random_device{}());
   // std::minstd_rand0 rand(std::random_device{}());
   GeneticCircuit* c = new GeneticCircuit(2, 1, &rand);
   BooleanTable answer = c->evaluateAllInputs();
@@ -62,7 +62,7 @@ TEST(InnocuousAttempt, FullAdder) {
                                  {false, true},
                                  {false, true},
                                  {true, true}};
-  std::mt19937 rand(std::random_device{}());
+  std::minstd_rand rand(std::random_device{}());
   // std::minstd_rand0 rand(std::random_device{}());
   GeneticCircuit* c = new GeneticCircuit(3, 2, &rand);
   BooleanTable answer = c->evaluateAllInputs();
@@ -89,7 +89,7 @@ TEST(InnocuousAttempt, InvertInputs) {
                              {false, true, false},
                              {false, false, true},
                              {false, false, false}};
-  std::mt19937 rand(std::random_device{}());
+  std::minstd_rand rand(std::random_device{}());
   // std::minstd_rand0 rand(std::random_device{}());
   GeneticCircuit* c = new GeneticCircuit(3, 3, &rand);
   BooleanTable answer = c->evaluateAllInputs();

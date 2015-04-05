@@ -5,7 +5,7 @@
 #include <random>
 
 #include <utility>
-#include <random>     // std::mt19937
+#include <random>     // std::minstd_rand
 #include <algorithm>  // std::max
 #include <cstddef>    //std::size_t
 
@@ -16,8 +16,8 @@ const bool SHOW_POPULATION_LOG = false;
 
 class GeneticCircuit : public Circuit {
  public:
-  GeneticCircuit(int input_num, int output_num, std::mt19937* rand_eng_ptr);
-  GeneticCircuit(int input_num, int output_num, std::mt19937* rand_eng,
+  GeneticCircuit(int input_num, int output_num, std::minstd_rand* rand_eng_ptr);
+  GeneticCircuit(int input_num, int output_num, std::minstd_rand* rand_eng,
                  std::vector<Gate*> gates);
 
   int generateFitness();
@@ -28,7 +28,7 @@ class GeneticCircuit : public Circuit {
  private:
   std::uniform_int_distribution<> gate_dist{0, 2};
   std::uniform_int_distribution<> number_dist{0, 40};
-  std::mt19937* rand_engine_ptr;
+  std::minstd_rand* rand_engine_ptr;
   int fitness;
 };
 

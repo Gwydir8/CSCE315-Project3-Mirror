@@ -42,7 +42,7 @@ class Genetic {
   int input_no;
   BooleanTable expected_outputs;
 
-  std::mt19937 rand_engine;
+  std::minstd_rand rand_engine;
 };
 
 #endif /* GENETIC_H */
