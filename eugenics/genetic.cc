@@ -117,6 +117,7 @@ std::map<std::size_t, GeneticCircuit> Genetic::spawnPopulation(
 }
 
 void Genetic::cullHerd() {
+  int initial_size = population.size();
   int avg = 0;
   double total = 0.0;
   std::map<std::size_t, GeneticCircuit>::iterator it;
@@ -126,7 +127,8 @@ void Genetic::cullHerd() {
     avg = total / population.size();
   }
   it = population.begin();
-  while (it != population.end()) {
+  //keep going until either deletes most or half
+  while (it != population.end() || population.size() < (initial_size /2)) {
     if (generateFitness((*it).second) > avg) {
       population.erase(it++);
     } else {
