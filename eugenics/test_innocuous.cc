@@ -2,21 +2,6 @@
 
 #include <vector>
 
-// uncomment to use threads
-//#define THREADED
-
-#ifdef THREADED
-
-// Tron
-//#define NUM_CORES 4
-// Clue
-#define NUM_CORES 12
-
-#include <thread>
-#include <future>
-
-#endif  // THREADED
-
 #include "genetic.h"
 #include "genetic_circuit.h"
 #include "circuit.h"
