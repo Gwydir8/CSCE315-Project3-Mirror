@@ -38,13 +38,15 @@ class Genetic {
   std::map<std::size_t, GeneticCircuit> spawnPopulation(std::size_t populationSize);
 
   void cullHerd();
-  void evolve();
+  GeneticCircuit evolve();
 
+  size_t hashExpectedOutput();
   int generateFitness(GeneticCircuit c);
  private:
   std::map<std::size_t, GeneticCircuit> population;
 
   int input_no;
+  bool correct_found = false;
   BooleanTable expected_outputs;
 
   std::minstd_rand rand_engine;

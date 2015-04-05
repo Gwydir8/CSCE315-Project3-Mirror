@@ -127,7 +127,7 @@ void Genetic::cullHerd() {
   }
   it = population.begin();
   while (it != population.end()) {
-    if (generateFitness((*it).second) < avg) {
+    if (generateFitness((*it).second) > avg) {
       population.erase(it++);
     } else {
       ++it;
@@ -141,8 +141,8 @@ void Genetic::cullHerd() {
   errlog("I should be done", true);
 }
 
-void Genetic::evolve(){
-  while(true){
+GeneticCircuit Genetic::evolve(){
+  while(!correct_found){
     cullHerd();
     std::vector<GeneticCircuit *> breedable;
     std::map<std::size_t, GeneticCircuit>::iterator it;
@@ -164,6 +164,8 @@ void Genetic::evolve(){
     }
     errlog("Done", true);
   }
+
+  return population.at(hashExpectedOutput());
 }
 
 int Genetic::generateFitness(GeneticCircuit c) {
@@ -177,8 +179,20 @@ int Genetic::generateFitness(GeneticCircuit c) {
   score += c.getNotCount() * 1000;
   score += (c.getOrCount() + c.getAndCount()) * 10;
   if (score < 10000) {
-    std::cout << "FOUND IT!!!!!!" << std::endl;
-    exit(EXIT_FAILURE);
+    correct_found = true;
   }
   return score;
 }
+
+size_t Genetic::hashExpectedOutput(){
+  std::string s = "";
+  std::hash<std::string> hash_fn;
+  for (std::vector<bool> row : expected_outputs) {
+    for (bool bit : row) {
+      s += std::to_string((int)bit);
+    }
+  }
+  std::size_t hash = hash_fn(s);
+  return hash;
+}
+
