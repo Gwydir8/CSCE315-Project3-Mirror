@@ -22,6 +22,8 @@
 #include "circuit.h"
 #include "utility.h"
 
+// #define VERBOSE_TEST
+
 TEST(InnocuousAttempt, XOR) {
   BooleanTable expected_o = {{false}, {true}, {false}, {true}};
   BooleanTable expected_o_bar = {{false}, {true}, {true}, {false}};
@@ -33,14 +35,16 @@ TEST(InnocuousAttempt, XOR) {
   int i = 0;
 
   while ((answer != expected_o) || (answer != expected_o_bar)) {
-    ++i;
     delete c;
     c = new GeneticCircuit(2, 1, &rand);
+    answer = c->evaluateAllInputs();
+    #ifdef VERBOSE_TEST
+    ++i;
     if (i % 100000 == 0) {
       std::cerr << "Iteration: " + std::to_string(i) << std::endl;
       std::cerr << *c << std::endl;
     }
-    answer = c->evaluateAllInputs();
+    #endif
   }
   EXPECT_EQ(expected_o, answer);
   std::cerr << *c << std::endl;
@@ -71,14 +75,16 @@ TEST(InnocuousAttempt, FullAdder) {
   int i = 0;
 
   while ((answer != expected_o) || (answer != expected_o_bar)) {
-    ++i;
     delete c;
     c = new GeneticCircuit(2, 2, &rand);
+    answer = c->evaluateAllInputs();
+    #ifdef VERBOSE_TEST
+    ++i;
     if (i % 10000 == 0) {
       std::cerr << "Iteration: " + std::to_string(i) << std::endl;
       std::cerr << *c << std::endl;
     }
-    answer = c->evaluateAllInputs();
+    #endif
   }
   EXPECT_EQ(expected_o, answer);
   std::cerr << *c << std::endl;
@@ -100,14 +106,16 @@ TEST(InnocuousAttempt, InvertInputs) {
   BooleanTable answer = c->evaluateAllInputs();
   int i = 0;
   while ((answer != expected_o)) {
-    ++i;
     delete c;
     c = new GeneticCircuit(3, 3, &rand);
+    answer = c->evaluateAllInputs();
+    #ifdef VERBOSE_TEST
+    ++i;
     if (i % 10000 == 0) {
       std::cerr << "Iteration: " + std::to_string(i) << std::endl;
       std::cerr << *c << std::endl;
     }
-    answer = c->evaluateAllInputs();
+    #endif
   }
   EXPECT_EQ(expected_o, answer);
   std::cerr << *c << std::endl;
