@@ -120,12 +120,14 @@ void Genetic::cullHerd() {
   int initial_size = population.size();
   int avg = 0;
   double total = 0.0;
+
   std::map<std::size_t, GeneticCircuit>::iterator it;
   for (it = population.begin(); it != population.end(); ++it) {
-    int fit = generateFitness((*it).second);
+    int fit = generateFitness(it->second);
     total += fit;
     avg = total / population.size();
   }
+
   it = population.begin();
   //keep going until either deletes most or half
   while (it != population.end() || population.size() < (initial_size /2)) {
