@@ -12,12 +12,11 @@
 
 class Genetic {
  public:
-  Genetic() : population(), input_no(), expected_outputs() {}
+  Genetic() : population(), input_no(), expected_outputs(), correct_found() {}
   Genetic(int n, BooleanTable outputs) : Genetic(n, outputs, 1000) {}
   Genetic(int input_no, BooleanTable expect_outputs, int population_size);
-  Genetic(int input_no, BooleanTable expect_outputs,
-          std::map<std::size_t, GeneticCircuit> pop);
-  // ~Genetic() { std::cerr << "~Genetic" << std::endl; }
+  /* Genetic(int input_no, BooleanTable expect_outputs, */
+  /*         std::map<std::size_t, GeneticCircuit> pop); */
 
   // "cut" two circuits at random point
   std::pair<std::vector<Gate *>, std::vector<Gate *>> split(
@@ -33,9 +32,9 @@ class Genetic {
 
   int getExpectedInputs() const { return input_no; }
   BooleanTable getExpectedOutputs() const { return expected_outputs; }
-  std::map<std::size_t, GeneticCircuit> getPopulation() const { return population; }
+  std::map<std::size_t, GeneticCircuit> getPopulation() const { return *population; }
 
-  std::map<std::size_t, GeneticCircuit> spawnPopulation(std::size_t populationSize);
+  std::map<std::size_t, GeneticCircuit> * spawnPopulation(std::size_t populationSize);
 
   void cullHerd();
   GeneticCircuit evolve();
@@ -43,10 +42,10 @@ class Genetic {
   size_t hashExpectedOutput();
   int generateFitness(GeneticCircuit c);
  private:
-  std::map<std::size_t, GeneticCircuit> population;
 
+  std::map<std::size_t, GeneticCircuit> * population;
   int input_no;
-  bool correct_found = false;
+  bool correct_found;
   BooleanTable expected_outputs;
 
   std::minstd_rand rand_engine;

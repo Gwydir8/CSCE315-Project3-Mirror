@@ -93,9 +93,9 @@ TEST_F(GeneticSetup, SplitAndSplice) {
   // dolly.split(dolly.getPopulation()[3], dolly.getPopulation()[900]);
 }
 
-/* TEST_F(GeneticSetup, Evolve) { */
-/*   dolly.evolve(); */
-/* } */
+TEST_F(GeneticSetup, Evolve) {
+  EXPECT_EQ(expected_o, dolly.evolve().evaluateAllInputs());
+}
 
 
 }  // end of namespace

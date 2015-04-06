@@ -21,16 +21,20 @@
 Genetic::Genetic(int n, BooleanTable outputs, int population_size)
     : input_no(n),
       expected_outputs(outputs),
+      correct_found(false),
       rand_engine(std::random_device{}()) {
   population = spawnPopulation(population_size);
 }
 
-Genetic::Genetic(int n, BooleanTable outputs,
-                 std::map<std::size_t, GeneticCircuit> pop)
-    : population(pop),
-      input_no(n),
-      expected_outputs(outputs),
-      rand_engine(std::random_device{}()) {}
+/* Genetic::Genetic(int n, BooleanTable outputs, */
+/*                  std::map<std::size_t, GeneticCircuit> pop) */
+/*     : population(pop), */
+/*       input_no(n), */
+/*       expected_outputs(outputs), */
+/*       correct_found(false), */
+/*       rand_engine(std::random_device{}()) { */
+/*       errlog("Constructor..", true); */
+/*       } */
 
 std::pair<std::vector<Gate *>, std::vector<Gate *>> Genetic::split(
     GeneticCircuit circuit, int split_index) {
@@ -61,7 +65,6 @@ std::pair<GeneticCircuit, GeneticCircuit> Genetic::splitAndSplice(
     GeneticCircuit c_1, GeneticCircuit c_2) {
   std::pair<GeneticCircuit, GeneticCircuit> swapped_circuits(c_1, c_2);
 
-  errlog("Started s&s", true);
   // Generate random index to split at
   std::uniform_int_distribution<> dist{
       input_no, (std::min(c_1.getGateCount(), c_2.getGateCount())) - 1};
@@ -89,50 +92,54 @@ std::pair<GeneticCircuit, GeneticCircuit> Genetic::splitAndSplice(
 /*   population.insert(zergling); */
 /* } */
 
-std::map<std::size_t, GeneticCircuit> Genetic::spawnPopulation(
+std::map<std::size_t, GeneticCircuit>* Genetic::spawnPopulation(
     std::size_t populationSize) {
-  std::map<std::size_t, GeneticCircuit> spawned_pop;
-  while (spawned_pop.size() < populationSize) {
+  std::map<std::size_t, GeneticCircuit>* spawned_pop = new std::map<std::size_t, GeneticCircuit>;
+  while (spawned_pop->size() < populationSize) {
     GeneticCircuit c(input_no, expected_outputs.front().size(), &rand_engine);
     c.setFitness(generateFitness(c));
 
-    if (SHOW_POPULATION_LOG) {
-      std::string errmsg =
-          "Genetic::spawnPopulation inserting Circuit "
-          "fitness: " +
-          std::to_string(c.getFitness());
-      errlog(errmsg);
-    }
 
     std::pair<std::size_t, GeneticCircuit> zergling(c.hash_circ(), c);
-    spawned_pop.insert(zergling);
+    if(spawned_pop->find(c.hash_circ()) == spawned_pop->end()){
+      spawned_pop->insert(zergling);
 
-    if (SHOW_POPULATION_LOG) {
-      std::ostringstream errstream;
-      errstream << "Genetic::spawnPopulation --  " << spawned_pop.size();
-      errlog(errstream.str(), SHOW_POPULATION_LOG);
+    /* if (true) { */
+    /*   std::string errmsg = */
+    /*       "Genetic::spawnPopulation inserting Circuit " + std::to_string(c.getGateCount()) + */
+    /*       "fitness: " + */
+    /*       std::to_string(c.hash_circ()); */
+    /*   errlog(errmsg, true); */
+    /* } */
     }
+
+
   }
+    /* if (true) { */
+    /*   std::ostringstream errstream; */
+    /*   errstream << "Genetic::spawnPopulation --  " << spawned_pop->size(); */
+    /*   errlog(errstream.str(), true); */
+    /* } */
   return spawned_pop;
 }
 
 void Genetic::cullHerd() {
-  int initial_size = population.size();
+  int initial_size = population->size();
   int avg = 0;
   double total = 0.0;
 
   std::map<std::size_t, GeneticCircuit>::iterator it;
-  for (it = population.begin(); it != population.end(); ++it) {
+  for (it = population->begin(); it != population->end(); ++it) {
     int fit = generateFitness(it->second);
     total += fit;
-    avg = total / population.size();
+    avg = total / population->size();
   }
 
-  it = population.begin();
+  it = population->begin();
   //keep going until either deletes most or half
-  while (it != population.end() || population.size() < (initial_size /2)) {
+  while (it != population->end()) {
     if (generateFitness((*it).second) > avg) {
-      population.erase(it++);
+      it = population->erase(it);
     } else {
       ++it;
     }
@@ -140,36 +147,38 @@ void Genetic::cullHerd() {
 
   errlog("I should be done", true);
   std::string errmsg =
-      "Deleted stuff. Population is now: " + std::to_string(population.size());
+      "Deleted stuff. Population is now: " + std::to_string(population->size());
   errlog(errmsg, true);
   errlog("I should be done", true);
 }
 
 GeneticCircuit Genetic::evolve(){
-  while(!correct_found){
+    errlog("Don't have it yet, starting cull..", true);
+  while(correct_found == false){
+    errlog("Don't have it yet, starting cull..", true);
     cullHerd();
     std::vector<GeneticCircuit *> breedable;
     std::map<std::size_t, GeneticCircuit>::iterator it;
-    for (it = population.begin(); it != population.end(); ++it) {
+    for (it = population->begin(); it != population->end(); ++it) {
       breedable.push_back(&(it->second));
     }
     errlog("not yet", true);
 
-    for (std::size_t i = 0; i < breedable.size() - 2; i += 2) {
-      errlog("Ran..", true);
+    for (std::size_t i = 0; i < breedable.size() - 1; i += 2) {
       std::pair<GeneticCircuit, GeneticCircuit> twins =
           splitAndSplice(*breedable[i], *breedable[i + 1]);
       twins.first.setFitness(generateFitness(twins.first));
-      population.insert(std::pair<std::size_t, GeneticCircuit>(
+      population->insert(std::pair<std::size_t, GeneticCircuit>(
           twins.first.hash_circ(), twins.first));
       twins.second.setFitness(generateFitness(twins.second));
-      population.insert(std::pair<std::size_t, GeneticCircuit>(
+      population->insert(std::pair<std::size_t, GeneticCircuit>(
           twins.second.hash_circ(), twins.second));
     }
-    errlog("Done", true);
+    errlog(std::to_string(population->size()), true);
+    errlog(std::to_string(correct_found), true);
   }
 
-  return population.at(hashExpectedOutput());
+  return population->at(hashExpectedOutput());
 }
 
 int Genetic::generateFitness(GeneticCircuit c) {
