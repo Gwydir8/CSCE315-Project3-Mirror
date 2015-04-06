@@ -30,7 +30,7 @@ class GeneticCircuit : public Circuit {
 
  private:
   std::uniform_int_distribution<> gate_dist{0, 2};
-  std::uniform_int_distribution<> number_dist{0, 28};
+  std::uniform_int_distribution<> number_dist{0, 36};
   std::minstd_rand* rand_engine_ptr;
   int fitness;
   /* BooleanTable memoized_output;//assuming that gates won't be added after evaluation */

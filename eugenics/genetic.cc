@@ -123,30 +123,34 @@ std::map<std::size_t, GeneticCircuit>* Genetic::spawnPopulation(
 }
 
 void Genetic::cullHerd() {
-  int initial_size = population->size();
+  int initial_size = 10000;
   int avg = 0;
   double total = 0.0;
-
+  double avg_not = 0.0;
   std::map<std::size_t, GeneticCircuit>::iterator it;
   for (it = population->begin(); it != population->end(); ++it) {
     int fit = generateFitness(it->second);
-    total += fit + 150;
-    avg = total / population->size();
+    total += fit;
+    avg_not = it->second.getNotCount() / population->size();
   }
+  avg  = total / population->size();
   errlog("Fitness Average is: " + std::to_string(avg), true);
-
-  it = population->begin();
+  errlog("Avg Not" + std::to_string(avg_not), true);
   //keep going until either deletes most or half
-  while (it != population->end()) {
-    if (generateFitness((*it).second) > avg) {
-      it = population->erase(it);
-    } else {
-      ++it;
+  while(population->size() > (initial_size / 2)){
+    avg /= 1.5;
+    it = population->begin();
+    while (it != population->end() && population->size() > initial_size / 2) {
+      if (generateFitness((*it).second) > avg) {
+        it = population->erase(it);
+      } else {
+        ++it;
+      }
     }
   }
 
   std::string errmsg =
-      "Deleted stuff. Population is now: " + std::to_string(population->size());
+    "Deleted stuff. Population is now: " + std::to_string(population->size());
   errlog(errmsg, true);
 }
 
@@ -162,13 +166,13 @@ GeneticCircuit Genetic::evolve(){
 
     for (std::size_t i = 0; i < breedable.size() - 1; i += 2) {
       std::pair<GeneticCircuit, GeneticCircuit> twins =
-          splitAndSplice(*breedable[i], *breedable[i + 1]);
+        splitAndSplice(*breedable[i], *breedable[i + 1]);
       twins.first.setFitness(generateFitness(twins.first));
       population->insert(std::pair<std::size_t, GeneticCircuit>(
-          twins.first.hash_circ(), twins.first));
+            twins.first.hash_circ(), twins.first));
       twins.second.setFitness(generateFitness(twins.second));
       population->insert(std::pair<std::size_t, GeneticCircuit>(
-          twins.second.hash_circ(), twins.second));
+            twins.second.hash_circ(), twins.second));
     }
     errlog(std::to_string(population->size()), true);
   }
@@ -179,15 +183,17 @@ GeneticCircuit Genetic::evolve(){
 
 int Genetic::generateFitness(GeneticCircuit c) {
   int score = 0;
+  bool tentative_is_correct = true;
   BooleanTable actual_output = c.evaluateAllInputs();
   for (std::size_t i = 0; i < actual_output.size(); ++i) {
     if (actual_output[i] != expected_outputs[i]) {
-      score += 10000;
+      score += 5000;
+      tentative_is_correct = false;
     }
   }
   score += c.getNotCount() * 1000;
   score += (c.getOrCount() + c.getAndCount()) * 10;
-  if (score < 10000) {
+  if (tentative_is_correct) {
     correct_found = true;
   }
   return score;
