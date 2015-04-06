@@ -6,10 +6,12 @@
 using namespace std;
 
 Ckt_Algo::Ckt_Algo(Circuit circuit) : circ_output(), output_set(new std::vector<std::vector<std::vector<bool>>>)  {
+  if(circuit.getGateCount() % 2 == 0) {
+    circuit.addGate(AND, 0, 1);
+  } else {
+    circuit.addGate(OR, 0, 1);
+  }
   ex_list.push(circuit);
-  addAnd(circuit.getGateCount());
-  addOr(circuit.getGateCount());
-  ex_list.pop();
 }
 
 bool Ckt_Algo::circuitMatchesDesired(vector<vector<bool>> desired) {
@@ -69,12 +71,17 @@ bool Ckt_Algo::circuitMatchesDesired(vector<vector<bool>> desired) {
 void Ckt_Algo::addNot(int counter) {
   // generates different circuits based on the different
   // combinations of gates to wires, then pushes to queue
-  for (int i = 2; i < counter; ++i) {
+  /*for (int i = 2; i < counter; ++i) {
     Circuit next = ex_list.front();
     next.addGate(NOT, i);
     std::string errmsg = "Ckt_Algo::addNot: " + std::to_string(next.getGateCount()) +
                          " NOT " + std::to_string(i);
     errlog(errmsg);
+    ex_list.push(next);
+  }*/
+  if(counter > ex_list.front().getInputCount()) {
+    Circuit next = ex_list.front();
+    next.addGate(NOT, counter - 1);
     ex_list.push(next);
   }
 }
@@ -92,6 +99,7 @@ void Ckt_Algo::addAnd(int counter) {
       ex_list.push(next);
     }
   }
+
 }
 
 void Ckt_Algo::addOr(int counter) {
@@ -116,10 +124,13 @@ vector<vector<bool>> Ckt_Algo::search(vector<vector<bool>> desired) {
     // adds NOT/AND/OR gate
     addNot(ex_list.front().getGateCount());
     errlog("Ckt_Algo::search addNot successful");
-    addAnd(ex_list.front().getGateCount());
-    errlog("Ckt_Algo::search addNot successful");
-    addOr(ex_list.front().getGateCount());
-    errlog("Ckt_Algo::search addNot successful");
+    if(ex_list.front().getGateCount() % 2 == 0) {
+      addAnd(ex_list.front().getGateCount());
+      errlog("Ckt_Algo::search addAnd successful");
+    } else {
+      addOr(ex_list.front().getGateCount());
+      errlog("Ckt_Algo::search addOr successful");
+    }
 
     // remove "first" element
     ex_list.pop();

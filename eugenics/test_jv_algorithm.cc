@@ -21,7 +21,7 @@ TEST(JVAlgorithmTest, XORTest) {
   EXPECT_EQ(expected_output, Ckt_Algo(Circuit(2, 1)).search(expected_output));
 }
 
-/*TEST(JVAlgorithmTest, FullAdderTest){
+TEST(JVAlgorithmTest, FullAdderTest){
         vector<vector<bool>> expected_output = {{false, false},
                                              {false, true},
                                              {false, true},
@@ -31,7 +31,7 @@ TEST(JVAlgorithmTest, XORTest) {
                                              {true, false},
                                              {true, true}};
     EXPECT_EQ(expected_output, Ckt_Algo(Circuit(3,2)).search(expected_output));
-}*/
+}
 
 /*TEST(JVAlgorithmTest, Inverter){
   vector<vector<bool>> expected_output = {{true, true, true}
