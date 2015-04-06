@@ -130,30 +130,27 @@ void Genetic::cullHerd() {
   std::map<std::size_t, GeneticCircuit>::iterator it;
   for (it = population->begin(); it != population->end(); ++it) {
     int fit = generateFitness(it->second);
-    total += fit;
+    total += fit + 150;
     avg = total / population->size();
   }
+  errlog("Fitness Average is: " + std::to_string(avg), true);
 
   it = population->begin();
   //keep going until either deletes most or half
   while (it != population->end()) {
     if (generateFitness((*it).second) > avg) {
       it = population->erase(it);
-      avg -=
     } else {
       ++it;
     }
   }
 
-  errlog("I should be done", true);
   std::string errmsg =
       "Deleted stuff. Population is now: " + std::to_string(population->size());
   errlog(errmsg, true);
-  errlog("I should be done", true);
 }
 
 GeneticCircuit Genetic::evolve(){
-    errlog("Don't have it yet, starting cull..", true);
   while(correct_found == false){
     errlog("Don't have it yet, starting cull..", true);
     cullHerd();
@@ -162,7 +159,6 @@ GeneticCircuit Genetic::evolve(){
     for (it = population->begin(); it != population->end(); ++it) {
       breedable.push_back(&(it->second));
     }
-    errlog("not yet", true);
 
     for (std::size_t i = 0; i < breedable.size() - 1; i += 2) {
       std::pair<GeneticCircuit, GeneticCircuit> twins =
@@ -175,7 +171,6 @@ GeneticCircuit Genetic::evolve(){
           twins.second.hash_circ(), twins.second));
     }
     errlog(std::to_string(population->size()), true);
-    errlog(std::to_string(correct_found), true);
   }
   GeneticCircuit result = population->at(hashExpectedOutput());
   /* std::cout << result << std::endl; */
