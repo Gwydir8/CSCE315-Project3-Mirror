@@ -36,6 +36,7 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
   }
 }
 
+
 GeneticCircuit::GeneticCircuit(int input_num, int output_num,
                                std::minstd_rand* rand_eng,
                                std::vector<Gate*> gates)
@@ -46,7 +47,12 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
     } else if (gate->type == "NONE") {
       errlog("GeneticCircuit::GeneticCircuit NONE Wires are not added");
     } else if (gate->type == "NOT") {
-      addGate(GateType(NOT), gate->input_1_index);
+      if(getNotCount() < 2){
+        addGate(GateType(NOT), gate->input_1_index);
+      }
+      else {
+        addGate(GateType(OR), gate->input_1_index, gate->input_1_index);
+      }
     } else if (gate->type == "AND") {
       addGate(GateType(AND), gate->input_1_index, gate->input_2_index);
     } else if (gate->type == "OR") {
@@ -60,6 +66,7 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
     }
   }
 }
+
 
 
 

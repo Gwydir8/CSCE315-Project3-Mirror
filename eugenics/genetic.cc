@@ -38,7 +38,6 @@ Genetic::Genetic(int n, BooleanTable outputs, int population_size)
 
 std::pair<std::vector<Gate *>, std::vector<Gate *>> Genetic::split(
     GeneticCircuit circuit, int split_index) {
-  // split gates
 
   std::vector<Gate *> a = circuit.getGates();
   std::vector<Gate *> lhs_gates(a.begin(), a.begin() + split_index);
@@ -140,6 +139,7 @@ void Genetic::cullHerd() {
   while (it != population->end()) {
     if (generateFitness((*it).second) > avg) {
       it = population->erase(it);
+      avg -=
     } else {
       ++it;
     }
@@ -177,8 +177,9 @@ GeneticCircuit Genetic::evolve(){
     errlog(std::to_string(population->size()), true);
     errlog(std::to_string(correct_found), true);
   }
-
-  return population->at(hashExpectedOutput());
+  GeneticCircuit result = population->at(hashExpectedOutput());
+  /* std::cout << result << std::endl; */
+  return result;
 }
 
 int Genetic::generateFitness(GeneticCircuit c) {
