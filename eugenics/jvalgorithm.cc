@@ -1,5 +1,7 @@
 #include <vector>
 #include <queue>
+#include <string>
+#include <map>
 #include "jvalgorithm.h"
 #include "utility.h"
 
@@ -8,8 +10,12 @@ using namespace std;
 Ckt_Algo::Ckt_Algo(Circuit circuit) : circ_output(), output_set(new std::vector<std::vector<std::vector<bool>>>)  {
   if(circuit.getGateCount() % 2 == 0) {
     circuit.addGate(AND, 0, 1);
+    or_level = circuit.getGateCount();
+    and_level = or_level + 1;
   } else {
     circuit.addGate(OR, 0, 1);
+    and_level = circuit.getGateCount();
+    or_level = and_level + 1;
   }
   ex_list.push(circuit);
 }
@@ -69,19 +75,13 @@ bool Ckt_Algo::circuitMatchesDesired(vector<vector<bool>> desired) {
 }
 
 void Ckt_Algo::addNot(int counter) {
-  // generates different circuits based on the different
-  // combinations of gates to wires, then pushes to queue
-  /*for (int i = 2; i < counter; ++i) {
-    Circuit next = ex_list.front();
-    next.addGate(NOT, i);
-    std::string errmsg = "Ckt_Algo::addNot: " + std::to_string(next.getGateCount()) +
-                         " NOT " + std::to_string(i);
-    errlog(errmsg);
-    ex_list.push(next);
-  }*/
+  // only add a not gate to the end of the circuit
   if(counter > ex_list.front().getInputCount()) {
     Circuit next = ex_list.front();
     next.addGate(NOT, counter - 1);
+    std::string errmsg = "Ckt_Algo::addNot: " + std::to_string(next.getGateCount()) +
+                             " NOT " + std::to_string(counter);
+    errlog(errmsg);
     ex_list.push(next);
   }
 }
@@ -89,14 +89,26 @@ void Ckt_Algo::addNot(int counter) {
 void Ckt_Algo::addAnd(int counter) {
   // generates different circuits based on the different
   // combinations of gates to wires, then pushes to queue
+  if(counter != and_level) {
+    // eliminate the combinations that were used
+    // on previous levels
+    for (int i = 0; i < and_level - 1; ++i) {
+      for (int j = i + 1; j < and_level; ++j) {
+        and_map[to_string(i)+ to_string(j)] = 1;
+      }
+    }
+    and_level = counter; 
+  }
   for (int i = 0; i < counter - 1; ++i) {
     for (int j = i + 1; j < counter; ++j) {
-      Circuit next = ex_list.front();
-      next.addGate(AND, i, j);
-      std::string errmsg = "Ckt_Algo::addAnd: " + std::to_string(next.getGateCount()) +
-                           " AND " + std::to_string(i) + " " + std::to_string(j);
-      errlog(errmsg);
-      ex_list.push(next);
+      if(and_map[to_string(i)+ to_string(j)] != 1) {
+        Circuit next = ex_list.front();
+        next.addGate(AND, i, j);
+        std::string errmsg = "Ckt_Algo::addAnd: " + std::to_string(next.getGateCount()) +
+                             " AND " + std::to_string(i) + " " + std::to_string(j);
+        errlog(errmsg);
+        ex_list.push(next);
+      }
     }
   }
 
@@ -105,14 +117,26 @@ void Ckt_Algo::addAnd(int counter) {
 void Ckt_Algo::addOr(int counter) {
   // generates different circuits based on the different
   // combinations of gates to wires, then pushes to queue
+  if(counter != or_level) {
+    // eliminate the combinations that were used
+    // on previous levels
+    for (int i = 0; i < or_level - 1; ++i) {
+      for (int j = i + 1; j < or_level; ++j) {
+        or_map[to_string(i)+ to_string(j)] = 1;
+      }
+    } 
+    or_level = counter; 
+  }
   for (int i = 0; i < counter - 1; ++i) {
     for (int j = i + 1; j < counter; ++j) {
-      Circuit next = ex_list.front();
-      next.addGate(OR, i, j);
-      std::string errmsg = "Ckt_Algo::addOr: " + std::to_string(next.getGateCount()) +
-                           " OR " + std::to_string(i) + " " + std::to_string(j);
-      errlog(errmsg);
-      ex_list.push(next);
+      if(or_map[to_string(i)+ to_string(j)] != 1) {
+        Circuit next = ex_list.front();
+        next.addGate(OR, i, j);
+        std::string errmsg = "Ckt_Algo::addOr: " + std::to_string(next.getGateCount()) +
+                             " OR " + std::to_string(i) + " " + std::to_string(j);
+        errlog(errmsg);
+        ex_list.push(next);
+      }
     }
   }
 }
