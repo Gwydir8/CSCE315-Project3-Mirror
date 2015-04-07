@@ -7,9 +7,11 @@
 #include "utility.h"
 
 using namespace std;
+size_t hash_output(vector<vector<bool>> output);
 
-Ckt_Algo::Ckt_Algo(Circuit circuit) : correct_circuit_output(), output_set(new vector<vector<vector<bool>>>)  {
+Ckt_Algo::Ckt_Algo(Circuit circuit,  vector<vector<bool>> e_o) : correct_circuit_output(), expected_output(e_o)  {
   ex_list.push(circuit);
+  unique_map.insert(pair<size_t, int>(hash_output(expected_output), 0));
 }
 size_t hash_output(vector<vector<bool>> output){
   string s = "";
@@ -23,9 +25,45 @@ size_t hash_output(vector<vector<bool>> output){
   return hash;
 }
 
+void Ckt_Algo::searchPreProcess(){
+  Circuit* circ = &ex_list.front();
+  if (circ->getOutputCount() < 2){
+    //only do this for over 3 outputs
+        return;
+  }
+  for(int i = 0; i<2; ++i){
+    for(int j = i+1; j < circ->getInputCount(); ++j){
+      circ->addGate(AND, i, j);
+      circ->addGate(OR, i, j);
+    }
+  }
+
+}
+
+
 bool Ckt_Algo::isUnique(Circuit candidate){
   bool need_more_possibilities = (candidate.getOutputCount() < 2);
-  size_t hashed_val = hash_output(candidate.evaluateAllInputs());
+  vector<vector<bool>> input_1 = candidate.evaluateAllInputs();
+
+
+  vector<vector<bool>> input_2;
+  input_2.push_back(input_1[1]);
+  input_2.push_back(input_1[2]);
+  input_2.push_back(input_1[0]);
+
+  unique_map.insert(pair<size_t, int>(hash_output(input_2), candidate.getNotCount()));
+
+  vector<vector<bool>> input_3;
+  input_3.push_back(input_1[2]);
+  input_3.push_back(input_1[0]);
+  input_3.push_back(input_1[1]);
+
+  unique_map.insert(pair<size_t, int>(hash_output(input_3), candidate.getNotCount()));
+
+
+
+
+  size_t hashed_val = hash_output(input_1);
   auto search = unique_map.find(hashed_val);
   if(search == unique_map.end()) { //if(hashed_val is unique)
     unique_map.insert(pair<size_t, int>(hashed_val, candidate.getNotCount()));
@@ -89,7 +127,7 @@ void Ckt_Algo::checkPermAndMap(Circuit* check, vector<vector<bool>> desired){
 }
 
 //also maps correct gates to outputs
-bool Ckt_Algo::circuitMatchesDesired(vector<vector<bool>> desired) {
+bool Ckt_Algo::circuitMatchesDesired() {
     // check if output of current circuit equals desired
     Circuit * current_circ = &ex_list.front();
 
@@ -97,7 +135,7 @@ bool Ckt_Algo::circuitMatchesDesired(vector<vector<bool>> desired) {
     /* checkPermAndMap(current_circ, desired); */
     vector<vector<bool>> circ_output = current_circ->evaluateAllInputs();
 
-
+    if(unique_map.find(pair<size_t, int>(hash_output(circ_output), 0)) == unique_map.end())
     if(circ_output.size() != desired.size()){
       errlog("Getting a weird output size while checking correctness", true);
       return false;
@@ -115,22 +153,28 @@ bool Ckt_Algo::circuitMatchesDesired(vector<vector<bool>> desired) {
 
 void Ckt_Algo::addNot(int counter) {
   // only add a not gate to the end of the circuit
+  if(counter < 12 || (counter > 14 && counter < 20)){
+    return;
+  }
 
-  for (int i = 0; i < counter - 1; ++i) {
+  /* for (int i = 0; i < counter - 1; ++i) { */
     Circuit next = ex_list.front();
-    next.addGate(NOT, i);
+    next.addGate(NOT, counter - 1);
     string errmsg = "Ckt_Algo::addNot: " + to_string(next.getGateCount()) +
       " NOT " + to_string(counter);
     errlog(errmsg);
     if(isUnique(next)){
       ex_list.push(next);
     }
-  }
+  /* } */
 }
 
 void Ckt_Algo::addAnd(int counter) {
-  for (int i = 0; i < counter - 1; ++i) {
-    for (int j = i; j < counter-1; ++j) {
+  int left_bound = (counter > 8)? counter - 8 : 0;
+  int right_bound = (counter > left_bound + 5)? left_bound + 5 : counter - 1;
+  /* int right_max_connection =  6; */
+  for (int i = left_bound; i < right_bound; ++i) {
+    for (int j = counter - 5; j < counter - 1; ++j) {
       Circuit next = ex_list.front();
       next.addGate(AND, i, j);
       string errmsg = "Ckt_Algo::addAnd: " + to_string(next.getGateCount()) +
@@ -145,8 +189,11 @@ void Ckt_Algo::addAnd(int counter) {
 }
 
 void Ckt_Algo::addOr(int counter) {
-  for (int i = 0; i < counter - 1; ++i) {
-    for (int j = i + 1; j < counter; ++j) {
+  int left_bound = (counter > 15)? counter - 15 : 0;
+  int right_bound = (counter > left_bound + 5)? left_bound + 5 : counter - 1;
+  int higher_left = counter - 8;
+  for (int i = left_bound; i < right_bound - 1; ++i) {
+    for (int j = higher_left; j < counter - 1; ++j) {
       Circuit next = ex_list.front();
       next.addGate(OR, i, j);
       string errmsg = "Ckt_Algo::addOr: " + to_string(next.getGateCount()) +
@@ -160,7 +207,8 @@ void Ckt_Algo::addOr(int counter) {
 }
 
 vector<vector<bool>> Ckt_Algo::search(vector<vector<bool>> desired) {
-  while (circuitMatchesDesired(desired) == false) {
+  searchPreProcess();
+  while (circuitMatchesDesired() == false) {
     errlog("Ckt_Algo::search circuit did not match desired, search continuing");
     Circuit temp_c = ex_list.front();
     if(ex_list.empty()){
