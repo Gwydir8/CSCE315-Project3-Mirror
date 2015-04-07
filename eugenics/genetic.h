@@ -54,7 +54,7 @@ class Genetic {
   bool correct_found;
   BooleanTable expected_outputs;
 
-  std::minstd_rand rand_engine;
+  std::mt19937 rand_engine;
 };
 
 #endif /* GENETIC_H */
