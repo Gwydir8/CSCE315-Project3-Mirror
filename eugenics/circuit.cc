@@ -158,19 +158,6 @@ BooleanTable Circuit::evaluateAllInputs() {
   return outputs;
 }
 
-BooleanTable Circuit::evaluateAllInputsToColumns() {
-  BooleanTable original = evaluateAllInputs();
-  BooleanTable transposed(original[0].size());
-
-  for (int i = 0; i < original[0].size(); ++i) {
-      for (int j = 0; j < original.size(); ++j) {
-          transposed[i].push_back(original[j][i]);
-      }
-  }
-  assert(!transposed.empty());
-
-  return transposed;
-}
 
 
 

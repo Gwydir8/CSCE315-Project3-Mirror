@@ -19,7 +19,7 @@ class Genetic {
   /*         std::map<std::size_t, GeneticCircuit> pop); */
 
   // "cut" two circuits at random point
-  std::pair<std::vector<Gate *>, std::vector<Gate *>> split(
+  std::pair<std::vector<Gate *>, std::vector<Gate *> > split(
       GeneticCircuit circuit, int split_index);
 
   // splice together c1a and c2b, and c2a and c1b
@@ -38,6 +38,9 @@ class Genetic {
 
   void cullHerd();
   GeneticCircuit evolve();
+
+  //this function will check permutations, map them, then call generateFitness
+  void mapAndSetFitness(GeneticCircuit *c);
 
   size_t hashExpectedOutput();
   int generateFitness(GeneticCircuit c);

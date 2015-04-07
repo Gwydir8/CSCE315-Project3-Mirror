@@ -18,6 +18,8 @@
 #include "genetic_circuit.h"
 #include "utility.h"
 
+BooleanTable transposeBooleanTable(BooleanTable original);
+
 Genetic::Genetic(int n, BooleanTable outputs, int population_size)
     : input_no(n),
       expected_outputs(outputs),
@@ -60,7 +62,7 @@ std::pair<GeneticCircuit, GeneticCircuit> Genetic::splitAndSplice(
   int max_index = std::min(c_1.getGateCount(), c_2.getGateCount()) - 1;
   int min_index = std::min(c_1.getSmallestSafeCut(), c_2.getSmallestSafeCut());
   std::uniform_int_distribution<> dist{
-      input_no, max_index};
+      min_index, max_index};
 
   int split_index = dist(rand_engine);
 
@@ -90,7 +92,7 @@ std::map<std::size_t, GeneticCircuit>* Genetic::spawnPopulation(
   std::map<std::size_t, GeneticCircuit>* spawned_pop = new std::map<std::size_t, GeneticCircuit>;
   while (spawned_pop->size() < populationSize) {
     GeneticCircuit c(input_no, expected_outputs.front().size(), &rand_engine);
-    c.setFitness(generateFitness(c));
+    mapAndSetFitness(&c);
 
 
     std::pair<std::size_t, GeneticCircuit> zergling(c.hash_circ(), c);
@@ -109,7 +111,7 @@ void Genetic::cullHerd() {
   double avg_not = 0.0;
   std::map<std::size_t, GeneticCircuit>::iterator it;
   for (it = population->begin(); it != population->end(); ++it) {
-    int fit = generateFitness(it->second);
+    int fit = it->second.getFitness();
     total += fit;
     /* avg_not += (double)it->second.getNotCount() / population->size(); */
   }
@@ -121,7 +123,7 @@ void Genetic::cullHerd() {
   /*   avg /= 1.5; */
     it = population->begin();
     while (it != population->end() && population->size() > initial_size / 2) {
-      if (generateFitness(it->second) > avg) {
+      if (it->second.getFitness() > avg) {
         it = population->erase(it);
       } else {
         ++it;
@@ -159,8 +161,9 @@ GeneticCircuit Genetic::evolve(){
       std::pair<GeneticCircuit, GeneticCircuit> twins =
         /* splitAndSplice(*breedable[i], *breedable[i + 1]); */
         splitAndSplice(*breedable[circ_1], *breedable[circ_2]);
-      twins.first.setFitness(generateFitness(twins.first));
-      twins.second.setFitness(generateFitness(twins.second));
+
+      mapAndSetFitness(&twins.first);
+      mapAndSetFitness(&twins.second);
 
 
       auto first_success = population->insert(std::pair<std::size_t, GeneticCircuit>(
@@ -184,17 +187,9 @@ int Genetic::generateFitness(GeneticCircuit c) {
   bool tentative_is_correct = true;
   BooleanTable actual_output = c.evaluateAllInputs();
 
-    BooleanTable transposed_actual(actual_output[0].size());
-    BooleanTable transposed_expected(actual_output[0].size());
-    //transposes our vectors to work easily with columns later
-      for (int i = 0; i < actual_output[0].size(); ++i) {
-        for (int j = 0; j < actual_output.size(); ++j) {
-          transposed_actual[i].push_back(actual_output[j][i]);
-          transposed_expected[i].push_back(expected_outputs[j][i]);
-          /* std::cout << transposed_expected[i][j]; */
-        }
-          /* std::cout << std::endl; */
-      }
+  //transposes our vectors to work easily with columns later
+  BooleanTable transposed_actual = transposeBooleanTable(actual_output);
+  BooleanTable transposed_expected = transposeBooleanTable(expected_outputs);
 
   for (std::size_t i = 0; i < transposed_actual.size(); ++i) {
     if (transposed_actual[i] != transposed_expected[i]) {
@@ -205,13 +200,6 @@ int Genetic::generateFitness(GeneticCircuit c) {
       /* std::cout << "Got one right" << std::endl; */
     }
   }
-
-  /* for (std::size_t i = 0; i < actual_output.size(); ++i) { */
-  /*   if (actual_output[i] != expected_outputs[i]) { */
-  /*     score += 10000; */
-  /*     tentative_is_correct = false; */
-  /*   } */
-  /* } */
   score += c.getNotCount() * 1000;
   //favor equal distribution of or : and gates
   score += std::abs(c.getOrCount() - c.getAndCount()) * 100;
@@ -232,5 +220,31 @@ size_t Genetic::hashExpectedOutput(){
   }
   std::size_t hash = hash_fn(s);
   return hash;
+}
+
+void Genetic::mapAndSetFitness(GeneticCircuit* c){
+  BooleanTable transposed_actual = transposeBooleanTable(c->evaluateAllInputs());
+  BooleanTable transposed_expected = transposeBooleanTable(expected_outputs);
+  for (std::size_t i = 0; i < transposed_actual.size(); ++i) {
+    for (std::size_t j = 0; j < transposed_actual.size(); ++j) {
+      if(transposed_actual[i] == transposed_actual[j]){
+        c->mapOutputToOutput(i, j);
+      }
+    }
+  }
+  int fitness = generateFitness(*c);
+  c->setFitness(fitness);
+}
+
+BooleanTable transposeBooleanTable(BooleanTable original) {
+  BooleanTable transposed(original[0].size());
+
+  for (int i = 0; i < original[0].size(); ++i) {
+      for (int j = 0; j < original.size(); ++j) {
+          transposed[i].push_back(original[j][i]);
+      }
+  }
+
+  return transposed;
 }
 
