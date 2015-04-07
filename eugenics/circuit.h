@@ -2,6 +2,9 @@
 #define CIRCUIT_H
 #include <vector>
 #include "gate.h"
+
+typedef std::vector<std::vector<bool>> BooleanTable;
+
 enum GateType { NOT, WIRE, OR, AND };
 class Circuit {
  public:
@@ -14,6 +17,7 @@ class Circuit {
   //// 11
   // output_no is the number of outputs desired
   Circuit(int input_no, int output_no);
+  virtual ~Circuit();
 
   int getOutputCount() const { return output_no; }
   int getInputCount() const { return input_no; }
@@ -23,8 +27,8 @@ class Circuit {
   int getWireCount() const { return wire_no; }
   int getGateCount() const { return gates.size(); }
 
-  // gate indexes which gate we want to always have as ouput
-  // desired_output indexes which output to map it to
+  // gate_index := which gate we want to always have as ouput
+  // desired_output_index := which output to map it to
   void mapGateToOutput(int gate_index, int desired_output_index);
 
   // Valid Gate types with 1 input { NOT, WIRE}
@@ -38,7 +42,7 @@ class Circuit {
 
   // evaluate a circuit for all sets of inputs
   // e.g. the entire set of inputs for an XOR gate
-  std::vector<std::vector<bool>> evaluateAllInputs();
+  BooleanTable evaluateAllInputs();
 
   // evaluate a circuit for just one row of inputs
   // e.g. {false,false,true}
@@ -46,7 +50,7 @@ class Circuit {
 
   // generate all combinations of input_no number of inputs
   // e.g. if input_no is 3, returns 2^3 sets of input_no wide inputs
-  std::vector<std::vector<bool>> generateInputSet();
+  BooleanTable generateInputSet();
 
   /*---end of usefulness for algorithm folks----*/
   // DEPRECATED Constructor
@@ -62,26 +66,25 @@ class Circuit {
   // NOTE: output_index is checked if it is correct, not set to output_index
   int addGate(int output_index, GateType gate_type, int index_1);
 
-  // stdout printer
-  // friend std::ostream& operator<<(std::ostream& os, const Circuit& circuit);
+  // Manual Constructor, Sets everything
+  Circuit(int input_no, int output_no, std::vector<Gate *> gates);
 
-  // file read
-  // friend std::ifstream& operator>>(std::ifstream& is, Circuit& circuit);
+  // return gates
+  std::vector<Gate *> getGates() { return gates; }
+  void setGates(std::vector<Gate *> gates_) { gates = gates_; }
 
-  // file print
-  // friend std::ofstream &operator<<(std::ofstream &os, const Circuit
-  // &circuit);
+  // friend std::istream& operator>>(std::istream& is, Circuit& circuit);
 
-  // this is the function that should be used to print gates
-  void writeGateToFile(const Gate& gate, int output_index, std::string type,
-                       int input_index);
+  friend std::ostream &operator<<(std::ostream &os, const Circuit &circuit);
 
-  void writeGateToFile(const Gate& gate, int output_index, std::string type,
-                       int input_index1, int input_index2);
+  void writeCircuitToFile() const;
+
+  // print stats
+  void printStatistics();
 
  private:
   // gates and wires storage
-  std::vector<Gate*> gates;
+  std::vector<Gate *> gates;
   std::vector<int> mapped_outputs;
   // number of outputs
   int output_no;
@@ -89,7 +92,6 @@ class Circuit {
   int input_no;
 
   //// Statistics
-  void printStatistics();
   // number of And gates
   int and_no;
   // number of Or gates

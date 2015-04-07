@@ -33,7 +33,6 @@ class Algo {
   void add_not(int counter);
   void add_and(int counter);
   void add_or(int counter);
-
 };
 
 #endif

@@ -1,11 +1,13 @@
 import math
 from graphics import *
 def dot(x, y):
+    """Returns a dot to represent a wire's connection at the specified (x,y) """
     dot = Circle(Point(x, y), 2)
     dot.setFill("black")
     return dot
 
 def not_gate(x, y):
+    """Returns a not gate at the specified (x,y) """
     not_gate = Polygon([Point(x, y), \
                         Point(x + 30, y), Point(x + 15, y + 30)])
 
@@ -14,6 +16,7 @@ def not_gate(x, y):
 
 
 def and_gate(x, y):
+    """Returns an and gate at the specified (x,y) """
     pts = [Point(x + 30, y), Point(x, y)]
     for i in xrange(30):
         if i <= 15:
@@ -29,6 +32,7 @@ def and_gate(x, y):
 
 
 def or_gate(x, y):
+    """Returns an or gate at the specified (x,y)"""
     pts = [Point(x, y)]
     #drawing base
     for i in xrange(31):

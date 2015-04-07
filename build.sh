@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
 # build project3. should be run in root of project.
 # USAGE: cd $PROJECT_ROOT; ./build.sh
 
@@ -35,6 +36,8 @@ elif [ "$HOSTNAME" = "Tron" ]; then
     # CXX="/usr/local/opt/ccache/libexec/clang++-3.6 -std=gnu++11 -stdlib=libc++"
     # #CXXFLAGS="$CXXFLAGS -nostdinc++ -I/usr/local/opt/llvm36/lib/llvm-3.6/include/c++/v1"
     # LDFLAGS="$LDFLAGS -L/usr/local/opt/llvm36/lib/llvm-3.6/lib"
+elif [ "$HOSTNAME" = "Clue.local" ]; then
+    CORES=12
 else
     CORES=4
 fi
@@ -71,7 +74,7 @@ if [ ! -d "$RELEASE_BUILD_DIR/eugenics" ]; then
     mkdir "$RELEASE_BUILD_DIR";
     cd "$RELEASE_BUILD_DIR";
     # generate release build make files
-    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -Dtest=ON -DCMAKE_BUILD_TYPE=Release ../eugenics-system/.
+    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -Dtest=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ../eugenics-system/.
     # make on all cores
     # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
     make -j"$CORES"
@@ -105,7 +108,7 @@ if [ ! -d "$DEBUG_BUILD_DIR/eugenics" ]; then
     mkdir "$DEBUG_BUILD_DIR";
     cd "$DEBUG_BUILD_DIR";
     # generate debug build make files
-    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -Dtest=ON -DCMAKE_BUILD_TYPE=Debug ../eugenics-system/.
+    CC=${CC} CXX=${CXX} LD_LIBRARY_PATH=${LOCAL_LIBS} cmake -Dtest=ON -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ../eugenics-system/.
     # make on all cores
     # VERBOSE=${VERBOSE_MAKE} make -j"$CORES"
     make -j"$CORES"
