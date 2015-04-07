@@ -44,6 +44,9 @@ class Circuit {
   // e.g. the entire set of inputs for an XOR gate
   BooleanTable evaluateAllInputs();
 
+  //same as above except puts it in column form
+  BooleanTable evaluateAllInputsToColumns();
+
   // evaluate a circuit for just one row of inputs
   // e.g. {false,false,true}
   std::vector<bool> evaluateInputSet(std::vector<bool> input_set);
@@ -82,7 +85,7 @@ class Circuit {
   // print stats
   void printStatistics();
 
- private:
+ protected:
   // gates and wires storage
   std::vector<Gate *> gates;
   std::vector<int> mapped_outputs;

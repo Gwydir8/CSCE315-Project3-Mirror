@@ -158,93 +158,109 @@ BooleanTable Circuit::evaluateAllInputs() {
   return outputs;
 }
 
+BooleanTable Circuit::evaluateAllInputsToColumns() {
+  BooleanTable original = evaluateAllInputs();
+  BooleanTable transposed(original[0].size());
+
+  for (int i = 0; i < original[0].size(); ++i) {
+      for (int j = 0; j < original.size(); ++j) {
+          transposed[i].push_back(original[j][i]);
+      }
+  }
+  assert(!transposed.empty());
+
+  return transposed;
+}
+
+
+
 std::vector<bool> Circuit::evaluateInputSet(std::vector<bool> input_set) {
-  printStatistics();
-  // initalize input wires to input_set values
-  for (int i = 0; i < input_no; ++i) {
-    (dynamic_cast<Wire*>(gates[i]))->setInput(input_set[i]);
+    printStatistics();
+    // initalize input wires to input_set values
+    for (int i = 0; i < input_no; ++i) {
+        (dynamic_cast<Wire*>(gates[i]))->setInput(input_set[i]);
 
-    std::string errmsg = "Circuit::evaluateInputSet: input_set[" +
-                         std::to_string(i) + "] = " +
-                         std::to_string(input_set[i]);
-    errlog(errmsg);
-  }
-
-  std::vector<bool> result;
-  // evaluate gates in reverse order, i.e. from input to output
-  std::reverse_iterator<std::vector<Gate*>::iterator> r = gates.rbegin();
-  for (int i = output_no - 1; i >= 0; --i) {
-    Gate* output_gate =
-        ((mapped_outputs[i] != -1) ? gates[mapped_outputs[i]] : r[i]);
-    bool output = output_gate->evaluate();
-    // gates_reversed = {2, 1, 0}
-    // i = {2,1,0}
-    // result  = { 0, 1, 2}
-    result.push_back(output);
-
-    // std::string errmsg = "Circuit::evaluateInputSet: output[" +
-    //                      std::to_string(i) + "] = " + std::to_string(output)
-    //                      +
-    //                      " Current Mapped Output = [" +
-    //                      std::to_string(mapped_outputs[i]) + "]";
-    std::string map_string = "NONE";
-    if (mapped_outputs[i] == -1) {
-      map_string = std::to_string(i);
-    } else {
-      map_string = std::to_string(mapped_outputs[i]);
+        std::string errmsg = "Circuit::evaluateInputSet: input_set[" +
+            std::to_string(i) + "] = " +
+            std::to_string(input_set[i]);
+        errlog(errmsg);
     }
-    std::string errmsg = "Circuit::evaluateInputSet: output[" +
-                         std::to_string(i) + "] = " + std::to_string(output) +
-                         " (Current Mapping: " + map_string + " -> " +
-                         std::to_string(i) + ")";
-    errlog(errmsg);
-  }
 
-  return result;
+    std::vector<bool> result;
+    // evaluate gates in reverse order, i.e. from input to output
+    std::reverse_iterator<std::vector<Gate*>::iterator> r = gates.rbegin();
+    for (int i = output_no - 1; i >= 0; --i) {
+        Gate* output_gate =
+            ((mapped_outputs[i] != -1) ? gates[mapped_outputs[i]] : r[i]);
+        bool output = output_gate->evaluate();
+        // gates_reversed = {2, 1, 0}
+        // i = {2,1,0}
+        // result  = { 0, 1, 2}
+        result.push_back(output);
+
+        // std::string errmsg = "Circuit::evaluateInputSet: output[" +
+        //                      std::to_string(i) + "] = " + std::to_string(output)
+        //                      +
+        //                      " Current Mapped Output = [" +
+        //                      std::to_string(mapped_outputs[i]) + "]";
+        std::string map_string = "NONE";
+        if (mapped_outputs[i] == -1) {
+            map_string = std::to_string(i);
+        } else {
+            map_string = std::to_string(mapped_outputs[i]);
+        }
+        std::string errmsg = "Circuit::evaluateInputSet: output[" +
+            std::to_string(i) + "] = " + std::to_string(output) +
+            " (Current Mapping: " + map_string + " -> " +
+            std::to_string(i) + ")";
+        errlog(errmsg);
+    }
+
+    return result;
 }
 
 BooleanTable Circuit::generateInputSet() {
-  BooleanTable inputset;
+    BooleanTable inputset;
 
-  // a truth table is input_no columns wide and 2^{input_no} rows tall
-  for (int i = 0; i < pow(2, input_no); ++i) {
-    std::string errmsg =
-        "Circuit::generateInputSet: row[" + std::to_string(i) + "] = { ";
+    // a truth table is input_no columns wide and 2^{input_no} rows tall
+    for (int i = 0; i < pow(2, input_no); ++i) {
+        std::string errmsg =
+            "Circuit::generateInputSet: row[" + std::to_string(i) + "] = { ";
 
-    std::vector<bool> row;
-    for (int j = input_no - 1; j >= 0; --j) {
-      int current_bit = (i >> j) & 1;
-      row.push_back(current_bit);
-      errmsg += std::to_string(current_bit) + " ";
+        std::vector<bool> row;
+        for (int j = input_no - 1; j >= 0; --j) {
+            int current_bit = (i >> j) & 1;
+            row.push_back(current_bit);
+            errmsg += std::to_string(current_bit) + " ";
+        }
+        errmsg += "}";
+        errlog(errmsg);
+
+        assert(row.size() == (unsigned int)input_no);
+        inputset.push_back(row);
     }
-    errmsg += "}";
-    errlog(errmsg);
-
-    assert(row.size() == (unsigned int)input_no);
-    inputset.push_back(row);
-  }
-  return inputset;
+    return inputset;
 }
 
 void Circuit::mapGateToOutput(int gate_index, int desired_output_index) {
-  // int actual_output_index = output_no - 1 - desired_output_index;
-  int actual_output_index = mapped_outputs.size() - 1 - desired_output_index;
-  std::string errmsg = "Circuit::mapGateToOutput actual_output_index: " +
-                       std::to_string(mapped_outputs.size()) + " - 1 - " +
-                       std::to_string(desired_output_index);
-  errlog(errmsg);
-  errmsg = "Circuit::mapGateToOutput mapping: " + std::to_string(gate_index) +
-           " -> " + std::to_string(actual_output_index);
-  errlog(errmsg);
-  mapped_outputs[actual_output_index] = gate_index;
+    // int actual_output_index = output_no - 1 - desired_output_index;
+    int actual_output_index = mapped_outputs.size() - 1 - desired_output_index;
+    std::string errmsg = "Circuit::mapGateToOutput actual_output_index: " +
+        std::to_string(mapped_outputs.size()) + " - 1 - " +
+        std::to_string(desired_output_index);
+    errlog(errmsg);
+    errmsg = "Circuit::mapGateToOutput mapping: " + std::to_string(gate_index) +
+        " -> " + std::to_string(actual_output_index);
+    errlog(errmsg);
+    mapped_outputs[actual_output_index] = gate_index;
 }
 
 void Circuit::printStatistics() {
-  std::string errmsg =
-      "Circuit::printStatistics: WIREs = " + std::to_string(wire_no) +
-      " ANDs = " + std::to_string(and_no) + " ORs = " + std::to_string(or_no) +
-      " NOTs = " + std::to_string(not_no);
-  errlog(errmsg);
+    std::string errmsg =
+        "Circuit::printStatistics: WIREs = " + std::to_string(wire_no) +
+        " ANDs = " + std::to_string(and_no) + " ORs = " + std::to_string(or_no) +
+        " NOTs = " + std::to_string(not_no);
+    errlog(errmsg);
 }
 
 // std::istream& operator>>(std::istream& is, Circuit& circuit) {
@@ -252,29 +268,29 @@ void Circuit::printStatistics() {
 // }
 
 std::ostream& operator<<(std::ostream& os, const Circuit& circuit) {
-  for (Gate* gate : circuit.gates) {
-    os << *gate;
-  }
+    for (Gate* gate : circuit.gates) {
+        os << *gate;
+    }
 
-  return os;
+    return os;
 }
 
 void Circuit::writeCircuitToFile() const {
-  // Create filepath
-  std::string directory = "";
-  std::string filename = "eugenics.circuit";
-  // std::string filepath = directory + filename;
-  std::string filepath = filename;
+    // Create filepath
+    std::string directory = "";
+    std::string filename = "eugenics.circuit";
+    // std::string filepath = directory + filename;
+    std::string filepath = filename;
 
-  // Open filepath
-  std::ofstream circuitfile(filepath, std::ios::app);
+    // Open filepath
+    std::ofstream circuitfile(filepath, std::ios::app);
 
-  std::string errmsg = "Circuit::writeCircuitToFile: " + filepath;
-  errlog(errmsg);
+    std::string errmsg = "Circuit::writeCircuitToFile: " + filepath;
+    errlog(errmsg);
 
-  // Write circuit to circuitfile
-  circuitfile << *this;
-  errlog("Circuit::writeCircuitToFile: write complete");
+    // Write circuit to circuitfile
+    circuitfile << *this;
+    errlog("Circuit::writeCircuitToFile: write complete");
 
-  circuitfile.close();
+    circuitfile.close();
 }

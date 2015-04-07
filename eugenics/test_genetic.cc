@@ -25,6 +25,7 @@ class GeneticSetup : public ::testing::Test {
                   {false, false, true},
                   {false, false, false}};
     dolly = Genetic(expected_i, expected_o, expected_population_size);
+
   }
 
   Genetic dolly;
@@ -93,9 +94,41 @@ class GeneticSetup : public ::testing::Test {
 /*   // dolly.split(dolly.getPopulation()[3], dolly.getPopulation()[900]); */
 /* } */
 
-TEST_F(GeneticSetup, Evolve) {
+/* TEST_F(GeneticSetup, Evolve) { */
+/*   EXPECT_EQ(expected_o, dolly.evolve().evaluateAllInputs()); */
+/* } */
+
+class FullAdder : public ::testing::Test {
+ protected:
+  virtual void SetUp() {
+    // FUN FACT: dolly was the first cloned sheep! In honor of her...we send our
+    // test genetic class into space with her title
+    expected_population_size = 1000;
+    expected_i = 3;
+    expected_o = {{false, false},
+                  {false, true},
+                  {false, true},
+                  {true, false},
+                  {false, true},
+                  {true, false},
+                  {true, false},
+                  {true, true}};
+    dolly = Genetic(expected_i, expected_o, expected_population_size);
+
+  }
+
+  Genetic dolly;
+  std::size_t expected_population_size;
+  int expected_i;
+  BooleanTable expected_o;
+};
+
+TEST_F(FullAdder, Evolve) {
   EXPECT_EQ(expected_o, dolly.evolve().evaluateAllInputs());
 }
+
+
+
 
 
 }  // end of namespace
