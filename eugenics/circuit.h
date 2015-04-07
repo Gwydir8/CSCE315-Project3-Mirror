@@ -19,6 +19,37 @@ class Circuit {
   Circuit(int input_no, int output_no);
   virtual ~Circuit();
 
+  // Circuit &operator=(const Circuit &other) {
+  //   if (&other != this) {
+  //     // for (Gate *gate : gates) {
+  //     //   delete gate;
+  //     // }
+  //   }
+
+  //   return *this;
+  // }
+
+  // Circuit& operator=(Circuit&& other)
+  // 	{
+  // 		if (&other != this) {
+  // 			delete p;
+  // 			p = other.p;
+  // 			other.p = nullptr;
+  //     // for (Gate *gate : gates) {
+  //     //   delete gate;
+  //     // }
+  //     // for (Gate *othergate : other.gates) {
+  //       // othergate = nullptr;
+  //     // }
+  //       gate = other.get
+  //         for(std::size_t i = 0; i < gates.size(); ++i) {
+  //           for(st)
+  //         }
+  // 		}
+
+  // 		return *this;
+  // 	}
+
   int getOutputCount() const { return output_no; }
   int getInputCount() const { return input_no; }
   int getAndCount() const { return and_no; }

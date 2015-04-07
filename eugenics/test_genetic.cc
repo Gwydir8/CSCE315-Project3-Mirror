@@ -25,7 +25,6 @@ class GeneticSetup : public ::testing::Test {
                   {false, false, true},
                   {false, false, false}};
     dolly = Genetic(expected_i, expected_o, expected_population_size);
-
   }
 
   Genetic dolly;
@@ -42,7 +41,8 @@ class GeneticSetup : public ::testing::Test {
 /* } */
 
 /* TEST_F(GeneticSetup, ConstructorTest) { */
-/*   // try having genetic only instantiate Circuit *s that are new GeneticCircuits */
+/*   // try having genetic only instantiate Circuit *s that are new
+ * GeneticCircuits */
 /*   // std::size_t expected_population_size = 1000; */
 /*   // int expected_i = 3; */
 /*   // BooleanTable expected_o = {{true, true, true}, */
@@ -114,7 +114,6 @@ class FullAdder : public ::testing::Test {
                   {true, false},
                   {true, true}};
     dolly = Genetic(expected_i, expected_o, expected_population_size);
-
   }
 
   Genetic dolly;
@@ -127,10 +126,6 @@ TEST_F(FullAdder, Evolve) {
   EXPECT_EQ(expected_o, dolly.evolve().evaluateAllInputs());
 }
 
-
-
-
-
 }  // end of namespace
 
 class SimpleXOR : public ::testing::Test {
@@ -138,7 +133,7 @@ class SimpleXOR : public ::testing::Test {
   virtual void SetUp() {
     // FUN FACT: dolly was the first cloned sheep! In honor of her...we send our
     // test genetic class into space with her title
-    expected_population_size = 16; //b/c wont find 1000 unique with 2x2
+    expected_population_size = 16;  // b/c wont find 1000 unique with 2x2
     expected_i = 2;
     expected_o = {{false}, {true}, {true}, {false}};
     dolly = Genetic(expected_i, expected_o, expected_population_size);
