@@ -28,11 +28,12 @@ class GeneticCircuit : public Circuit {
   //returns the smallest cut you can make without disturbing mappings..
   //
   int getSmallestSafeCut();
+  void mapOutputToOutput(int to_map, int index_to_be_mapped);
   std::size_t hash_circ();
 
  private:
   std::uniform_int_distribution<> gate_dist{0, 2};
-  std::uniform_int_distribution<> number_dist{7, 36};
+  std::uniform_int_distribution<> number_dist{10, 36};
   std::minstd_rand* rand_engine_ptr;
   int fitness;
   /* BooleanTable memoized_output;//assuming that gates won't be added after evaluation */

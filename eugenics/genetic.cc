@@ -191,9 +191,9 @@ int Genetic::generateFitness(GeneticCircuit c) {
         for (int j = 0; j < actual_output.size(); ++j) {
           transposed_actual[i].push_back(actual_output[j][i]);
           transposed_expected[i].push_back(expected_outputs[j][i]);
-          std::cout << transposed_expected[i][j];
+          /* std::cout << transposed_expected[i][j]; */
         }
-          std::cout << std::endl;
+          /* std::cout << std::endl; */
       }
 
   for (std::size_t i = 0; i < transposed_actual.size(); ++i) {
@@ -202,7 +202,7 @@ int Genetic::generateFitness(GeneticCircuit c) {
       tentative_is_correct = false;
     }
     else{
-      std::cout << "Got one right" << std::endl;
+      /* std::cout << "Got one right" << std::endl; */
     }
   }
 

@@ -104,3 +104,17 @@ int GeneticCircuit::getSmallestSafeCut() {
   return smallest_safe_cut;
 }
 
+//index starts at 0
+//helper function to avoid conversions.
+void GeneticCircuit::mapOutputToOutput(int to_map, int index_to_be_mapped){
+  if(mapped_outputs[to_map] > -1){
+        return; //already mapped don't remap
+  }
+  //convert
+  int converted_gate_index = getGateCount() - getOutputCount() + to_map;
+  assert(converted_gate_index < getGateCount());
+
+  mapGateToOutput(converted_gate_index, index_to_be_mapped);
+}
+
+
