@@ -5,10 +5,10 @@
 #include <vector>
 using namespace std;
 
-/*TEST(JVAlgorithmTest, EmptyTest) {
+TEST(JVAlgorithmTest, EmptyTest) {
   vector<vector<bool>> expected_output = {{false}, {true}};
   EXPECT_EQ(expected_output, Ckt_Algo(Circuit(1, 1)).search(expected_output));
-}*/
+}
 
 
 TEST(JVAlgorithmTest, ANDTest) {
@@ -16,10 +16,10 @@ TEST(JVAlgorithmTest, ANDTest) {
   EXPECT_EQ(expected_output, Ckt_Algo(Circuit(2, 1)).search(expected_output));
 }
 
-TEST(JVAlgorithmTest, XORTest) {
-  vector<vector<bool>> expected_output = {{false}, {true}, {true}, {false}};
-  EXPECT_EQ(expected_output, Ckt_Algo(Circuit(2, 1)).search(expected_output));
-}
+/* TEST(JVAlgorithmTest, XORTest) { */
+/*   vector<vector<bool>> expected_output = {{false}, {true}, {true}, {false}}; */
+/*   EXPECT_EQ(expected_output, Ckt_Algo(Circuit(2, 1)).search(expected_output)); */
+/* } */
 
 TEST(JVAlgorithmTest, FullAdderTest){
         vector<vector<bool>> expected_output = {{false, false},

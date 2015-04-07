@@ -12,10 +12,10 @@ class Ckt_Algo {
   // Circuit Constructor
   Ckt_Algo(Circuit circuit);
   // ex_list.front()'s output
-  std::vector<std::vector<bool>> circ_output;
+  std::vector<std::vector<bool>> correct_circuit_output;
   // returns true if circuit.evaluateAllInputs() matches desired
   // it also uses output_set to store all the unique outputs and
-  // compares them to ex_list.front() 
+  // compares them to ex_list.front()
   bool circuitMatchesDesired(std::vector<std::vector<bool>> desired);
   // searches for circuit that matches desired output
   // if found, search is complete
@@ -27,16 +27,16 @@ class Ckt_Algo {
   // instantiate vector on heap
   std::vector<std::vector<std::vector<bool>>>* output_set;
   // maps to keep track of combinations
-  std::map<std::string, int> and_map;
-  std::map<std::string, int> or_map;
+  void checkPermAndMap(Circuit* check, std::vector<std::vector<bool>> desired);
+  bool isUnique(Circuit candidate);
+  std::map<std::size_t, int> unique_map;
+  /* std::map<std::string, int> or_map; */
   // keeps track of level
-  int and_level;
-  int or_level;
   // helper functions to creating the population
   void addNot(int counter);
   void addAnd(int counter);
   void addOr(int counter);
-  
+
 };
 
 #endif
