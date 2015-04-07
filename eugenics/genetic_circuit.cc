@@ -16,8 +16,9 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
 
   std::vector<GateType> gate_types{NOT, OR, AND};
 
-  int num_of_gates = number_dist(*rand_engine_ptr);  // random number between 0 and 28
-  std::uniform_int_distribution<> gate_max_dist{0 , num_of_gates};
+  int num_of_gates =
+      number_dist(*rand_engine_ptr);  // random number between 0 and 28
+  std::uniform_int_distribution<> gate_max_dist{0, num_of_gates};
 
   for (int i = 0; i < num_of_gates; ++i) {
     // random number between 0 and 2
@@ -36,7 +37,6 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
   }
 }
 
-
 GeneticCircuit::GeneticCircuit(int input_num, int output_num,
                                std::minstd_rand* rand_eng,
                                std::vector<Gate*> gates)
@@ -47,10 +47,9 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
     } else if (gate->type == "NONE") {
       errlog("GeneticCircuit::GeneticCircuit NONE Wires are not added");
     } else if (gate->type == "NOT") {
-      if(getNotCount() < 2){
+      if (getNotCount() < 2) {
         addGate(GateType(NOT), gate->input_1_index);
-      }
-      else {
+      } else {
         addGate(GateType(OR), gate->input_1_index, gate->input_1_index);
       }
     } else if (gate->type == "AND") {
@@ -66,9 +65,6 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
     }
   }
 }
-
-
-
 
 std::size_t GeneticCircuit::hash_circ() {
   std::string s = "";
@@ -96,29 +92,28 @@ std::size_t GeneticCircuit::hash_circ() {
 
 int GeneticCircuit::getSmallestSafeCut() {
   int smallest_safe_cut = input_no;
-  for(int potential : mapped_outputs){
-    if(potential > smallest_safe_cut && potential < getGateCount() - 1){
+  for (int potential : mapped_outputs) {
+    if (potential > smallest_safe_cut && potential < getGateCount() - 1) {
       smallest_safe_cut = potential + 1;
     }
   }
-  //temporary logging to see if mapping is working
+  // temporary logging to see if mapping is working
   /* if(smallest_safe_cut > input_no){ */
   /*   std::cout << "MAPPING IS WORKING!!!" << std::endl; */
   /* } */
   return smallest_safe_cut;
 }
 
-//index starts at 0
-//helper function to avoid conversions.
-void GeneticCircuit::mapOutputToOutput(int to_map, int index_to_be_mapped){
-  if(mapped_outputs[index_to_be_mapped] > -1){
-        return; //already mapped don't remap
+// index starts at 0
+// helper function to avoid conversions.
+void GeneticCircuit::mapOutputToOutput(int to_map, int index_to_be_mapped) {
+  if (mapped_outputs[index_to_be_mapped] != -1) {
+    return;  // already mapped don't remap
   }
-  //convert
+  // convert
   int converted_gate_index = getGateCount() - getOutputCount() + to_map;
+
   assert(converted_gate_index < getGateCount());
 
   mapGateToOutput(converted_gate_index, index_to_be_mapped);
 }
-
-

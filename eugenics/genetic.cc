@@ -107,6 +107,7 @@ void Genetic::cullHerd() {
   int avg = 0;
   double total = 0.0;
   double avg_not = 0.0;
+
   std::map<std::size_t, GeneticCircuit>::iterator it;
   for (it = population->begin(); it != population->end(); ++it) {
     int fit = it->second.getFitness();
@@ -163,13 +164,12 @@ GeneticCircuit Genetic::evolve() {
       mapAndSetFitness(&twins.first);
       mapAndSetFitness(&twins.second);
 
-      auto first_success =
-          population->insert(std::pair<std::size_t, GeneticCircuit>(
-              twins.first.hash_circ(), twins.first));
-      auto second_success =
-          population->insert(std::pair<std::size_t, GeneticCircuit>(
-              twins.second.hash_circ(), twins.second));
-
+      // auto first_success =
+      //     population->insert(std::pair<std::size_t, GeneticCircuit>(
+      //         twins.first.hash_circ(), twins.first));
+      // auto second_success =
+      //     population->insert(std::pair<std::size_t, GeneticCircuit>(
+      //         twins.second.hash_circ(), twins.second));
       // if(first_success.second == false || second_success.second == false){
       //       --i;
       // }
@@ -235,10 +235,11 @@ void Genetic::mapAndSetFitness(GeneticCircuit *c) {
 }
 
 BooleanTable transposeBooleanTable(BooleanTable original) {
-  BooleanTable transposed(original[0].size());
+  std::size_t column_length = original.front().size();
+  BooleanTable transposed(column_length);
 
-  for (std::size_t i = 0; i < original[0].size(); ++i) {
-    for (std::size_t j = 0; j < original.size(); ++j) {
+  for (std::size_t i = 0; i < column_length; ++i) {
+    for (std::size_t j = 0; j < column_length; ++j) {
       transposed[i].push_back(original[j][i]);
     }
   }
