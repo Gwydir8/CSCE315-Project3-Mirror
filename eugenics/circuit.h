@@ -30,11 +30,11 @@ class Circuit {
   // }
 
   // Circuit& operator=(Circuit&& other)
-	// 	{
-	// 		if (&other != this) {
-	// 			delete p;
-	// 			p = other.p;
-	// 			other.p = nullptr;
+  // 	{
+  // 		if (&other != this) {
+  // 			delete p;
+  // 			p = other.p;
+  // 			other.p = nullptr;
   //     // for (Gate *gate : gates) {
   //     //   delete gate;
   //     // }
@@ -45,10 +45,10 @@ class Circuit {
   //         for(std::size_t i = 0; i < gates.size(); ++i) {
   //           for(st)
   //         }
-	// 		}
+  // 		}
 
-	// 		return *this;
-	// 	}
+  // 		return *this;
+  // 	}
 
   int getOutputCount() const { return output_no; }
   int getInputCount() const { return input_no; }

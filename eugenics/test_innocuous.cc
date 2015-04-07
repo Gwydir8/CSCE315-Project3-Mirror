@@ -23,12 +23,12 @@ TEST(InnocuousAttempt, XOR) {
     delete c;
     c = new GeneticCircuit(2, 1, &rand);
     answer = c->evaluateAllInputs();
-    #ifdef VERBOSE_TEST
+#ifdef VERBOSE_TEST
     if (i % 100000 == 0) {
       std::cerr << "Iteration: " + std::to_string(i) << std::endl;
       std::cerr << *c << std::endl;
     }
-    #endif
+#endif
   }
   std::cerr << "Iteration: " + std::to_string(i) << std::endl;
   std::cerr << *c << std::endl;
@@ -64,12 +64,12 @@ TEST(InnocuousAttempt, FullAdder) {
     delete c;
     c = new GeneticCircuit(2, 2, &rand);
     answer = c->evaluateAllInputs();
-    #ifdef VERBOSE_TEST
+#ifdef VERBOSE_TEST
     if (i % 10000 == 0) {
       std::cerr << "Iteration: " + std::to_string(i) << std::endl;
       std::cerr << *c << std::endl;
     }
-    #endif
+#endif
   }
   std::cerr << "Iteration: " + std::to_string(i) << std::endl;
   std::cerr << *c << std::endl;
@@ -96,12 +96,12 @@ TEST(InnocuousAttempt, InvertInputs) {
     delete c;
     c = new GeneticCircuit(3, 3, &rand);
     answer = c->evaluateAllInputs();
-    #ifdef VERBOSE_TEST
+#ifdef VERBOSE_TEST
     if (i % 10000 == 0) {
       std::cerr << "Iteration: " + std::to_string(i) << std::endl;
       std::cerr << *c << std::endl;
     }
-    #endif
+#endif
   }
   std::cerr << "Iteration: " + std::to_string(i) << std::endl;
   std::cerr << *c << std::endl;
