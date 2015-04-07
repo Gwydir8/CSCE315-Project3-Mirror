@@ -39,7 +39,8 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
 
 GeneticCircuit::GeneticCircuit(int input_num, int output_num,
                                std::minstd_rand* rand_eng,
-                               std::vector<Gate*> gates)
+                               std::vector<Gate*> gates
+                               )
     : Circuit(input_num, output_num), rand_engine_ptr(rand_eng) {
   for (Gate* gate : gates) {
     if (gate->type == "WIRE") {
@@ -98,7 +99,7 @@ int GeneticCircuit::getSmallestSafeCut() {
   int smallest_safe_cut = input_no;
   for(int potential : mapped_outputs){
     if(potential > smallest_safe_cut && potential < getGateCount() - 1){
-      smallest_safe_cut = potential + 1;
+      smallest_safe_cut = potential;
     }
   }
   //temporary logging to see if mapping is working
@@ -111,12 +112,17 @@ int GeneticCircuit::getSmallestSafeCut() {
 //index starts at 0
 //helper function to avoid conversions.
 void GeneticCircuit::mapOutputToOutput(int to_map, int index_to_be_mapped){
-  if(mapped_outputs[index_to_be_mapped] > -1){
+  if(mapped_outputs[index_to_be_mapped] != -1){
         return; //already mapped don't remap
   }
   //convert
   int converted_gate_index = getGateCount() - getOutputCount() + to_map;
-  assert(converted_gate_index < getGateCount());
+  errlog("Mapping " + std::to_string(converted_gate_index) + " to " + std::to_string(index_to_be_mapped) , true);
+
+  if(converted_gate_index >= getGateCount()){
+    errlog("WOAHHH NELLY", true);
+    exit(1);
+  }
 
   mapGateToOutput(converted_gate_index, index_to_be_mapped);
 }

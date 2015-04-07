@@ -239,7 +239,7 @@ void Circuit::mapGateToOutput(int gate_index, int desired_output_index) {
     errmsg = "Circuit::mapGateToOutput mapping: " + std::to_string(gate_index) +
         " -> " + std::to_string(actual_output_index);
     errlog(errmsg);
-    mapped_outputs[actual_output_index] = gate_index;
+    mapped_outputs[desired_output_index] = gate_index;
 }
 
 void Circuit::printStatistics() {

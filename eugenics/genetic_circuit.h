@@ -27,6 +27,8 @@ class GeneticCircuit : public Circuit {
   int getFitness() { return fitness; }
   //returns the smallest cut you can make without disturbing mappings..
   //
+  void setMapping(std::vector<int> new_mapping){ mapped_outputs = new_mapping;}
+  std::vector<int> getMapping(){ return mapped_outputs;}
   int getSmallestSafeCut();
   void mapOutputToOutput(int to_map, int index_to_be_mapped);
   std::size_t hash_circ();
