@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
 # install gtest
 # USAGE: cd $PROJECT_ROOT; ./install-gtest.sh
 

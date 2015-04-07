@@ -69,8 +69,12 @@ set_property(TARGET ${RELEASE_BINARY} PROPERTY CXX_STANDARD_REQUIRED ON)
 # set_property(TARGET ${RELEASE_BINARY} PROPERTY CXX_STANDARD 14)
 # #C++14 required
 # #set_property(TARGET ${RELEASE_BINARY} PROPERTY CXX_STANDARD_REQUIRED ON)
-
 # link libraries
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+  target_link_libraries(${RELEASE_BINARY} ${gflags_LIBRARIES})
+else()
+  target_link_libraries(${RELEASE_BINARY} ${GFlags_LIBS})
+endif()
 # if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 #   target_link_libraries(${RELEASE_BINARY} ${gflags_LIBRARIES})
 # else()

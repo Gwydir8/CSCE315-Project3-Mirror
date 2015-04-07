@@ -81,3 +81,21 @@ cd $PROJECT_ROOT;
 man $PROJECT_ROOT/share/man/eugenics.1
 man $PROJECT_ROOT/share/man/lookingglass.1
 ```
+
+### Team 15
+* Christopher Findeisen
+  - cfindeisen7@email.tamu.edu
+
+* Sam Gwydir
+  - gwydir8@gmail.com
+
+* Jerego Orlino
+  - jjo498@email.tamu.edu
+
+* Vincent Valenti
+  - vincentv18@email.tamu.edu
+
+### Links
+
+  - [Project 3 Spec](http://faculty.cse.tamu.edu/ritchey/courses/csce315/spring15/homework/project3.pdf)
+  - [Gitter](https://gitter.im/Gwydir8/CSCE315-Project3-Mirror?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&content=body_link)
