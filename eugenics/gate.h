@@ -160,7 +160,7 @@ class Wire : public Gate {
       std::string errmsg = "Wire::setInput: " + std::to_string(val);
       errlog(errmsg);
     } else {
-      errlog("Wire isn't an input wire", true);
+      errlog("Wire isn't an input wire");
     }
   }
 };

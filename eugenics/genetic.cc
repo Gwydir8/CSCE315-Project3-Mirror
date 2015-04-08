@@ -132,7 +132,7 @@ int getRealMapped(std::vector<int> map) {
   for (int mapping : map) {
     if (mapping > -1) {
       ++total;
-      /* errlog("keeping a mapping", true); */
+      /* errlog("keeping a mapping", ); */
     }
   }
   return total;
@@ -156,9 +156,9 @@ void Genetic::cullHerd() {
     }
   }
   avg = total / population->size();
-  errlog("Fitness Average is: " + std::to_string(avg), true);
+  errlog("Fitness Average is: " + std::to_string(avg));
   average_fitness = avg;
-  errlog("Avg # of mapped gates are" + std::to_string(avg_mapped), true);
+  errlog("Avg # of mapped gates are" + std::to_string(avg_mapped));
 
   it = population->begin();
   while ((it != population->end()) &&
@@ -172,7 +172,7 @@ void Genetic::cullHerd() {
 
   std::string errmsg =
       "Deleted stuff. Population is now: " + std::to_string(population->size());
-  errlog(errmsg, true);
+  errlog(errmsg);
 }
 
 GeneticCircuit Genetic::evolve() {
@@ -182,7 +182,7 @@ GeneticCircuit Genetic::evolve() {
     if (count_loop % 20 == 10) {
       spawnMore(300);
     }
-    errlog("Don't have it yet, starting cull..", true);
+    errlog("Don't have it yet, starting cull..");
     std::vector<GeneticCircuit *> breedable;
     std::vector<GeneticCircuit *> best_stock;
     std::map<std::size_t, GeneticCircuit>::iterator it;
@@ -228,7 +228,7 @@ GeneticCircuit Genetic::evolve() {
       //       --i;
       // }
     }
-    errlog(std::to_string(population->size()), true);
+    errlog(std::to_string(population->size()));
     cullHerd();
     ++count_loop;
   }
@@ -307,9 +307,9 @@ std::vector<int> splitMapping(int split_index, std::vector<int> original_map) {
   for (std::size_t i = 0; i < split_map.size(); ++i) {
     if (split_map[i] >= split_index) {
       split_map[i] = -1;
-      // errlog("Killing a mapping", true);
+      // errlog("Killing a mapping");
     } else if (split_map[i] > -1) {
-      // errlog("keeping a mapping", true);
+      // errlog("keeping a mapping");
     }
   }
   return split_map;
