@@ -61,12 +61,12 @@ std::pair<GeneticCircuit, GeneticCircuit> Genetic::splitAndSplice(
   // Generate random index to split at
   // half the time, pick one close to edge
 
-  int max_index = std::min(c_1.getGateCount(), c_2.getGateCount()) - 1;
-  int min_index = std::min(c_1.getSmallestSafeCut(), c_2.getSmallestSafeCut());
+  std::size_t max_index = std::min(c_1.getGateCount(), c_2.getGateCount()) - 1;
+  std::size_t min_index = std::min(c_1.getSmallestSafeCut(), c_2.getSmallestSafeCut());
 
   std::uniform_int_distribution<> dist{min_index, max_index};
 
-  int split_index = dist(rand_engine);
+  std::size_t split_index = dist(rand_engine);
 
   if (c_1.getGateCount() <= input_no || c_2.getGateCount() <= input_no) {
     split_index = input_no;
