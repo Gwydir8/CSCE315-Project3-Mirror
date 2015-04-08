@@ -85,8 +85,8 @@ std::pair<GeneticCircuit, GeneticCircuit> Genetic::splitAndSplice(
   swapped_circuits.first = splice(c_1_halves.first, c_2_halves.second);
   swapped_circuits.second = splice(c_2_halves.first, c_1_halves.second);
 
-  swapped_circuits.first.setMapping(split_map_of_c1);
-  swapped_circuits.second.setMapping(split_map_of_c2);
+/*   swapped_circuits.first.setMapping(split_map_of_c1); */
+/*   swapped_circuits.second.setMapping(split_map_of_c2); */
 
   return swapped_circuits;
 }
@@ -172,26 +172,24 @@ GeneticCircuit Genetic::evolve() {
 
 
 
-    std::uniform_int_distribution<> dist{
-        0, static_cast<int>(breedable.size() - 1)};
+    std::uniform_int_distribution<> dist{ 0, static_cast<int>(breedable.size() - 1)};
     /* for (std::size_t i = 0; i < breedable.size() - 1; i += 2) { */
     // for (std::size_t i = 0; i < breedable.size() - 1; i += 2) {
     for (std::size_t i = 0; i < 10; ++i) {
       int circ_1 = dist(rand_engine);
       int circ_2 = dist(rand_engine);
-      std::pair<GeneticCircuit, GeneticCircuit> twins =
+      std::pair<GeneticCircuit, GeneticCircuit> twins = splitAndSplice(*breedable[circ_1], *breedable[circ_2]);
           // splitAndSplice(*breedable[i], *breedable[i + 1]);
-          splitAndSplice(*breedable[circ_1], *breedable[circ_2]);
 
       mapAndSetFitness(&twins.first);
       mapAndSetFitness(&twins.second);
 
       // auto first_success =
-      //     population->insert(std::pair<std::size_t, GeneticCircuit>(
-      //         twins.first.hash_circ(), twins.first));
+          population->insert(std::pair<std::size_t, GeneticCircuit>(
+              twins.first.hash_circ(), twins.first));
       // auto second_success =
-      //     population->insert(std::pair<std::size_t, GeneticCircuit>(
-      //         twins.second.hash_circ(), twins.second));
+          population->insert(std::pair<std::size_t, GeneticCircuit>(
+              twins.second.hash_circ(), twins.second));
       // if(first_success.second == false || second_success.second == false){
       //       --i;
       // }
