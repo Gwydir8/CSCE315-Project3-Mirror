@@ -57,6 +57,7 @@ class Circuit {
   int getNotCount() const { return not_no; }
   int getWireCount() const { return wire_no; }
   int getGateCount() const { return gates.size(); }
+  std::vector<std::vector<bool>> getEval() { return eval_set; }
 
   // gate_index := which gate we want to always have as ouput
   // desired_output_index := which output to map it to
@@ -121,6 +122,7 @@ class Circuit {
   int output_no;
   // number of inputs
   int input_no;
+  std::vector<std::vector<bool>> eval_set;
 
   //// Statistics
   // number of And gates
