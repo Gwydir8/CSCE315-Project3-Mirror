@@ -50,9 +50,9 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
     } else if ((rand_gate == OR) || (rand_gate == AND)) {
       addGate(rand_gate, gate_max_dist(*rand_engine_ptr) % getGateCount(),
               gate_max_dist(*rand_engine_ptr) % getGateCount());
-    } else {
-      errlog("GeneticCircuit::GeneticCircuit FATAL Unknown Gate Encountered");
-      std::exit(EXIT_FAILURE);
+    // } else {
+    //   errlog("GeneticCircuit::GeneticCircuit FATAL Unknown Gate Encountered");
+    //   std::exit(EXIT_FAILURE);
     }
   }
 }
@@ -79,9 +79,9 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
     } else if (gate->type == "INVALID") {
       errlog("GeneticCircuit::GeneticCircuit FATAL Invalid Gate Encountered");
       std::exit(EXIT_FAILURE);
-    } else {
-      errlog("GeneticCircuit::GeneticCircuit FATAL Unknown Gate Encountered");
-      std::exit(EXIT_FAILURE);
+    // } else {
+    //   errlog("GeneticCircuit::GeneticCircuit FATAL Unknown Gate Encountered");
+    //   std::exit(EXIT_FAILURE);
     }
   }
 }
