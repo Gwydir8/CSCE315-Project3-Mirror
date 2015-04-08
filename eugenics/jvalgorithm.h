@@ -13,6 +13,7 @@ class Ckt_Algo {
   Ckt_Algo(Circuit circuit);
   // ex_list.front()'s output
   std::vector<std::vector<bool>> correct_circuit_output;
+  Circuit correct_circuit;
   // returns true if circuit.evaluateAllInputs() matches desired
   // it also uses output_set to store all the unique outputs and
   // compares them to ex_list.front()
