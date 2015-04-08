@@ -5,7 +5,7 @@
 #include <iostream>
 #include <utility>    // std::map
 #include <algorithm>  // std::max
-#include <random>     // std::mt19937
+#include <random>     // std::mt19937_64
 
 #include <vector>
 #include <algorithm>

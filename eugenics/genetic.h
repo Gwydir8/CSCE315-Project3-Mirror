@@ -4,7 +4,7 @@
 #include <vector>
 #include <map>
 #include <utility>
-#include <random>     // std::mt19937
+#include <random>     // std::mt19937_64
 #include <algorithm>  // std::max
 #include <cstddef>    //std::size_t
 
@@ -56,7 +56,7 @@ class Genetic {
   bool correct_found;
   BooleanTable expected_outputs;
 
-  std::mt19937 rand_engine;
+  std::mt19937_64 rand_engine;
 };
 
 #endif /* GENETIC_H */

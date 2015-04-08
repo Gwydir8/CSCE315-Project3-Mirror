@@ -34,7 +34,7 @@ class GeneticSetup : public ::testing::Test {
 };
 
 /* TEST(GeneticCircuitFitnessTest, Fitness) { */
-/*   std::mt19937 rand(std::random_device{}()); */
+/*   std::mt19937_64 rand(std::random_device{}()); */
 /*   GeneticCircuit c(3, 3, &rand); */
 /*   // It's expect EXPECTED is less than ACTUAL */
 /*   /1* EXPECT_LT(0, c.generateFitness()); *1/ */
@@ -68,7 +68,7 @@ class GeneticSetup : public ::testing::Test {
 /* } */
 
 /* TEST_F(GeneticSetup, SplitAndSplice) { */
-/*   std::mt19937 rand1(std::random_device{}()); */
+/*   std::mt19937_64 rand1(std::random_device{}()); */
 /*   GeneticCircuit gc_1(3, 3, &rand1); */
 /*   GeneticCircuit gc_2(3, 3, &rand1); */
 /*   std::pair<GeneticCircuit, GeneticCircuit> gc_pair = */
