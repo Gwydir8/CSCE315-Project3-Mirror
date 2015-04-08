@@ -13,7 +13,7 @@ def main():
     Sample Rate example: if you're giving 1 per 30 points, type 30
     if you're giving every data point, type 1
     """
-    fname = "test.txt" if len(sys.argv) < 1 else sys.argv[1]
+    fname = "test.txt" if len(sys.argv) < 2 else sys.argv[1]
     data = readData(fname)
     parseData(data)
     drawWindow()
