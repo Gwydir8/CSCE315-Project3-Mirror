@@ -124,6 +124,12 @@ int GeneticCircuit::getSmallestSafeCut() {
   return smallest_safe_cut;
 }
 
+
+
+
+
+
+
 // index starts at 0
 // helper function to avoid conversions.
 void GeneticCircuit::mapOutputToOutput(int to_map, int index_to_be_mapped) {

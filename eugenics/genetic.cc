@@ -233,6 +233,7 @@ GeneticCircuit Genetic::evolve() {
     ++count_loop;
   }
   GeneticCircuit result = population->at(hashExpectedOutput());
+  writeFitnessToFile();
   return result;
 }
 
@@ -312,4 +313,25 @@ std::vector<int> splitMapping(int split_index, std::vector<int> original_map) {
     }
   }
   return split_map;
+}
+
+void Genetic::writeFitnessToFile() const {
+  // Create filepath
+  std::string directory = "";
+  std::string filename = "genetic.fitness";
+
+  // std::string filepath = directory + filename;
+  std::string filepath = filename;
+
+  // Open filepath
+  std::ofstream circuitfile(filepath, std::ios::app);
+
+  std::string errmsg = "Circuit::writeCircuitToFile: " + filepath;
+  errlog(errmsg);
+
+  // Write circuit to circuitfile
+  circuitfile << average_fitness;
+  errlog("Circuit::writeCircuitToFile: write complete");
+
+  circuitfile.close();
 }

@@ -7,8 +7,11 @@
 #include "utility.h"
 
 using namespace std;
-
-Ckt_Algo::Ckt_Algo(Circuit circuit) : correct_circuit_output(), output_set(new vector<vector<vector<bool>>>)  {
+Ckt_Algo::Ckt_Algo(Circuit circuit)
+    : correct_circuit_output(),
+      correct_circuit(circuit),
+      output_set(new vector<vector<vector<bool>>>) {
+          /* Ckt_Algo(Circuit circuit); */
   ex_list.push(circuit);
 }
 size_t hash_output(vector<vector<bool>> output) {
@@ -48,11 +51,8 @@ bool Ckt_Algo::circuitMatchesDesired(vector<vector<bool>> desired) {
     Circuit * current_circ = &ex_list.front();
 
     //check permutations of output and map if equal
-    /* checkPermAndMap(current_circ, desired); */
-    vector<vector<bool>> circ_output = current_circ->evaluateAllInputs();
 
   // check permutations of output and map if equal
-  checkPermAndMap(current_circ, desired);
   vector<vector<bool>> circ_output = current_circ->evaluateAllInputs();
 
   if (circ_output.size() != desired.size()) {

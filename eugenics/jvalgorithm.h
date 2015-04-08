@@ -10,6 +10,8 @@
 class Ckt_Algo {
  public:
   // Circuit Constructor
+  /* Ckt_Algo(): output_set(){} */
+  // Circuit Constructor
   Ckt_Algo(Circuit circuit);
   // ex_list.front()'s output
   std::vector<std::vector<bool>> correct_circuit_output;

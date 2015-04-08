@@ -36,6 +36,7 @@ class Genetic {
     return *population;
   }
 
+  void writeFitnessToFile() const;
   std::map<std::size_t, GeneticCircuit> *spawnPopulation(
       std::size_t populationSize);
   void spawnMore(int x);
