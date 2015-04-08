@@ -12,7 +12,7 @@
 
 class Genetic {
  public:
-  Genetic() : population(), input_no(), expected_outputs(), correct_found() {}
+  Genetic() : population(), input_no(), correct_found(), expected_outputs() {}
   Genetic(int n, BooleanTable outputs) : Genetic(n, outputs, 1000) {}
   Genetic(int input_no, BooleanTable expect_outputs, int population_size);
   /* Genetic(int input_no, BooleanTable expect_outputs, */
