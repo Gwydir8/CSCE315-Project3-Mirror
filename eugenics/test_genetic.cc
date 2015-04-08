@@ -126,8 +126,6 @@ TEST_F(FullAdder, Evolve) {
   EXPECT_EQ(expected_o, dolly.evolve().evaluateAllInputs());
 }
 
-}  // end of namespace
-
 class SimpleXOR : public ::testing::Test {
  protected:
   virtual void SetUp() {
@@ -147,6 +145,9 @@ class SimpleXOR : public ::testing::Test {
 TEST_F(SimpleXOR, Evolve) {
   EXPECT_EQ(expected_o, dolly.evolve().evaluateAllInputs());
 }
+
+}  // end of namespace
+
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
