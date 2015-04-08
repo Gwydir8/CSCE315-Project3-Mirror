@@ -5,7 +5,7 @@
 #include <iostream>
 #include <utility>    // std::map
 #include <algorithm>  // std::max
-#include <random>     // std::mt19937
+#include <random>     // std::mt19937_64
 
 #include <vector>
 #include <algorithm>
@@ -22,12 +22,13 @@ BooleanTable transposeBooleanTable(BooleanTable original);
 std::vector<int> splitMapping(int split_index, std::vector<int> original_map);
 
 Genetic::Genetic(int n, BooleanTable outputs, int population_size)
-  : input_no(n),
-  expected_outputs(outputs),
-  correct_found(false),
-  rand_engine(std::random_device{}()) , average_fitness(0) {
-    population = spawnPopulation(population_size);
-  }
+    : input_no(n),
+      expected_outputs(outputs),
+      correct_found(false),
+      rand_engine(std::random_device{}()),
+      average_fitness(0) {
+  population = spawnPopulation(population_size);
+}
 std::pair<std::vector<Gate *>, std::vector<Gate *>> Genetic::split(
     GeneticCircuit circuit, int split_index) {
   std::vector<Gate *> a = circuit.getGates();
@@ -40,19 +41,19 @@ std::pair<std::vector<Gate *>, std::vector<Gate *>> Genetic::split(
 }
 
 GeneticCircuit Genetic::splice(std::vector<Gate *> base_part,
-    std::vector<Gate *> appended_part) {
+                               std::vector<Gate *> appended_part) {
   std::vector<Gate *> combined_gates = base_part;
   std::vector<Gate *> a = appended_part;
 
   combined_gates.insert(std::end(combined_gates), std::begin(a), std::end(a));
 
   GeneticCircuit new_circuit(input_no, expected_outputs.front().size(),
-      &rand_engine, combined_gates);
+                             &rand_engine, combined_gates);
 
   return new_circuit;
 }
 
-//favor c_1
+// favor c_1
 std::pair<GeneticCircuit, GeneticCircuit> Genetic::splitAndSplice(
     GeneticCircuit c_1, GeneticCircuit c_2) {
   std::pair<GeneticCircuit, GeneticCircuit> swapped_circuits(c_1, c_2);
@@ -60,25 +61,28 @@ std::pair<GeneticCircuit, GeneticCircuit> Genetic::splitAndSplice(
   // Generate random index to split at
   // half the time, pick one close to edge
 
-  int max_index = std::min(c_1.getGateCount(), c_2.getGateCount()) - 1;
-  int min_index = std::min(c_1.getSmallestSafeCut(), c_2.getSmallestSafeCut());
+  std::size_t max_index = std::min(c_1.getGateCount(), c_2.getGateCount()) - 1;
+  std::size_t min_index =
+      std::min(c_1.getSmallestSafeCut(), c_2.getSmallestSafeCut());
 
-  std::uniform_int_distribution<> dist{min_index, max_index};
+  std::uniform_int_distribution<> dist{static_cast<int>(min_index),
+                                       static_cast<int>(max_index)};
 
-  int split_index = dist(rand_engine);
+  std::size_t split_index = dist(rand_engine);
 
   if (c_1.getGateCount() <= input_no || c_2.getGateCount() <= input_no) {
     split_index = input_no;
   }
 
-  std::vector<int> split_map_of_c1 = splitMapping(split_index, c_1.getMapping());
-  std::vector<int> split_map_of_c2 = splitMapping(split_index, c_2.getMapping());
+  std::vector<int> split_map_of_c1 =
+      splitMapping(split_index, c_1.getMapping());
+  std::vector<int> split_map_of_c2 =
+      splitMapping(split_index, c_2.getMapping());
 
-
-  std::pair<std::vector<Gate *>, std::vector<Gate *> > c_1_halves =
-    split(c_1, split_index);
-  std::pair<std::vector<Gate *>, std::vector<Gate *> > c_2_halves =
-    split(c_2, split_index);
+  std::pair<std::vector<Gate *>, std::vector<Gate *>> c_1_halves =
+      split(c_1, split_index);
+  std::pair<std::vector<Gate *>, std::vector<Gate *>> c_2_halves =
+      split(c_2, split_index);
 
   swapped_circuits.first = splice(c_1_halves.first, c_2_halves.second);
   swapped_circuits.second = splice(c_2_halves.first, c_1_halves.second);
@@ -112,7 +116,7 @@ std::map<std::size_t, GeneticCircuit> *Genetic::spawnPopulation(
   return spawned_pop;
 }
 
-void Genetic::spawnMore(int x){
+void Genetic::spawnMore(int x) {
   for (int i = 0; i < x; ++i) {
     GeneticCircuit c(input_no, expected_outputs.front().size(), &rand_engine);
     mapAndSetFitness(&c);
@@ -121,11 +125,11 @@ void Genetic::spawnMore(int x){
     population->insert(zergling);
   }
 }
-//temporary...
-int getRealMapped(std::vector<int> map){
+// temporary...
+int getRealMapped(std::vector<int> map) {
   int total = 0;
-  for(int mapping : map){
-    if(mapping > -1){
+  for (int mapping : map) {
+    if (mapping > -1) {
       ++total;
       /* errlog("keeping a mapping", true); */
     }
@@ -145,8 +149,9 @@ void Genetic::cullHerd() {
     int fit = it->second.getFitness();
     total += fit;
     /* avg_not += (double)it->second.getNotCount() / population->size(); */
-    if(getRealMapped(it->second.getMapping()) > 0){
-      /* std::cout << "MAPPED SO THE FITNESS IS : " << it->second.getFitness() << std::endl; */
+    if (getRealMapped(it->second.getMapping()) > 0) {
+      /* std::cout << "MAPPED SO THE FITNESS IS : " << it->second.getFitness()
+       * << std::endl; */
     }
   }
   avg = total / population->size();
@@ -155,7 +160,8 @@ void Genetic::cullHerd() {
   errlog("Avg # of mapped gates are" + std::to_string(avg_mapped), true);
 
   it = population->begin();
-  while (it != population->end() && population->size() > (std::size_t)(initial_size / 2)) {
+  while (it != population->end() &&
+         population->size() > (std::size_t)(initial_size / 2)) {
     if (it->second.getFitness() > avg) {
       it = population->erase(it);
     } else {
@@ -164,7 +170,7 @@ void Genetic::cullHerd() {
   }
 
   std::string errmsg =
-    "Deleted stuff. Population is now: " + std::to_string(population->size());
+      "Deleted stuff. Population is now: " + std::to_string(population->size());
   errlog(errmsg, true);
 }
 
@@ -172,7 +178,7 @@ GeneticCircuit Genetic::evolve() {
   cullHerd();
   int count_loop = 0;
   while (correct_found == false) {
-    if(count_loop % 20 == 10){
+    if (count_loop % 20 == 10) {
       spawnMore(300);
     }
     errlog("Don't have it yet, starting cull..", true);
@@ -181,18 +187,17 @@ GeneticCircuit Genetic::evolve() {
     std::map<std::size_t, GeneticCircuit>::iterator it;
     for (it = population->begin(); it != population->end(); ++it) {
       // all are breedable, but one is alpha af.
-      if(it->second.getFitness() < average_fitness - 2000){
+      if (it->second.getFitness() < average_fitness - 2000) {
         best_stock.push_back(&(it->second));
-      }
-      else{
+      } else {
         breedable.push_back(&(it->second));
       }
     }
 
     std::cout << best_stock.size() << std::endl;
 
-
-    std::uniform_int_distribution<> dist{ 0, static_cast<int>(breedable.size() - 1)};
+    std::uniform_int_distribution<> dist{
+        0, static_cast<int>(breedable.size() - 1)};
     /* for (std::size_t i = 0; i < breedable.size() - 1; i += 2) { */
     // for (std::size_t i = 0; i < breedable.size() - 1; i += 2) {
     int index = 10;
@@ -202,7 +207,8 @@ GeneticCircuit Genetic::evolve() {
     for (std::size_t i = 0; i < index; ++i) {
       int circ_1 = dist(rand_engine);
       int circ_2 = dist(rand_engine);
-      std::pair<GeneticCircuit, GeneticCircuit> twins = splitAndSplice(*best_stock[circ_1 % best_stock.size()], *breedable[circ_2]);
+      std::pair<GeneticCircuit, GeneticCircuit> twins = splitAndSplice(
+          *best_stock[circ_1 % best_stock.size()], *breedable[circ_2]);
       // splitAndSplice(*breedable[i], *breedable[i + 1]);
 
       mapAndSetFitness(&twins.first);
@@ -210,10 +216,10 @@ GeneticCircuit Genetic::evolve() {
 
       // auto first_success =
       population->insert(std::pair<std::size_t, GeneticCircuit>(
-            twins.first.hash_circ(), twins.first));
+          twins.first.hash_circ(), twins.first));
       // auto second_success =
       population->insert(std::pair<std::size_t, GeneticCircuit>(
-            twins.second.hash_circ(), twins.second));
+          twins.second.hash_circ(), twins.second));
       // if(first_success.second == false || second_success.second == false){
       //       --i;
       // }
@@ -224,84 +230,82 @@ GeneticCircuit Genetic::evolve() {
   }
   GeneticCircuit result = population->at(hashExpectedOutput());
   return result;
+}
+
+int Genetic::generateFitness(GeneticCircuit c) {
+  int score = 0;
+  bool tentative_is_correct = true;
+  BooleanTable actual_output = c.evaluateAllInputs();
+
+  // transposes our vectors to work easily with columns later
+  BooleanTable transposed_actual = transposeBooleanTable(actual_output);
+  BooleanTable transposed_expected = transposeBooleanTable(expected_outputs);
+
+  for (std::size_t i = 0; i < transposed_actual.size(); ++i) {
+    if (transposed_actual[i] != transposed_expected[i]) {
+      score += 10000;
+      tentative_is_correct = false;
+    } else {
+      /* std::cout << "Got one right" << std::endl; */
+    }
   }
+  score += c.getNotCount() * 1000;
+  // favor equal distribution of or : and gates
+  /* score += std::abs(c.getOrCount() - c.getAndCount()) * 100; */
+  score += (c.getGateCount()) * 10;
+  if (tentative_is_correct) {
+    correct_found = true;
+  }
+  return score;
+}
 
-  int Genetic::generateFitness(GeneticCircuit c) {
-    int score = 0;
-    bool tentative_is_correct = true;
-    BooleanTable actual_output = c.evaluateAllInputs();
+size_t Genetic::hashExpectedOutput() {
+  std::string s = "";
+  std::hash<std::string> hash_fn;
+  for (std::vector<bool> row : expected_outputs) {
+    for (bool bit : row) {
+      s += std::to_string((int)bit);
+    }
+  }
+  std::size_t hash = hash_fn(s);
+  return hash;
+}
 
-    //transposes our vectors to work easily with columns later
-    BooleanTable transposed_actual = transposeBooleanTable(actual_output);
-    BooleanTable transposed_expected = transposeBooleanTable(expected_outputs);
-
-    for (std::size_t i = 0; i < transposed_actual.size(); ++i) {
-      if (transposed_actual[i] != transposed_expected[i]) {
-        score += 10000;
-        tentative_is_correct = false;
-      }
-      else{
-        /* std::cout << "Got one right" << std::endl; */
+void Genetic::mapAndSetFitness(GeneticCircuit *c) {
+  BooleanTable transposed_actual =
+      transposeBooleanTable(c->evaluateAllInputs());
+  BooleanTable transposed_expected = transposeBooleanTable(expected_outputs);
+  for (std::size_t i = 0; i < transposed_actual.size(); ++i) {
+    for (std::size_t j = 0; j < transposed_actual.size(); ++j) {
+      if (transposed_actual[i] == transposed_expected[j]) {
+        c->mapOutputToOutput(i, j);
       }
     }
-    score += c.getNotCount() * 1000;
-    //favor equal distribution of or : and gates
-    /* score += std::abs(c.getOrCount() - c.getAndCount()) * 100; */
-    score += (c.getGateCount()) * 10;
-    if (tentative_is_correct) {
-      correct_found = true;
+  }
+  int fitness = generateFitness(*c);
+  c->setFitness(fitness);
+}
+
+BooleanTable transposeBooleanTable(BooleanTable original) {
+  BooleanTable transposed(original[0].size());
+
+  for (int i = 0; i < original[0].size(); ++i) {
+    for (int j = 0; j < original.size(); ++j) {
+      transposed[i].push_back(original[j][i]);
     }
-    return score;
   }
 
-  size_t Genetic::hashExpectedOutput(){
-    std::string s = "";
-    std::hash<std::string> hash_fn;
-    for (std::vector<bool> row : expected_outputs) {
-      for (bool bit : row) {
-        s += std::to_string((int)bit);
-      }
+  return transposed;
+}
+std::vector<int> splitMapping(int split_index, std::vector<int> original_map) {
+  std::vector<int> split_map = original_map;
+  for (int i = 0; i < split_map.size(); ++i) {
+    if (split_map[i] >= split_index) {
+      split_map[i] = -1;
+      /* errlog("Killing a mapping", true); */
+    } else if (split_map[i] > -1) {
+      /* errlog("keeping a mapping", true); */
     }
-    std::size_t hash = hash_fn(s);
-    return hash;
   }
-
-  void Genetic::mapAndSetFitness(GeneticCircuit* c){
-    BooleanTable transposed_actual = transposeBooleanTable(c->evaluateAllInputs());
-    BooleanTable transposed_expected = transposeBooleanTable(expected_outputs);
-    for (std::size_t i = 0; i < transposed_actual.size(); ++i) {
-      for (std::size_t j = 0; j < transposed_actual.size(); ++j) {
-        if(transposed_actual[i] == transposed_expected[j]){
-          c->mapOutputToOutput(i, j);
-        }
-      }
-    }
-    int fitness = generateFitness(*c);
-    c->setFitness(fitness);
-  }
-
-  BooleanTable transposeBooleanTable(BooleanTable original) {
-    BooleanTable transposed(original[0].size());
-
-    for (int i = 0; i < original[0].size(); ++i) {
-      for (int j = 0; j < original.size(); ++j) {
-        transposed[i].push_back(original[j][i]);
-      }
-    }
-
-    return transposed;
-  }
-  std::vector<int> splitMapping(int split_index, std::vector<int> original_map){
-    std::vector<int> split_map = original_map;
-    for(int i = 0; i < split_map.size(); ++i){
-      if(split_map[i] >= split_index){
-        split_map[i]  = -1;
-        /* errlog("Killing a mapping", true); */
-      }
-      else if(split_map[i] > -1){
-        /* errlog("keeping a mapping", true); */
-      }
-    }
-    return split_map;
-  }
-
+  return split_map;
+}

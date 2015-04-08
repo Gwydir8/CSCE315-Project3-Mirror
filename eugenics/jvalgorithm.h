@@ -37,7 +37,6 @@ class Ckt_Algo {
   void addNot(int counter);
   void addAnd(int counter);
   void addOr(int counter);
-
 };
 
 #endif

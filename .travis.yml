@@ -20,12 +20,12 @@ install:
   # - ./share/scripts/install-gflags.sh
   # - cd ..
 script:
-  # - rm -rf build debug
+  - rm -rf build debug
   - ./build.sh
-  - ./build/eugenics/test-circuit
-  - ./build/eugenics/test-getopts
+  # - ./build/eugenics/test-circuit
+  # - ./build/eugenics/test-getopts
   # - ./build/eugenics/test-algorithm
-  - ./build/eugenics/test-jv_algorithm
+  # - ./build/eugenics/test-jv_algorithm
 notifications:
   webhooks:
     urls: https://webhooks.gitter.im/e/9706bbd6480b87449c86

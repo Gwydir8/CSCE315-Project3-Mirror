@@ -10,7 +10,7 @@
 #include "utility.h"
 
 GeneticCircuit::GeneticCircuit(int input_num, int output_num,
-                               std::mt19937* rand_eng)
+                               std::mt19937_64* rand_eng)
     : Circuit(input_num, output_num), rand_engine_ptr(rand_eng), fitness(0) {
   assert(input_num >= 2);
 
@@ -41,8 +41,7 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
 }
 
 GeneticCircuit::GeneticCircuit(int input_num, int output_num,
-                               std::mt19937* rand_eng,
-                               std::vector<Gate*> gates)
+                               std::mt19937_64* rand_eng, std::vector<Gate*> gates)
     : Circuit(input_num, output_num), rand_engine_ptr(rand_eng) {
   for (Gate* gate : gates) {
     if (gate->type == "WIRE") {
@@ -95,8 +94,8 @@ std::size_t GeneticCircuit::hash_circ() {
 
 int GeneticCircuit::getSmallestSafeCut() {
   int smallest_safe_cut = input_no;
-  for(int potential : mapped_outputs){
-    if(potential > smallest_safe_cut && potential < getGateCount() - 1){
+  for (int potential : mapped_outputs) {
+    if (potential > smallest_safe_cut && potential < getGateCount() - 1) {
       smallest_safe_cut = potential;
     }
   }
@@ -107,17 +106,18 @@ int GeneticCircuit::getSmallestSafeCut() {
   return smallest_safe_cut;
 }
 
-//index starts at 0
-//helper function to avoid conversions.
-void GeneticCircuit::mapOutputToOutput(int to_map, int index_to_be_mapped){
-  if(mapped_outputs[index_to_be_mapped] != -1){
-        return; //already mapped don't remap
+// index starts at 0
+// helper function to avoid conversions.
+void GeneticCircuit::mapOutputToOutput(int to_map, int index_to_be_mapped) {
+  if (mapped_outputs[index_to_be_mapped] != -1) {
+    return;  // already mapped don't remap
   }
   // convert
   int converted_gate_index = getGateCount() - getOutputCount() + to_map;
-  /* errlog("Mapping " + std::to_string(converted_gate_index) + " to " + std::to_string(index_to_be_mapped) , true); */
+  /* errlog("Mapping " + std::to_string(converted_gate_index) + " to " +
+   * std::to_string(index_to_be_mapped) , true); */
 
-  if(converted_gate_index >= getGateCount()){
+  if (converted_gate_index >= getGateCount()) {
     errlog("WOAHHH NELLY", true);
     exit(1);
   }

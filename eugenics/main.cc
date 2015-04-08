@@ -18,23 +18,23 @@ int main(int argc, char* argv[]) {
   // get algorithm from CLI
   Algol_t algol = getOpts(argc, argv);
 
-    BooleanTable fulladder_outputs = {{false, false},
-                                     {false, true},
-                                     {false, true},
-                                     {true, false},
-                                     {false, true},
-                                     {true, false},
-                                     {true, false},
-                                     {true, true}};
+  BooleanTable fulladder_outputs = {{false, false},
+                                    {false, true},
+                                    {false, true},
+                                    {true, false},
+                                    {false, true},
+                                    {true, false},
+                                    {true, false},
+                                    {true, true}};
 
-    BooleanTable inverted_outputs = {{true, true, true},
-                                     {true, true, false},
-                                     {true, false, true},
-                                     {true, false, false},
-                                     {false, true, true},
-                                     {false, true, false},
-                                     {false, false, true},
-                                     {false, false, false}};
+  BooleanTable inverted_outputs = {{true, true, true},
+                                   {true, true, false},
+                                   {true, false, true},
+                                   {true, false, false},
+                                   {false, true, true},
+                                   {false, true, false},
+                                   {false, false, true},
+                                   {false, false, false}};
 
   if (algol == GENETIC) {
     errlog("Running Genetic Algorithm");
@@ -51,15 +51,14 @@ int main(int argc, char* argv[]) {
     errlog("Running Traditional Algorithm");
 
     // full adder
-    Ckt_Algo fulladder_trad = Ckt_Algo(Circuit(3,2));
+    Ckt_Algo fulladder_trad = Ckt_Algo(Circuit(3, 2));
     fulladder_trad.search(fulladder_outputs);
     std::cout << fulladder_trad.correct_circuit << std::endl;
 
     // inverted outputs
-    Ckt_Algo inverted_trad = Ckt_Algo(Circuit(3,3));
+    Ckt_Algo inverted_trad = Ckt_Algo(Circuit(3, 3));
     inverted_trad.search(inverted_outputs);
     std::cout << inverted_trad.correct_circuit << std::endl;
-
   }
 
   std::exit(EXIT_SUCCESS);

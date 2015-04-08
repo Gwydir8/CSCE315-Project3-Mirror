@@ -10,7 +10,9 @@ using namespace std;
 
 int level = 0;
 Ckt_Algo::Ckt_Algo(Circuit circuit)
-  : correct_circuit_output(), output_set(new vector<vector<vector<bool>>>), correct_circuit(circuit) {
+    : correct_circuit_output(),
+      output_set(new vector<vector<vector<bool>>>),
+      correct_circuit(circuit) {
   ex_list.push(circuit);
 }
 size_t hash_output(vector<vector<bool>> output) {
