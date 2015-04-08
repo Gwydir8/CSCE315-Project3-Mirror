@@ -22,19 +22,6 @@ TEST(JVAlgorithmTest, ANDTest) {
  * 1)).search(expected_output)); */
 /* } */
 
-<<<<<<< HEAD
-TEST(JVAlgorithmTest, FullAdderTest) {
-  vector<vector<bool>> expected_output = {{false, false},
-                                          {false, true},
-                                          {false, true},
-                                          {true, false},
-                                          {false, true},
-                                          {true, false},
-                                          {true, false},
-                                          {true, true}};
-  EXPECT_EQ(expected_output, Ckt_Algo(Circuit(3, 2)).search(expected_output));
-}
-=======
 /* TEST(JVAlgorithmTest, FullAdderTest){ */
 /*         vector<vector<bool>> expected_output = {{false, false}, */
 /*                                              {false, true}, */
@@ -47,7 +34,6 @@ TEST(JVAlgorithmTest, FullAdderTest) {
 /*     EXPECT_EQ(expected_output,
  * Ckt_Algo(Circuit(3,2)).search(expected_output)); */
 /* } */
->>>>>>> experimental/sam
 
 TEST(JVAlgorithmTest, Inverter) {
   vector<vector<bool>> expected_output = {{true, true, true},
