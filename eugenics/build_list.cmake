@@ -5,6 +5,7 @@ set(SRCS
     src/genetic.cc
     src/genetic_circuit.cc
     src/utility.cc
+    src/jvalgorithm.cc
     # src/algorithm.cc
     # src/traditional_algorithm.cc
 )
