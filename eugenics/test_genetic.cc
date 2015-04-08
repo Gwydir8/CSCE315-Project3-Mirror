@@ -103,7 +103,7 @@ class FullAdder : public ::testing::Test {
   virtual void SetUp() {
     // FUN FACT: dolly was the first cloned sheep! In honor of her...we send our
     // test genetic class into space with her title
-    expected_population_size = 1000;
+    expected_population_size = 2000;
     expected_i = 3;
     expected_o = {{false, false},
                   {false, true},

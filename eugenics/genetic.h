@@ -38,6 +38,7 @@ class Genetic {
 
   std::map<std::size_t, GeneticCircuit> *spawnPopulation(
       std::size_t populationSize);
+  void spawnMore(int x);
 
   void cullHerd();
   GeneticCircuit evolve();
@@ -51,6 +52,7 @@ class Genetic {
  private:
   std::map<std::size_t, GeneticCircuit> *population;
   int input_no;
+  int average_fitness;
   bool correct_found;
   BooleanTable expected_outputs;
 

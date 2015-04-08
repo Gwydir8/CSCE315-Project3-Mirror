@@ -112,7 +112,7 @@ void GeneticCircuit::mapOutputToOutput(int to_map, int index_to_be_mapped){
   }
   // convert
   int converted_gate_index = getGateCount() - getOutputCount() + to_map;
-  errlog("Mapping " + std::to_string(converted_gate_index) + " to " + std::to_string(index_to_be_mapped) , true);
+  /* errlog("Mapping " + std::to_string(converted_gate_index) + " to " + std::to_string(index_to_be_mapped) , true); */
 
   if(converted_gate_index >= getGateCount()){
     errlog("WOAHHH NELLY", true);
