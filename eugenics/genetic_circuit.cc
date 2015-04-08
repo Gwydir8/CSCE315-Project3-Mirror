@@ -14,34 +14,52 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
     : Circuit(input_num, output_num), rand_engine_ptr(rand_eng), fitness(0) {
   assert(input_num >= 2);
 
+  // minimum number of gates
+  int min_number_gates = 0;
+  // maximum number of gates
+  int max_number_gates = 36;
+
   std::vector<GateType> gate_types{NOT, OR, AND};
 
-  int num_of_gates =
-      number_dist(*rand_engine_ptr);  // random number between 0 and 28
-  std::uniform_int_distribution<> gate_max_dist{0, num_of_gates};
+  std::uniform_int_distribution<> number_dist{min_number_gates,
+                                              max_number_gates};
+
+  int num_of_gates = number_dist(*rand_engine_ptr);  // random number between
+                                                     // min_number_gates and
+                                                     // max_number_gates
+
+  // distribution for random number between min_number of gates and number of
+  // gates chosen for this circuit
+  std::uniform_int_distribution<> gate_max_dist{min_number_gates, num_of_gates};
+
+  // if you want to print out the random numbers:
+  // std::ostringstream errstream;
+  // errstream << "Random Number: " << gate_max_dist(*rand_engine_ptr);
+  // errlog(errstream.str(), true);
 
   for (int i = 0; i < num_of_gates; ++i) {
     // random number between 0 and 2
     GateType rand_gate = gate_types[gate_max_dist(*rand_engine_ptr) % 3];
-    if(i == num_of_gates - 1){
-      addGate(GateType(NOT), getGateCount() -1);
+    if (i == num_of_gates - 1) {
+      addGate(GateType(NOT), getGateCount() - 1);
     }
 
-    if ((rand_gate == NOT) && (getNotCount() < 1) && i % 4 == 0) {
+    if ((rand_gate == NOT) && (getNotCount() < 1) && ( i % 4 == 0 )) {
       // only add a NOT if we don't have 2 already
       addGate(rand_gate, gate_max_dist(*rand_engine_ptr) % getGateCount());
     } else if ((rand_gate == OR) || (rand_gate == AND)) {
       addGate(rand_gate, gate_max_dist(*rand_engine_ptr) % getGateCount(),
               gate_max_dist(*rand_engine_ptr) % getGateCount());
+    } else{
+      errlog("GeneticCircuit::GeneticCircuit FATAL Unknown Gate Encountered");
+      std::exit(EXIT_FAILURE);
     }
-    /* else{ */
-    /*     --i; //didn't add a gate(prbly due to not constraints failing */
-    /* } */
   }
 }
 
 GeneticCircuit::GeneticCircuit(int input_num, int output_num,
-                               std::mt19937_64* rand_eng, std::vector<Gate*> gates)
+                               std::mt19937_64* rand_eng,
+                               std::vector<Gate*> gates)
     : Circuit(input_num, output_num), rand_engine_ptr(rand_eng) {
   for (Gate* gate : gates) {
     if (gate->type == "WIRE") {

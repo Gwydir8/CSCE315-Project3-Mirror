@@ -11,8 +11,8 @@ using namespace std;
 int level = 0;
 Ckt_Algo::Ckt_Algo(Circuit circuit)
     : correct_circuit_output(),
-      output_set(new vector<vector<vector<bool>>>),
-      correct_circuit(circuit) {
+      correct_circuit(circuit),
+      output_set(new vector<vector<vector<bool>>>) {
   ex_list.push(circuit);
 }
 size_t hash_output(vector<vector<bool>> output) {
@@ -28,7 +28,7 @@ size_t hash_output(vector<vector<bool>> output) {
 }
 
 bool Ckt_Algo::isUnique(Circuit candidate) {
-  bool need_more_possibilities = (candidate.getOutputCount() < 2);
+  // bool need_more_possibilities = (candidate.getOutputCount() < 2);
   size_t hashed_val = hash_output(candidate.evaluateAllInputs());
   auto search = unique_map.find(hashed_val);
   if (search == unique_map.end()) {  // if(hashed_val is unique)
@@ -68,26 +68,25 @@ void Ckt_Algo::checkPermAndMap(Circuit* check, vector<vector<bool>> desired) {
     }
   }
 
-  /* bool is_working = true; */
-  /* for (int i = 0; i < actual.size(); ++i) { */
-  /*   for (int j = 0; j < actual.size(); ++j) { */
-  /*     if(transposed_actual[i][j] != actual[j][i] || transposed_expected[i][j]
-   * != desired[j][i]){ */
-  /*           is_working = false; */
-  /*           exit(-1); */
-  /*     } */
-  /*   } */
-  /* } */
+  // bool is_working = true;
+  // for (int i = 0; i < actual.size(); ++i) {
+  //   for (int j = 0; j < actual.size(); ++j) {
+  //     if(transposed_actual[i][j] != actual[j][i] || transposed_expected[i][j]
+  //  * != desired[j][i]){
+  //           is_working = false;
+  //           exit(-1);
+  //     }
+  //   }
+  // }
 
-  /* if(!is_equal_to_col){ */
-  /*     is_equal_to_circuit = false; */
-  /* } */
-  /* else{ */
-  /*   current_circ->mapGateToOutput(current_circ->getGateCount() - i - 1, i);
-   */
-  /* } */
-  /* is_equal_to_col = false; */
-  /* } */
+  // if(!is_equal_to_col){
+  //     is_equal_to_circuit = false;
+  // }
+  // else{
+  //   current_circ->mapGateToOutput(current_circ->getGateCount() - i - 1, i);
+  // }
+  // is_equal_to_col = false;
+  // }
 }
 
 // also maps correct gates to outputs
@@ -103,7 +102,7 @@ bool Ckt_Algo::circuitMatchesDesired(vector<vector<bool>> desired) {
     errlog("Getting a weird output size while checking correctness", true);
     return false;
   }
-  for (int i = 0; i < circ_output.size(); ++i) {
+  for (std::size_t i = 0; i < circ_output.size(); ++i) {
     if (circ_output[i] != desired[i]) {
       return false;
     }

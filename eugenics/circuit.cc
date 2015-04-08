@@ -100,6 +100,9 @@ int Circuit::addGate(GateType gate_type, int index_1) {
 int Circuit::addGate(int output_index, GateType gate_type, int index_1) {
   int actual_output_index = addGate(gate_type, index_1);
   assert(output_index == actual_output_index);
+  if (output_index != actual_output_index) {
+    errlog("Circuit::addGate WARNING output_index != actual_output_index");
+  }
   return actual_output_index;
 }
 
