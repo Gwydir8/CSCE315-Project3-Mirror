@@ -41,11 +41,11 @@ int main(int argc, char* argv[]) {
 
     // full adder
     Genetic fulladder = Genetic(3, fulladder_outputs, 1000);
-    std::cout << fulladder.evolve() << std::endl;
+    std::cout << fulladder.evolve().writeCircuitToFile() << std::endl;
 
     // inverted outputs
     Genetic inverted = Genetic(3, inverted_outputs, 1000);
-    std::cout << inverted.evolve() << std::endl;
+    std::cout << inverted.evolve().writeCircuitToFile() << std::endl;
 
   } else if (algol == TRADITIONAL) {
     errlog("Running Traditional Algorithm");
@@ -53,12 +53,12 @@ int main(int argc, char* argv[]) {
     // full adder
     Ckt_Algo fulladder_trad = Ckt_Algo(Circuit(3, 2));
     fulladder_trad.search(fulladder_outputs);
-    std::cout << fulladder_trad.correct_circuit << std::endl;
+    std::cout << fulladder_trad.correct_circuit.writeCircuitToFile() << std::endl;
 
     // inverted outputs
     Ckt_Algo inverted_trad = Ckt_Algo(Circuit(3, 3));
     inverted_trad.search(inverted_outputs);
-    std::cout << inverted_trad.correct_circuit << std::endl;
+    std::cout << inverted_trad.correct_circuit.writeCircuitToFile() << std::endl;
   }
 
   std::exit(EXIT_SUCCESS);

@@ -262,7 +262,7 @@ std::ostream& operator<<(std::ostream& os, const Circuit& circuit) {
   return os;
 }
 
-void Circuit::writeCircuitToFile() const {
+Circuit Circuit::writeCircuitToFile() const {
   // Create filepath
   std::string directory = "";
   std::string filename = "eugenics.circuit";
@@ -280,4 +280,5 @@ void Circuit::writeCircuitToFile() const {
   errlog("Circuit::writeCircuitToFile: write complete");
 
   circuitfile.close();
+  return *this;
 }

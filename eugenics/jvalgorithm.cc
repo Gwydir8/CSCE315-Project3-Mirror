@@ -8,7 +8,10 @@
 
 using namespace std;
 
-Ckt_Algo::Ckt_Algo(Circuit circuit) : correct_circuit_output(), output_set(new vector<vector<vector<bool>>>)  {
+Ckt_Algo::Ckt_Algo(Circuit circuit)
+    : correct_circuit_output(),
+      correct_circuit(circuit),
+      output_set(new vector<vector<vector<bool>>>) {
   ex_list.push(circuit);
 }
 size_t hash_output(vector<vector<bool>> output) {
@@ -44,19 +47,15 @@ bool Ckt_Algo::isUnique(Circuit candidate) {
 
 // also maps correct gates to outputs
 bool Ckt_Algo::circuitMatchesDesired(vector<vector<bool>> desired) {
-    // check if output of current circuit equals desired
-    Circuit * current_circ = &ex_list.front();
-
-    //check permutations of output and map if equal
-    /* checkPermAndMap(current_circ, desired); */
-    vector<vector<bool>> circ_output = current_circ->evaluateAllInputs();
+  // check if output of current circuit equals desired
+  Circuit* current_circ = &ex_list.front();
 
   // check permutations of output and map if equal
-  checkPermAndMap(current_circ, desired);
+  /* checkPermAndMap(current_circ, desired); */
   vector<vector<bool>> circ_output = current_circ->evaluateAllInputs();
 
   if (circ_output.size() != desired.size()) {
-    errlog("Getting a weird output size while checking correctness", true);
+    errlog("Getting a weird output size while checking correctness");
     return false;
   }
 
@@ -89,7 +88,7 @@ void Ckt_Algo::addNot(int counter) {
 
 void Ckt_Algo::addAnd(int counter) {
   for (int i = 0; i < counter - 1; ++i) {
-    for (int j = i; j < counter-1; ++j) {
+    for (int j = i; j < counter - 1; ++j) {
       Circuit next = ex_list.front();
       next.addGate(AND, i, j);
       string errmsg = "Ckt_Algo::addAnd: " + to_string(next.getGateCount()) +
@@ -128,18 +127,20 @@ vector<vector<bool>> Ckt_Algo::search(vector<vector<bool>> desired) {
     int gate_count = temp_c.getGateCount();
     // adds NOT/AND/OR gate
     /* errlog("Ckt_Algo::search addNot successful", true); */
-    if(temp_c.getNotCount() < 2){
+    if (temp_c.getNotCount() < 2) {
       addNot(gate_count);
     }
-    if(temp_c.getGateCount()) {
+    if (temp_c.getGateCount()) {
       addAnd(gate_count);
       /* errlog("Ckt_Algo::search addAnd successful", true); */
       addOr(gate_count);
-      /* errlog("Ckt_Algo::search addOr successful", true); */
+      /* errlog("Ckt_Algo::search addOr successful"); */
     }
-    errlog("Ckt_Algo::search found :" + to_string(unique_map.size()) + " unique circs ", true);
-    errlog("Ckt_Algo::Queue still has :" + to_string(ex_list.size()) + " possibilities", true);
-    errlog("Ckt_Algo::On Level Number::" + to_string(gate_count) + " ", true);
+    errlog("Ckt_Algo::search found :" + to_string(unique_map.size()) +
+           " unique circs ");
+    errlog("Ckt_Algo::Queue still has :" + to_string(ex_list.size()) +
+           " possibilities");
+    errlog("Ckt_Algo::On Level Number::" + to_string(gate_count) + " ");
 
     // remove "first" element
     ex_list.pop();

@@ -109,7 +109,7 @@ class Circuit {
 
   friend std::ostream &operator<<(std::ostream &os, const Circuit &circuit);
 
-  void writeCircuitToFile() const;
+  Circuit writeCircuitToFile() const;
 
   // print stats
   void printStatistics();
