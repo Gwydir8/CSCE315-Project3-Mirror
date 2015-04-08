@@ -19,15 +19,16 @@ class GeneticCircuit : public Circuit {
   GeneticCircuit(int input_num, int output_num, std::mt19937* rand_eng_ptr);
   GeneticCircuit(int input_num, int output_num, std::mt19937* rand_eng_ptr,
                  std::vector<Gate*> gates);
-  virtual ~GeneticCircuit() {
-  }
+  virtual ~GeneticCircuit() {}
 
   void setFitness(int f) { fitness = f; }
   int getFitness() { return fitness; }
   // returns the smallest cut you can make without disturbing mappings..
   //
-  void setMapping(std::vector<int> new_mapping){ mapped_outputs = new_mapping;}
-  std::vector<int> getMapping(){ return mapped_outputs;}
+  void setMapping(std::vector<int> new_mapping) {
+    mapped_outputs = new_mapping;
+  }
+  std::vector<int> getMapping() { return mapped_outputs; }
   int getSmallestSafeCut();
   void mapOutputToOutput(int to_map, int index_to_be_mapped);
   std::size_t hash_circ();
