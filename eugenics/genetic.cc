@@ -195,7 +195,7 @@ GeneticCircuit Genetic::evolve() {
       }
     }
 
-    std::cout << best_stock.size() << std::endl;
+    // std::cout << best_stock.size() << std::endl;
 
     std::uniform_int_distribution<> dist{
         0, static_cast<int>(breedable.size() - 1)};
