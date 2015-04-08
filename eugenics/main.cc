@@ -20,8 +20,7 @@ int main(int argc, char* argv[]) {
   if (algol == GENETIC) {
     errlog("Running Genetic Algorithm");
 
-    std::size_t initial_population_size = 1000;
-    int inputs = 3;
+    // full adder
     BooleanTable expected_outputs = {{false, false},
                                      {false, true},
                                      {false, true},
@@ -30,9 +29,22 @@ int main(int argc, char* argv[]) {
                                      {true, false},
                                      {true, false},
                                      {true, true}};
-    Genetic dolly = Genetic(inputs, expected_outputs, initial_population_size);
+    Genetic fulladder = Genetic(3, expected_outputs, 1000);
 
-    std::cout << dolly.evolve() << std::endl;
+    std::cout << fulladder.evolve() << std::endl;
+
+    // inverted outputs
+    BooleanTable expected_outputs = {{true, true, true},
+                                     {true, true, false},
+                                     {true, false, true},
+                                     {true, false, false},
+                                     {false, true, true},
+                                     {false, true, false},
+                                     {false, false, true},
+                                     {false, false, false}};
+    Genetic inverted = Genetic(3, expected_outputs, 1000);
+
+    std::cout << inverted.evolve() << std::endl;
 
   } else if (algol == TRADITIONAL) {
     errlog("Running Traditional Algorithm");
