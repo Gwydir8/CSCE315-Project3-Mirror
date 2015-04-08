@@ -231,9 +231,9 @@ GeneticCircuit Genetic::evolve() {
     errlog(std::to_string(population->size()));
     cullHerd();
     ++count_loop;
+    this->writeFitnessToFile();
   }
   GeneticCircuit result = population->at(hashExpectedOutput());
-  writeFitnessToFile();
   return result;
 }
 
@@ -330,7 +330,7 @@ void Genetic::writeFitnessToFile() const {
   errlog(errmsg);
 
   // Write circuit to circuitfile
-  circuitfile << average_fitness;
+  circuitfile << average_fitness << "\n-\n";
   errlog("Circuit::writeCircuitToFile: write complete");
 
   circuitfile.close();
