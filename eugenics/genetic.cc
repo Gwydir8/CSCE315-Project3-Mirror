@@ -75,8 +75,6 @@ std::pair<GeneticCircuit, GeneticCircuit> Genetic::splitAndSplice(
   std::vector<int> split_map_of_c2 = splitMapping(split_index, c_2.getMapping());
 
 
-
-
   std::pair<std::vector<Gate *>, std::vector<Gate *> > c_1_halves =
     split(c_1, split_index);
   std::pair<std::vector<Gate *>, std::vector<Gate *> > c_2_halves =
@@ -85,8 +83,8 @@ std::pair<GeneticCircuit, GeneticCircuit> Genetic::splitAndSplice(
   swapped_circuits.first = splice(c_1_halves.first, c_2_halves.second);
   swapped_circuits.second = splice(c_2_halves.first, c_1_halves.second);
 
-/*   swapped_circuits.first.setMapping(split_map_of_c1); */
-/*   swapped_circuits.second.setMapping(split_map_of_c2); */
+  swapped_circuits.first.setMapping(split_map_of_c1);
+  swapped_circuits.second.setMapping(split_map_of_c2);
 
   return swapped_circuits;
 }
@@ -137,11 +135,11 @@ void Genetic::cullHerd() {
     int fit = it->second.getFitness();
     total += fit;
     /* avg_not += (double)it->second.getNotCount() / population->size(); */
-    /* avg_mapped += (double) getRealMapped(it->second.getMapping()) / population->size(); */
+    avg_mapped += (double) getRealMapped(it->second.getMapping()) / population->size();
   }
   avg = total / population->size();
   errlog("Fitness Average is: " + std::to_string(avg), true);
-  /* errlog("Avg # of mapped gates are" + std::to_string(avg_mapped), true); */
+  errlog("Avg # of mapped gates are" + std::to_string(avg_mapped), true);
   //keep going until either deletes most or half
   /* while(population->size() > (initial_size / 1.8)){ */
   /*   avg /= 1.5; */
@@ -267,12 +265,12 @@ GeneticCircuit Genetic::evolve() {
   }
   std::vector<int> splitMapping(int split_index, std::vector<int> original_map){
     std::vector<int> split_map = original_map;
-    for(int mapping : split_map){
-    mapping = -1;
-      if(mapping >= split_index){
+    for(int i = 0; i < split_map.size(); ++i){
+      if(split_map[i] >= split_index){
+        split_map[i]  = -1;
         /* errlog("Killing a mapping", true); */
       }
-      else if(mapping > -1){
+      else if(split_map[i] > -1){
         /* errlog("keeping a mapping", true); */
       }
     }
