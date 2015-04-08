@@ -35,7 +35,7 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
   // if you want to print out the random numbers:
   // std::ostringstream errstream;
   // errstream << "Random Number: " << gate_max_dist(*rand_engine_ptr);
-  // errlog(errstream.str(), true);
+  // errlog(errstream.str());
 
   for (int i = 0; i < num_of_gates; ++i) {
     // random number between 0 and 2
@@ -44,13 +44,13 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
       addGate(GateType(NOT), getGateCount() - 1);
     }
 
-    if ((rand_gate == NOT) && (getNotCount() < 1) && ( i % 4 == 0 )) {
+    if ((rand_gate == NOT) && (getNotCount() < 1) && (i % 4 == 0)) {
       // only add a NOT if we don't have 2 already
       addGate(rand_gate, gate_max_dist(*rand_engine_ptr) % getGateCount());
     } else if ((rand_gate == OR) || (rand_gate == AND)) {
       addGate(rand_gate, gate_max_dist(*rand_engine_ptr) % getGateCount(),
               gate_max_dist(*rand_engine_ptr) % getGateCount());
-    } else{
+    } else {
       errlog("GeneticCircuit::GeneticCircuit FATAL Unknown Gate Encountered");
       std::exit(EXIT_FAILURE);
     }
@@ -133,10 +133,10 @@ void GeneticCircuit::mapOutputToOutput(int to_map, int index_to_be_mapped) {
   // convert
   int converted_gate_index = getGateCount() - getOutputCount() + to_map;
   /* errlog("Mapping " + std::to_string(converted_gate_index) + " to " +
-   * std::to_string(index_to_be_mapped) , true); */
+   * std::to_string(index_to_be_mapped) ); */
 
   if (converted_gate_index >= getGateCount()) {
-    errlog("WOAHHH NELLY", true);
+    errlog("WOAHHH NELLY");
     exit(1);
   }
 

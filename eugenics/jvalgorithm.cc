@@ -98,7 +98,7 @@ bool Ckt_Algo::circuitMatchesDesired(vector<vector<bool>> desired) {
   vector<vector<bool>> circ_output = current_circ->evaluateAllInputs();
 
   if (circ_output.size() != desired.size()) {
-    errlog("Getting a weird output size while checking correctness", true);
+    errlog("Getting a weird output size while checking correctness");
     return false;
   }
   for (std::size_t i = 0; i < circ_output.size(); ++i) {
@@ -168,23 +168,21 @@ vector<vector<bool>> Ckt_Algo::search(vector<vector<bool>> desired) {
     }
     int gate_count = temp_c.getGateCount();
     // adds NOT/AND/OR gate
-    /* errlog("Ckt_Algo::search addNot successful", true); */
+    /* errlog("Ckt_Algo::search addNot successful"); */
     if (temp_c.getNotCount() < 2) {
       addNot(gate_count);
     }
     if (temp_c.getGateCount()) {
       addAnd(gate_count);
-      /* errlog("Ckt_Algo::search addAnd successful", true); */
+      /* errlog("Ckt_Algo::search addAnd successful"); */
       addOr(gate_count);
-      /* errlog("Ckt_Algo::search addOr successful", true); */
+      /* errlog("Ckt_Algo::search addOr successful"); */
     }
     errlog("Ckt_Algo::search found :" + to_string(unique_map.size()) +
-               " unique circs ",
-           true);
+           " unique circs ");
     errlog("Ckt_Algo::Queue still has :" + to_string(ex_list.size()) +
-               " possibilities",
-           true);
-    errlog("Ckt_Algo::On Level Number::" + to_string(gate_count) + " ", true);
+           " possibilities");
+    errlog("Ckt_Algo::On Level Number::" + to_string(gate_count) + " ");
 
     // remove "first" element
     ex_list.pop();
