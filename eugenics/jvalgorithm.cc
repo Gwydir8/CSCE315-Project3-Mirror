@@ -8,7 +8,6 @@
 
 using namespace std;
 
-int level = 0;
 Ckt_Algo::Ckt_Algo(Circuit circuit)
     : correct_circuit_output(),
       correct_circuit(circuit),
@@ -130,10 +129,8 @@ void Ckt_Algo::addNot(int counter) {
 }
 
 void Ckt_Algo::addAnd(int counter) {
-  // generates different circuits based on the different
-  // combinations of gates to wires, then pushes to queue
   for (int i = 0; i < counter - 1; ++i) {
-    for (int j = 0; j < counter; ++j) {
+    for (int j = i; j < counter - 1; ++j) {
       Circuit next = ex_list.front();
       next.addGate(AND, i, j);
       string errmsg = "Ckt_Algo::addAnd: " + to_string(next.getGateCount()) +
@@ -147,15 +144,6 @@ void Ckt_Algo::addAnd(int counter) {
 }
 
 void Ckt_Algo::addOr(int counter) {
-  // generates different circuits based on the different
-  // combinations of gates to wires, then pushes to queue
-  // eliminate the combinations that were used
-  // on previous levels
-  /* for (int i = 0; i < counter - 1; ++i) { */
-  /*   for (int j = i + 1; j < counter; ++j) { */
-  /*     or_map[to_string(i)+ to_string(j)] = 1; */
-  /*   } */
-  /* } */
   for (int i = 0; i < counter - 1; ++i) {
     for (int j = i + 1; j < counter; ++j) {
       Circuit next = ex_list.front();
@@ -178,15 +166,16 @@ vector<vector<bool>> Ckt_Algo::search(vector<vector<bool>> desired) {
       errlog("Ckt_Algo::NO MORE QUEUE CIRCUITS");
       exit(-1);
     }
+    int gate_count = temp_c.getGateCount();
     // adds NOT/AND/OR gate
     /* errlog("Ckt_Algo::search addNot successful", true); */
     if (temp_c.getNotCount() < 2) {
-      addNot(temp_c.getGateCount());
+      addNot(gate_count);
     }
     if (temp_c.getGateCount()) {
-      addAnd(temp_c.getGateCount());
+      addAnd(gate_count);
       /* errlog("Ckt_Algo::search addAnd successful", true); */
-      addOr(temp_c.getGateCount());
+      addOr(gate_count);
       /* errlog("Ckt_Algo::search addOr successful", true); */
     }
     errlog("Ckt_Algo::search found :" + to_string(unique_map.size()) +
@@ -195,10 +184,10 @@ vector<vector<bool>> Ckt_Algo::search(vector<vector<bool>> desired) {
     errlog("Ckt_Algo::Queue still has :" + to_string(ex_list.size()) +
                " possibilities",
            true);
+    errlog("Ckt_Algo::On Level Number::" + to_string(gate_count) + " ", true);
 
     // remove "first" element
     ex_list.pop();
-    ++level;
   }
   errlog("Ckt_Algo::search found correct circuit!");
   return correct_circuit_output;
