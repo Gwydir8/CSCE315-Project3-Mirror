@@ -195,7 +195,11 @@ GeneticCircuit Genetic::evolve() {
     std::uniform_int_distribution<> dist{ 0, static_cast<int>(breedable.size() - 1)};
     /* for (std::size_t i = 0; i < breedable.size() - 1; i += 2) { */
     // for (std::size_t i = 0; i < breedable.size() - 1; i += 2) {
-    for (std::size_t i = 0; i < 10; ++i) {
+    int index = 10;
+    if(count_loop % 20 == 10){
+      index = 100;
+    }
+    for (std::size_t i = 0; i < index; ++i) {
       int circ_1 = dist(rand_engine);
       int circ_2 = dist(rand_engine);
       std::pair<GeneticCircuit, GeneticCircuit> twins = splitAndSplice(*best_stock[circ_1 % best_stock.size()], *breedable[circ_2]);

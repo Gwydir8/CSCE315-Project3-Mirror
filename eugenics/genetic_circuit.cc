@@ -23,8 +23,11 @@ GeneticCircuit::GeneticCircuit(int input_num, int output_num,
   for (int i = 0; i < num_of_gates; ++i) {
     // random number between 0 and 2
     GateType rand_gate = gate_types[gate_max_dist(*rand_engine_ptr) % 3];
+    if(i == num_of_gates - 1){
+      addGate(GateType(NOT), getGateCount() -1);
+    }
 
-    if ((rand_gate == NOT) && (getNotCount() < 2) && i % 4 == 0) {
+    if ((rand_gate == NOT) && (getNotCount() < 1) && i % 4 == 0) {
       // only add a NOT if we don't have 2 already
       addGate(rand_gate, gate_max_dist(*rand_engine_ptr) % getGateCount());
     } else if ((rand_gate == OR) || (rand_gate == AND)) {
